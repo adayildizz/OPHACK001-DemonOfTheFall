@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cawh3p0wqchdo"]
+
+[ext_resource type="Script" path="res://components/pathfind_component.gd" id="1_evwb5"]
+
+[node name="PathFindComponent" type="Node2D"]
+scale = Vector2(11.16, 10.76)
+script = ExtResource("1_evwb5")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+radius = 32.0
+max_speed = 30.0
+debug_enabled = true
+
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_velocity_computed"]
