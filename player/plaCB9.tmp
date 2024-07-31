@@ -1,0 +1,98 @@
+[gd_scene load_steps=11 format=3 uid="uid://blyhpi7sw2a1o"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_t1hgf"]
+[ext_resource type="Texture2D" uid="uid://cv3o6qrf4w736" path="res://player/DinoSprites - mort.png" id="2_j5nri"]
+[ext_resource type="Script" path="res://player/state_mac.gd" id="3_opg3d"]
+[ext_resource type="Script" path="res://player/Idle.gd" id="4_ny8u3"]
+[ext_resource type="Script" path="res://player/Run.gd" id="5_fpkvq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fqe8"]
+size = Vector2(9, 15)
+
+[sub_resource type="Animation" id="Animation_jvs50"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_33hyg"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_bs0vh"]
+resource_name = "run"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7, 8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5rva7"]
+_data = {
+"RESET": SubResource("Animation_jvs50"),
+"idle": SubResource("Animation_33hyg"),
+"run": SubResource("Animation_bs0vh")
+}
+
+[node name="Player" type="CharacterBody2D"]
+scale = Vector2(5, 5)
+script = ExtResource("1_t1hgf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_j5nri")
+hframes = 24
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_7fqe8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5rva7")
+}
+autoplay = "idle"
+
+[node name="PlayerCam" type="Camera2D" parent="."]
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("3_opg3d")
+starting_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("run_state")]
+script = ExtResource("4_ny8u3")
+run_state = NodePath("../Run")
+
+[node name="Run" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state")]
+script = ExtResource("5_fpkvq")
+idle_state = NodePath("../Idle")
