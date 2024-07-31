@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://player/Run.gd" id="5_fpkvq"]
 [ext_resource type="Texture2D" uid="uid://clvo0tm32go7t" path="res://assets/Knight/DEATH.png" id="6_pv1p6"]
 [ext_resource type="Texture2D" uid="uid://molrna1lstci" path="res://assets/Knight/HURT.png" id="7_g02or"]
-[ext_resource type="PackedScene" uid="uid://j84r6p2vumpq" path="res://components/VelocityComponent.tscn" id="7_j2dg3"]
+[ext_resource type="PackedScene" uid="uid://b47kyc7wyf40e" path="res://components/HurtboxComponent.tscn" id="7_m17w6"]
 [ext_resource type="Texture2D" uid="uid://dfwqedvf4ffxf" path="res://assets/Knight/IDLE.png" id="8_088rm"]
 [ext_resource type="Texture2D" uid="uid://cwcmlphqbcpai" path="res://assets/Knight/WALK.png" id="9_wlujp"]
 [ext_resource type="Script" path="res://components/health_component.gd" id="10_avvu2"]
@@ -262,7 +262,7 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" groups=["Persist", "player"]]
 scale = Vector2(4, 4)
 motion_mode = 1
 script = ExtResource("1_t1hgf")
@@ -270,8 +270,6 @@ script = ExtResource("1_t1hgf")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.25, 0.42)
 shape = SubResource("RectangleShape2D_7fqe8")
-
-[node name="PlayerCam" type="Camera2D" parent="."]
 
 [node name="Area2D" type="Area2D" parent="."]
 scale = Vector2(1.58, 0.5)
@@ -290,10 +288,13 @@ frame_progress = 0.102951
 wait_time = 0.7
 one_shot = true
 
-[node name="VelocityComponent" parent="." instance=ExtResource("7_j2dg3")]
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("actor", "animator") instance=ExtResource("7_m17w6")]
+actor = NodePath("..")
+animator = NodePath("../AnimatedSprite2D")
 
-[node name="HealthComponent" type="Node2D" parent="."]
+[node name="HealthComponent" type="Node2D" parent="." node_paths=PackedStringArray("actor")]
 script = ExtResource("10_avvu2")
+actor = NodePath("..")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state", "current_state")]
 script = ExtResource("3_opg3d")
@@ -308,4 +309,18 @@ run_state = NodePath("../Run")
 script = ExtResource("5_fpkvq")
 idle_state = NodePath("../Idle")
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "quit
+"
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Control/Button" to="." method="_on_button_pressed"]

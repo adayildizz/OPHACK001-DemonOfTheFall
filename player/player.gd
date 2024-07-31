@@ -1,10 +1,11 @@
 extends CharacterBody2D
 class_name Player 
 
+
 var MAX_SPEED : float = 200.0
 var friction = 500.0
 var acceleration = 1000.0
-
+var victim
 
 @onready var animator = $AnimatedSprite2D
 @onready var timer = $Timer
@@ -13,11 +14,13 @@ var acceleration = 1000.0
 @onready var attack_area = $Area2D
 
 
+
 var input = Vector2.ZERO
 
 
 
 func _ready() -> void:
+	
 	
 	state_machine.init(self)
 	
@@ -51,6 +54,8 @@ func get_current_state():
 
 func check_attack():
 	if Input.is_action_just_pressed("Attack"):
+		#just testing the load logic
+		#Save.load_game()
 		animator.play("attack")
 		timer.start()
 		print(attack_area.has_overlapping_bodies())
@@ -63,3 +68,22 @@ func check_attack():
 		
 		return true
 	return false
+	
+	
+func save():
+	var save_dict = {
+		"filename" : get_scene_file_path(),
+		"parent" : get_parent().get_path(),
+		"pos_x" : position.x, # Vector2 is not supported by JSON
+		"pos_y" : position.y,
+		#"current_health" : current_health,
+		#"level" : level,
+		#"is_alive" : is_alive,
+		#"last_attack" : last_attack
+	}
+	return save_dict
+
+#just testing the save logic
+#func _on_button_pressed():
+	#Save.save_game()
+	#get_tree().quit()
