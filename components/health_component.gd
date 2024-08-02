@@ -40,7 +40,7 @@ func simply_die():
 func take_damage( damage_rate : float):
 	health_remaining -= max_health*damage_rate
 	actor.animator.play("hurt")
-	hurt_time.start()
+	#hurt_time.start()
 	print(health_remaining)
 	health_changed.emit()
 	 

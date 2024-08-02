@@ -55,13 +55,13 @@ func get_current_state():
 func check_attack():
 	if Input.is_action_just_pressed("Attack"):
 		#just testing the load logic
-		#Save.load_game()
+		Save.load_game()
 		animator.play("attack")
 		timer.start()
-		print(attack_area.has_overlapping_bodies())
+		#print(attack_area.has_overlapping_bodies())
 		if attack_area.has_overlapping_bodies():
 			var victims = attack_area.get_overlapping_bodies()
-			print(victims)
+			#print(victims)
 			for vic in victims:
 				if (vic != self) and (vic is CharacterBody2D):
 					vic.find_child("HealthComponent").take_damage(0.2)
@@ -77,13 +77,12 @@ func save():
 		"pos_x" : position.x, # Vector2 is not supported by JSON
 		"pos_y" : position.y,
 		#"current_health" : current_health,
-		#"level" : level,
 		#"is_alive" : is_alive,
 		#"last_attack" : last_attack
 	}
 	return save_dict
 
 #just testing the save logic
-#func _on_button_pressed():
-	#Save.save_game()
-	#get_tree().quit()
+func _on_button_pressed():
+	Save.save_game()
+	
