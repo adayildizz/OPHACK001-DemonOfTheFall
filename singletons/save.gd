@@ -2,48 +2,56 @@ extends Node
 
 func save_game():
 	
-	save_current_scene()
-
+	
+	var save_file = FileAccess.open("user://savegame.json", FileAccess.WRITE)
+	var current_scene_path = get_tree().current_scene.absolute_path
 	var save_nodes = get_tree().get_nodes_in_group("Persist")
+	var save_nodes_data = []
 	
 	for node in save_nodes:
-		
-		add_node_to_json(node)
+		var node_data = node.call("save")
+		save_nodes_data.append(node_data)
 	
-	
-		
-
+	var save_object = {"scene": current_scene_path, "save_nodes_data": save_nodes_data}
+	save_file.store_line(JSON.stringify(save_object))
+	print(JSON.stringify(save_object))
+	save_file.close()
 
 func load_game():
-	print(get_tree().current_scene)
-	if not FileAccess.file_exists("user://savegame.txt"):
-		return
-	
-		
+
 	var save_nodes = get_tree().get_nodes_in_group("Persist")
 	for i in save_nodes:
 		i.queue_free()
 		
+	var save_file = FileAccess.open("user://savegame.json", FileAccess.READ)
+	if not save_file:
+		print("Error opening save file")
+		return
 		
-	var save_file = FileAccess.open("user://savegame.txt", FileAccess.READ)
-	var last_scene = save_file.get_line()
-	SceneManager.change_scene(last_scene)
+	var json_string = save_file.get_as_text()
+	var json = JSON.new()
+	var parse_result = json.parse(json_string)
 	
-	while not save_file.eof_reached():
-		var debug_str = save_file.get_as_text()
-		var json_str = save_file.get_line()
-		
-		
-		var json = JSON.new()
-		var parse_result = json.parse(json_str)
-		if not parse_result == OK:
-			print("JSON Parse Error: ", json.get_error_message(), " in ", json_str, " at line ", json.get_error_line())
-			continue
-			
-			
-		var node_data = json.get_data()
-		
+	if parse_result != OK:
+		print("Error parsing JSON: ", json.get_error_message())
+		save_file.close()
+		return
+	
+	var save_object = json.data
+	print("save object:", save_object)
+	var scene_path = save_object["scene"]
+	SceneManager.change_scene(scene_path)
+	load_nodes_to_scene.call_deferred(save_object)	
+	save_file.close()
+	
+	
+
+func load_nodes_to_scene(save_object):
+	#below code is executed before the scene is actually changed. 
+	for node_data in save_object["save_nodes_data"]:
+		print("node data:", node_data)
 		var new_object = load(node_data["filename"]).instantiate()
+		print(get_tree().current_scene)
 		get_node(node_data["parent"]).add_child(new_object)
 		new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
 
@@ -52,43 +60,3 @@ func load_game():
 			if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
 				continue
 			new_object.set(i, node_data[i])
-	save_file.close()
-	print(get_tree().current_scene)
-	
-
-
-
-func add_node_to_json(node):
-	
-	var arr = []
-	var save_file = FileAccess.open("user://savegame.txt", FileAccess.READ)
-	arr.append(save_file.get_line())
-	while not save_file.eof_reached():
-		var json_str = save_file.get_line()
-		arr.append(json_str)
-		
-	save_file.close()
-		
-		
-	save_file = FileAccess.open("user://savegame.txt", FileAccess.WRITE)
-		
-	
-	var node_data = node.call("save")
-	var json_str = JSON.stringify(node_data)
-	arr.append(json_str)
-
-	for i in arr:
-		save_file.store_line(i)
-	save_file.close()
-	
-	
-	
-
-
-func save_current_scene():
-	print(get_tree().current_scene)
-	var current_scene_path = get_tree().current_scene.get_path()
-	
-	var save_file = FileAccess.open("user://savegame.txt", FileAccess.WRITE)
-	save_file.store_line(current_scene_path)
-	save_file.close()

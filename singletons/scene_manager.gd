@@ -1,19 +1,15 @@
 extends Node
 
-var current_scene : Node2D
+var Player = load("res://characters/player/player.tscn")
+
 var exit_door: ExitDoor
+signal level_changed 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
-	if current_scene:
-		exit_door = get_exit_door(current_scene)
+	if Input.is_action_just_pressed("Quit"):
+		quit_game()
 
-
-func get_exit_door(scene: Node2D):
-	if scene:
-		return scene.find_child("ExitDoor")
-		
-		
 func start_game():
 	Save.load_game()
 	
@@ -23,12 +19,13 @@ func quit_game():
 	get_tree().quit()
 	
 func change_scene(scene_name: String):
+	print("in change scene")
 	var scene = load(scene_name)
 	if not scene:
 		print("Error loading scene: ", scene_name)
 		return
 	
-	var new_scene = scene.instance()
+	var new_scene = scene.instantiate()
 	if not new_scene:
 		print("Error instantiating scene: ", scene_name)
 		return
@@ -39,6 +36,29 @@ func change_scene(scene_name: String):
 
 	if current_scene:
 		current_scene.queue_free()
+		
+	
 
 	
+
+func go_to_next_level(next_level_path):
+	print("in next level")
+	change_scene(next_level_path)
+	spawn_player();
+
+func spawn_player():
+	exit_door = get_tree().current_scene.find_child("ExitDoor")
+	if !exit_door:
+		print("Error: Cannot find the door of current level.")
+		return
+	else:
+		print("door found")
+		var spawn_point = exit_door.find_child("Marker2D").global_position
+		print(spawn_point)
+		var player = Player.instantiate()
+		get_tree().current_scene.add_child(player)
+		print(player)
+		player.position = spawn_point
 	
+	
+
