@@ -309,9 +309,7 @@ run_state = NodePath("../Run")
 script = ExtResource("5_fpkvq")
 idle_state = NodePath("../Idle")
 
-[node name="Button" type="Button" parent="."]
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

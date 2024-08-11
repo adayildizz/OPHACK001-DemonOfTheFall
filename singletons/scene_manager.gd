@@ -8,14 +8,17 @@ signal level_changed
 
 func _process(delta):
 	if Input.is_action_just_pressed("Quit"):
-		quit_game()
+		save_and_quit_game()
 
 func start_game():
 	Save.load_game()
 	
 	
-func quit_game():
+func save_and_quit_game():
 	Save.save_game()
+	get_tree().quit()
+	
+func quit_without_saving_game():
 	get_tree().quit()
 	
 func change_scene(scene_name: String):
@@ -37,17 +40,20 @@ func change_scene(scene_name: String):
 	if current_scene:
 		current_scene.queue_free()
 		
-	
+		
 
-	
-
-func go_to_next_level(next_level_path):
+func go_to_next_level(next_level_path, connected_door_name):
 	print("in next level")
+	
 	change_scene(next_level_path)
-	spawn_player();
+	spawn_player(connected_door_name);
 
-func spawn_player():
-	exit_door = get_tree().current_scene.find_child("ExitDoor")
+func spawn_player(door_to_spawn):
+	var doors = get_tree().current_scene.find_child("Doors")
+	for door in doors.get_children():
+		if door.door_name == door_to_spawn:
+			exit_door = door
+	
 	if !exit_door:
 		print("Error: Cannot find the door of current level.")
 		return

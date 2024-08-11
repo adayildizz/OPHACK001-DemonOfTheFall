@@ -55,7 +55,6 @@ func get_current_state():
 func check_attack():
 	if Input.is_action_just_pressed("Attack"):
 		#just testing the load logic
-		Save.load_game()
 		animator.play("attack")
 		timer.start()
 		#print(attack_area.has_overlapping_bodies())
@@ -82,7 +81,3 @@ func save():
 	}
 	return save_dict
 
-#just testing the save logic
-func _on_button_pressed():
-	Save.save_game()
-	

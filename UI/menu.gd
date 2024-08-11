@@ -20,6 +20,6 @@ func _on_options_button_pressed():
 	get_tree().current_scene.add_child(options)
 
 func _on_quit_button_pressed():
-	SceneManager.quit_game()
+	SceneManager.quit_without_saving_game()
 
 
