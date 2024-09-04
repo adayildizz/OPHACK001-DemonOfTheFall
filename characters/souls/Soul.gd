@@ -3,6 +3,7 @@ class_name Soul
 
 #here is the child components
 @onready var animator = $AnimatedSprite2D
+@onready var health_component = $HealthComponent
 
 #the fsm states
 @onready var fsm = $FiniteStateMachine

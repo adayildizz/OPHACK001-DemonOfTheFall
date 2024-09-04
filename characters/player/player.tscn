@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://blyhpi7sw2a1o"]
+[gd_scene load_steps=91 format=3 uid="uid://blyhpi7sw2a1o"]
 
 [ext_resource type="Script" path="res://characters/player/player.gd" id="1_t1hgf"]
 [ext_resource type="Texture2D" uid="uid://c3rovrkjotkcs" path="res://assets/geto/geto attack arka-Sheet.png" id="2_lyadc"]
@@ -24,6 +24,10 @@
 [ext_resource type="Texture2D" uid="uid://bquwsu300j08o" path="res://assets/rika/kiz yan yurume-Sheet.png" id="18_yocrb"]
 [ext_resource type="Texture2D" uid="uid://dieii2ttgby1x" path="res://assets/rika/kiz yana atakan-Sheet.png" id="19_w5ec4"]
 [ext_resource type="PackedScene" uid="uid://cfpcqylll8gsj" path="res://components/HealthComponent.tscn" id="24_ehnu8"]
+[ext_resource type="Script" path="res://characters/healthbar.gd" id="25_f6g46"]
+[ext_resource type="Texture2D" uid="uid://62jouqlqvrxe" path="res://assets/healthbars/helth bar arka.png" id="25_we1ve"]
+[ext_resource type="Texture2D" uid="uid://p03dwyb8v28y" path="res://assets/healthbars/helth bar kirmizi cerceve.png" id="26_ykgfd"]
+[ext_resource type="Texture2D" uid="uid://dpyuyq3pfxpen" path="res://assets/healthbars/helth bar kirmizi ic.png" id="27_hdjfy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7fqe8"]
 size = Vector2(9, 15)
@@ -608,6 +612,23 @@ one_shot = true
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("24_ehnu8")]
 actor = NodePath("..")
 max_health = 30
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("actor", "health_component")]
+offset_left = 10.8571
+offset_top = -17.1429
+offset_right = 74.8571
+offset_bottom = 22.8571
+scale = Vector2(0.194285, 0.211429)
+value = 100.0
+texture_under = ExtResource("25_we1ve")
+texture_over = ExtResource("26_ykgfd")
+texture_progress = ExtResource("27_hdjfy")
+script = ExtResource("25_f6g46")
+actor = NodePath("..")
+health_component = NodePath("../HealthComponent")
 
 [connection signal="body_exited" from="Hitbox" to="Hitbox" method="_on_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]

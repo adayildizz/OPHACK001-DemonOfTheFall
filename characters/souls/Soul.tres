@@ -1,0 +1,75 @@
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://bkdtmeq4h4j6g"]
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_wnyqp"]
+parameter_name = "hit"
+default_value_enabled = true
+default_value = Color(1, 0.886275, 0.317647, 0.705882)
+
+[sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_d1kcn"]
+parameter_name = "enabled"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_4g8tc"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_t6y2x"]
+input_name = "color"
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform bool enabled = false;
+uniform vec4 hit : source_color = vec4(1.000000, 0.886275, 0.317647, 0.705882);
+
+
+
+void fragment() {
+// BooleanParameter:3
+	bool n_out3p0 = enabled;
+
+
+// ColorParameter:2
+	vec4 n_out2p0 = hit;
+
+
+// Input:5
+	vec4 n_out5p0 = COLOR;
+
+
+	vec3 n_out4p0;
+// If:4
+	float n_in4p1 = 0.00000;
+	float n_in4p2 = 0.00001;
+	if(abs((n_out3p0 ? 1.0 : 0.0) - n_in4p1) < n_in4p2)
+	{
+		n_out4p0 = vec3(n_out2p0.xyz);
+	}
+	else if((n_out3p0 ? 1.0 : 0.0) < n_in4p1)
+	{
+		n_out4p0 = vec3(n_out5p0.xyz);
+	}
+	else
+	{
+		n_out4p0 = vec3(n_out5p0.xyz);
+	}
+
+
+// Output:0
+	COLOR.rgb = n_out4p0;
+
+
+}
+"
+graph_offset = Vector2(-118.715, -30.5062)
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(840, 200)
+nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_wnyqp")
+nodes/fragment/2/position = Vector2(180, 240)
+nodes/fragment/3/node = SubResource("VisualShaderNodeBooleanParameter_d1kcn")
+nodes/fragment/3/position = Vector2(160, 40)
+nodes/fragment/4/node = SubResource("VisualShaderNodeIf_4g8tc")
+nodes/fragment/4/position = Vector2(580, 40)
+nodes/fragment/5/node = SubResource("VisualShaderNodeInput_t6y2x")
+nodes/fragment/5/position = Vector2(140, 440)
+nodes/fragment/connections = PackedInt32Array(2, 0, 4, 3, 3, 0, 4, 0, 4, 0, 0, 0, 5, 0, 4, 4, 5, 0, 4, 5)

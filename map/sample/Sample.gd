@@ -4,6 +4,8 @@ extends Node2D
 #var Angel = preload("res://characters/angels/Angel.tscn")
 
 @onready var grass = $Grass
+@onready var texture_progress_bar = $CanvasLayer/TextureProgressBar
+@onready var camera_2d = $Camera2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,6 +14,7 @@ func _ready():
 	find_child("Soul").set_victim(player)
 	find_child("Angel").set_victim(player)
 	
+
 	#enemy.set_inner_map(map)
 	#enemy.find_child("PathFindComponent").call_deferred("compute_rand_coords")
 	

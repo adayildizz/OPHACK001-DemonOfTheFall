@@ -24,7 +24,7 @@ var victim : Player
 var last_vision : bool
 
 func _ready():
-	vision_cast.collide_with_bodies = false
+	vision_cast.collide_with_bodies = true
 	saw_player.connect(fsm.change_state.bind(attack))
 	lost_player.connect(fsm.change_state.bind(wander))
 
@@ -50,9 +50,11 @@ func set_victim(player: Player):
 	
 func is_seeing_player():
 	if vision_cast.is_colliding():
+		var collider = vision_cast.get_collider()
+		if collider == victim:
+			return true
 		return false
-	else:
-		return true
+	return false
 		
 	
 func check_visioncast():

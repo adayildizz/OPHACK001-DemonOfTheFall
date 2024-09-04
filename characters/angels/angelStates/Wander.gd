@@ -28,6 +28,7 @@ func _ready():
 func _enter_state():
 	set_physics_process(true)
 	waiting_timer.start()
+	animator.play("idle-front")
 	
 	
 func _exit_state():

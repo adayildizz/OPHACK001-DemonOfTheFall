@@ -6,12 +6,13 @@ signal simply_died
 
 
 @export var actor : CharacterBody2D
+@export var hitflash_animator : AnimationPlayer
 @onready var hurt_time = $Timer
 
 @export var max_health : int
 
 var health_remaining : float 
-var current_health_proportion : float = health_remaining / max_health
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,6 +32,8 @@ func isHealing():
 	pass
 
 func simply_die():
+	if hitflash_animator:
+		hitflash_animator.stop()
 	simply_died.emit()
 	actor.set_physics_process(false)
 	actor.hide()
@@ -40,7 +43,8 @@ func simply_die():
 func take_damage( damage_rate : float):
 
 	health_remaining -= max_health*damage_rate
-	actor.animator.play("hurt")
+	if hitflash_animator:
+		hitflash_animator.play("hit_flash")
 	hurt_time.start()
 	print(health_remaining)
 	health_changed.emit()

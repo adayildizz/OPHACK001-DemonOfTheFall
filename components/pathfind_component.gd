@@ -40,16 +40,18 @@ func _physics_process(delta):
 		
 		
 func follow_path(speed : float, acceleration_coefficient : float = velocity_component.default_acceleration_coefficient):
-	
+	print("speed: ", speed)
+	print("target: ", target_vector)
 	if target_vector != Vector2.ZERO:
 		nav.target_position = target_vector
 		#print(nav.target_position)
 	if nav.is_navigation_finished():
 		velocity_component.decelarate()
 		
-		#print("finished")
+		print("finished")
 	#print("AA", nav.target_position)
 	var direction = ((nav.get_next_path_position() - actor.global_position) ).normalized()
+	print("direction: ", nav.get_next_path_position())
 	velocity_component.accelerate_in_direction(direction, speed, acceleration_coefficient)
 	nav.set_velocity(velocity_component.velocity)
 	#print(direction)

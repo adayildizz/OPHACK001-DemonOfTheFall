@@ -16,7 +16,7 @@ func _process(delta):
 	position += direction * speed * delta
 
 func _physics_process(delta):
-	animator.play("temp")
+	#animator.play("temp")
 	await get_tree().create_timer(3).timeout
 	set_physics_process(false)
 
