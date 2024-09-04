@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://c28mg4crlfye2"]
+
+[ext_resource type="Script" path="res://map/door/ExitDoor.gd" id="1_ekijs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jo22l"]
+
+[sub_resource type="Gradient" id="Gradient_bii3x"]
+offsets = PackedFloat32Array(0, 0.357143, 1)
+colors = PackedColorArray(0.145098, 0, 0.160784, 1, 0.254902, 0, 0.32549, 0.839216, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_03rnn"]
+gradient = SubResource("Gradient_bii3x")
+
+[node name="ExitDoor" type="Area2D"]
+script = ExtResource("1_ekijs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -49)
+scale = Vector2(2.85318, 0.144797)
+shape = SubResource("RectangleShape2D_jo22l")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(1.60746, 0.943025)
+texture = SubResource("GradientTexture2D_03rnn")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, 51)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

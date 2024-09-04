@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cawh3p0wqchdo"]
+[gd_scene load_steps=3 format=3 uid="uid://cawh3p0wqchdo"]
 
 [ext_resource type="Script" path="res://components/pathfind_component.gd" id="1_evwb5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dntsh"]
+radius = 8.44551
 
 [node name="PathFindComponent" type="Node2D"]
 scale = Vector2(11.16, 10.76)
@@ -8,9 +11,18 @@ script = ExtResource("1_evwb5")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 avoidance_enabled = true
-radius = 32.0
+radius = 20.0
 max_speed = 30.0
 debug_enabled = true
 
+[node name="AvoidanceArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AvoidanceArea"]
+scale = Vector2(0.286738, 0.252788)
+shape = SubResource("CircleShape2D_dntsh")
+
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_target_reached"]
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_velocity_computed"]
+[connection signal="body_entered" from="AvoidanceArea" to="." method="_on_avoidance_area_body_entered"]
+[connection signal="body_exited" from="AvoidanceArea" to="." method="_on_avoidance_area_body_exited"]

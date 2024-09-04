@@ -1,16 +1,31 @@
 extends Node2D
 class_name MapComponent
 
-var current_scene : Node2D
+#This component deals with the map of the current scene to organize the movements of the actor
 
 var map : Array
 
+@export var wander_scope : int 
+@export var actor : CharacterBody2D
+
+func get_current_scene():
+	return get_parent().get_parent()
+
 func set_map():
-	current_scene = get_parent().get_parent()
-	if current_scene:
+	if get_current_scene():
+		map = get_current_scene().map
 		
-		map = current_scene.map
+		
+func get_tile_map():
+	if get_current_scene():
+		return get_current_scene().find_child("TileMap")
+	return
 
-
-func compute_rand_coords():
-	return map[randi() % map.size()]
+func create_wander_navigation_mesh():
+	var new_navigation_mesh = NavigationPolygon.new()
+	add_child(new_navigation_mesh)
+	
+	
+	
+	
+	

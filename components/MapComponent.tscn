@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://d26svexhnjptf"]
+[gd_scene load_steps=3 format=3 uid="uid://d26svexhnjptf"]
 
 [ext_resource type="Script" path="res://components/map_component.gd" id="1_rxl5u"]
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_gl1h7"]
+source_geometry_group_name = &"navigation_polygon_source_group"
+
 [node name="MapComponent" type="Node2D"]
 script = ExtResource("1_rxl5u")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_gl1h7")

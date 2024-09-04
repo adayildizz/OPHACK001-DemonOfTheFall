@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://cel8148hfb5n0"]
+
+[ext_resource type="Script" path="res://characters/fsm/fsm.gd" id="1_8g0aq"]
+[ext_resource type="Script" path="res://characters/souls/Soul.gd" id="1_fhq4b"]
+[ext_resource type="PackedScene" uid="uid://j84r6p2vumpq" path="res://components/VelocityComponent.tscn" id="2_nhxsu"]
+[ext_resource type="PackedScene" uid="uid://cfpcqylll8gsj" path="res://components/HealthComponent.tscn" id="3_637kw"]
+[ext_resource type="Script" path="res://characters/souls/Move.gd" id="3_g4yjr"]
+[ext_resource type="Script" path="res://characters/souls/Hurt.gd" id="4_320wy"]
+[ext_resource type="SpriteFrames" uid="uid://bpxjw34lcbumr" path="res://characters/Enemy0/Enemy0.tres" id="7_kq5cg"]
+[ext_resource type="PackedScene" uid="uid://cafhpk3wjdgsm" path="res://components/MovementCircle.tscn" id="8_b5onl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_omrom"]
+
+[node name="Soul" type="CharacterBody2D"]
+collision_layer = 3
+script = ExtResource("1_fhq4b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_omrom")
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
+script = ExtResource("1_8g0aq")
+state = NodePath("SoulMoveState")
+
+[node name="SoulMoveState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor")]
+script = ExtResource("3_g4yjr")
+actor = NodePath("../..")
+wander_power = 10.0
+speed = 120.0
+acceleration_coefficient = 0.5
+
+[node name="Timer" type="Timer" parent="FiniteStateMachine/SoulMoveState"]
+autostart = true
+
+[node name="SoulHurtState" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("4_320wy")
+
+[node name="VelocityComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("2_nhxsu")]
+actor = NodePath("..")
+max_speed = 30.0
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("3_637kw")]
+scale = Vector2(4.56, 4.28)
+actor = NodePath("..")
+max_health = 10
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -2)
+sprite_frames = ExtResource("7_kq5cg")
+animation = &"move"
+frame_progress = 0.823247
+
+[node name="MovementCircle" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("8_b5onl")]
+actor = NodePath("..")
+
+[node name="HealthComponent2" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("3_637kw")]
+actor = NodePath("..")
+max_health = 5
+
+[connection signal="timeout" from="FiniteStateMachine/SoulMoveState/Timer" to="FiniteStateMachine/SoulMoveState" method="_on_timer_timeout"]

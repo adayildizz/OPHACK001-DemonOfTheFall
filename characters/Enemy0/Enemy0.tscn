@@ -1,0 +1,109 @@
+[gd_scene load_steps=15 format=3 uid="uid://d3xfgr1grvbop"]
+
+[ext_resource type="Script" path="res://characters/Enemy0/enemy_0.gd" id="1_3hde7"]
+[ext_resource type="Script" path="res://characters/fsm/fsm.gd" id="3_wgo7a"]
+[ext_resource type="Script" path="res://characters/Enemy0/enemy0_states/chase_state0.gd" id="4_j11wt"]
+[ext_resource type="Script" path="res://characters/Enemy0/enemy0_states/attack_state0.gd" id="5_0x326"]
+[ext_resource type="Script" path="res://characters/Enemy0/enemy0_states/wander_state0.gd" id="5_siora"]
+[ext_resource type="PackedScene" uid="uid://j84r6p2vumpq" path="res://components/VelocityComponent.tscn" id="6_e0ltr"]
+[ext_resource type="PackedScene" uid="uid://cawh3p0wqchdo" path="res://components/PathFindComponent.tscn" id="7_ya2nm"]
+[ext_resource type="SpriteFrames" uid="uid://bpxjw34lcbumr" path="res://characters/Enemy0/Enemy0.tres" id="9_a41eg"]
+[ext_resource type="PackedScene" uid="uid://cafhpk3wjdgsm" path="res://components/MovementCircle.tscn" id="9_pvukf"]
+[ext_resource type="PackedScene" uid="uid://cfpcqylll8gsj" path="res://components/HealthComponent.tscn" id="10_terhj"]
+[ext_resource type="PackedScene" uid="uid://b47kyc7wyf40e" path="res://components/Hitbox.tscn" id="12_7c2m3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dq0pv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g8hgs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ogl1h"]
+
+[node name="Enemy0" type="CharacterBody2D" groups=["enemies,"]]
+motion_mode = 1
+script = ExtResource("1_3hde7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dq0pv")
+
+[node name="ChaseArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChaseArea"]
+scale = Vector2(15.2, 13.48)
+shape = SubResource("CircleShape2D_g8hgs")
+
+[node name="AttackArea" type="Area2D" parent="."]
+scale = Vector2(1.40013, 1.40918)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+scale = Vector2(3.2, 2.92)
+shape = SubResource("CircleShape2D_ogl1h")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -5)
+sprite_frames = ExtResource("9_a41eg")
+animation = &"prepare_attack"
+frame_progress = 0.955375
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
+script = ExtResource("3_wgo7a")
+state = NodePath("WanderState0")
+
+[node name="ChaseState0" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator", "pathfind_component")]
+script = ExtResource("4_j11wt")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+pathfind_component = NodePath("../../PathFindComponent")
+chase_speed = 50.0
+
+[node name="WanderState0" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "animator", "pathfind", "velocity_component", "movement_circle")]
+script = ExtResource("5_siora")
+actor = NodePath("../..")
+animator = NodePath("../../AnimatedSprite2D")
+pathfind = NodePath("../../PathFindComponent")
+velocity_component = NodePath("../../VelocityComponent")
+movement_circle = NodePath("../../MovementCircle")
+wander_speed = 30.0
+
+[node name="Stop" type="Timer" parent="FiniteStateMachine/WanderState0"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Start" type="Timer" parent="FiniteStateMachine/WanderState0"]
+wait_time = 5.0
+one_shot = true
+
+[node name="AttackState0" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "pathfind", "velocity_component", "animator")]
+script = ExtResource("5_0x326")
+actor = NodePath("../..")
+pathfind = NodePath("../../PathFindComponent")
+velocity_component = NodePath("../../VelocityComponent")
+animator = NodePath("../../AnimatedSprite2D")
+attack_speed = 100.0
+attack_acc = 0.5
+
+[node name="VelocityComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("6_e0ltr")]
+actor = NodePath("..")
+max_speed = 30.0
+
+[node name="PathFindComponent" parent="." node_paths=PackedStringArray("actor", "velocity_component", "movement_circle") instance=ExtResource("7_ya2nm")]
+actor = NodePath("..")
+velocity_component = NodePath("../VelocityComponent")
+movement_circle = NodePath("../MovementCircle")
+
+[node name="MovementCircle" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("9_pvukf")]
+actor = NodePath("..")
+
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("10_terhj")]
+actor = NodePath("..")
+max_health = 10
+
+[node name="HitboxComponent" parent="." instance=ExtResource("12_7c2m3")]
+scale = Vector2(2.28, 2)
+
+[connection signal="body_entered" from="ChaseArea" to="FiniteStateMachine/WanderState0" method="_on_chase_area_body_entered"]
+[connection signal="body_exited" from="ChaseArea" to="FiniteStateMachine/ChaseState0" method="_on_chase_area_body_exited"]
+[connection signal="body_entered" from="AttackArea" to="FiniteStateMachine/ChaseState0" method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="FiniteStateMachine/AttackState0" method="_on_attack_area_body_exited"]
+[connection signal="timeout" from="FiniteStateMachine/WanderState0/Stop" to="FiniteStateMachine/WanderState0" method="_on_stop_timeout"]
+[connection signal="timeout" from="FiniteStateMachine/WanderState0/Start" to="FiniteStateMachine/WanderState0" method="_on_start_timeout"]
+[connection signal="body_exited" from="HitboxComponent" to="HitboxComponent" method="_on_body_exited"]

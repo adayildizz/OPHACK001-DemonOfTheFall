@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brycyqjjnrb8r"]
+
+[ext_resource type="Script" path="res://components/steering_component.gd" id="1_ekhj6"]
+
+[node name="SteeringComponent" type="Node2D"]
+script = ExtResource("1_ekhj6")

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://x2o4i8b8qffx"]
-
-[ext_resource type="Script" path="res://map/dailyTasks/randomMap/Walker/walker_0.gd" id="1_gnttv"]
-
-[node name="WalkerType0" type="Node"]
-script = ExtResource("1_gnttv")

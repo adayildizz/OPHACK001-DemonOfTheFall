@@ -1,49 +1,29 @@
-extends P_state
+extends State_0
 @onready var timer = $"../../Timer"
 
 @export
-var idle_state: P_state
+var idle_state: State_0
 @export
-var die_state: P_state
+var die_state: State_0
 
 var state_name = "move"
 
+@export var actor : CharacterBody2D
+@onready var animator = $"../../AnimatedSprite2D"
+
 func enter() -> void:
-	if timer.is_stopped():
-		player.animator.play(state_name)
+	pass
 	
 
-func process_physics(delta: float, input: Vector2) -> P_state:
+func process_physics(delta: float, input: Vector2) -> State_0:
+	actor.velocity = input * actor.MAX_SPEED
 	
-	player.check_attack()
-		
-	if player.velocity.x < 0:
-		player.animator.flip_h = true
-	if player.velocity.x > 0:
-		player.animator.flip_h = false
-	
-	if input == Vector2.ZERO:
-		if player.velocity.length() > (player.friction*delta):
-			player.velocity -= player.velocity.normalized() * (player.friction*delta)
-		else:
-			player.velocity = Vector2.ZERO
-		
-	else:
-		player.velocity += (input*player.acceleration*delta)
-		player.velocity = player.velocity.limit_length(player.MAX_SPEED)
-	
-	
-		
-		
-	if player.velocity == Vector2.ZERO:
+	if actor.velocity == Vector2.ZERO:
 		return idle_state
 		
 	return null
 	
 
 func exit() -> void:
-	player.animator.stop()
-
-
-
+	actor.animator.stop()
 
