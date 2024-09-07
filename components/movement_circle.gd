@@ -11,7 +11,6 @@ class_name MovementCircle
 @onready var north_west = $NorthWest
 @onready var ray = $RayCast2D
 
-var avoidance_direction : Vector2
 @export var actor : CharacterBody2D
 
 @export var speed : float 
@@ -41,12 +40,26 @@ func choose_random_direction():
 		if !dir.is_colliding():
 			available_dirs.append(dir)
 	if available_dirs.size() != 0:
-		random_dir = available_dirs[randi()%available_dirs.size()].target_position.normalized()
-		
+		random_dir = available_dirs[randi()%available_dirs.size()].target_position.normalized()	
 	else:
-	
 		random_dir = Vector2.ZERO
 		
 	return random_dir
 	
 
+#this func is to be able to avoid from a specific direction.
+func compute_avoidance_vector(vector: Vector2, weight : float ):
+	var magnitude = vector.length()
+	var unitvec = vector.normalized()
+	var avoidance_vector = -(unitvec*weight)/magnitude
+	return avoidance_vector
+	
+	
+func avoid_from_obstacles(vector):
+	var vectors = self.get_children()
+	var avoid_from = Vector2.ZERO
+	for vec in vectors:
+		if vec.is_colliding():
+			avoid_from -= vec
+	
+	

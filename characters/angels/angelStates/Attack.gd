@@ -1,11 +1,17 @@
 extends State
 class_name AngelAttack
 
+#in attack state, random directions will continue to be selected. 
+#but also, the angel trys to runaway from the player.
+
 @export var runaway_speed : float
-@onready var path_find_component = $"../../PathFindComponent"
+
+#nodes of angel's needed
 @onready var vision_cast = $"../../VisionCast"
 @onready var wander_state = $"../Wander"
 @onready var shooting_timer = $ShootingTimer
+@onready var movement_circle = $"../../MovementCircle"
+@onready var velocity_component = $"../../VelocityComponent"
 
 @onready var animator = $"../../AnimatedSprite2D"
 
@@ -13,6 +19,7 @@ class_name AngelAttack
 var BitcoinBall = preload("res://objects/bitcoinball/BitcoinBall.tscn")
 @onready var bullet_container = $"../../BulletContainer"
 var can_shoot = true
+var random_vector = Vector2.ZERO
 
 @export var actor: CharacterBody2D
 
@@ -26,11 +33,11 @@ func _exit_state():
 	set_physics_process(false)
 	
 func _physics_process(delta):
-	
+	random_with_avoidance()
 	handle_animations()
 	attack()
-	if !can_shoot:
-		run_away()
+	#if !can_shoot:
+		#random_with_avoidance()
 	
 	
 	
@@ -49,11 +56,7 @@ func attack():
 		#await get_tree().create_timer(3).timeout
 		
 	
-		
-
-func run_away():
-	path_find_component.is_chasing_victim = true
-	path_find_component.follow_path(runaway_speed)
+	
 	
 	
 	
@@ -80,3 +83,23 @@ func approximate_to_vector(vector):
 
 func _on_shooting_timer_timeout():
 	can_shoot = true
+	random_vector = movement_circle.choose_random_direction()
+
+
+
+func get_victims_position_vector():
+	if actor.victim:
+		var direction = (actor.victim.global_position - actor.global_position)
+		return direction
+	return Vector2.ZERO
+
+
+func random_with_avoidance():
+	var avoid_from = get_victims_position_vector()
+	#here weight is among other directions 
+	var avoidance_vector = movement_circle.compute_avoidance_vector(avoid_from, 10)
+	
+	var final_vector = (avoidance_vector + random_vector).normalized()
+
+	velocity_component.accelerate_in_direction(final_vector, runaway_speed)
+	velocity_component.move(actor)

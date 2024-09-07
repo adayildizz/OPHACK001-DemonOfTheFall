@@ -34,43 +34,6 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7fqe8"]
 size = Vector2(9, 15)
 
-[sub_resource type="Animation" id="Animation_nk2s1"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/BooleanParameter")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_7slww"]
-resource_name = "hit_flash"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/BooleanParameter")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_d4ejh"]
-_data = {
-"RESET": SubResource("Animation_nk2s1"),
-"hit_flash": SubResource("Animation_7slww")
-}
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_53fnh"]
 resource_local_to_scene = true
 shader = ExtResource("7_06x6v")
@@ -592,6 +555,43 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_nk2s1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/BooleanParameter")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_7slww"]
+resource_name = "hit_flash"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/BooleanParameter")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d4ejh"]
+_data = {
+"RESET": SubResource("Animation_nk2s1"),
+"hit_flash": SubResource("Animation_7slww")
+}
+
 [node name="Player" type="CharacterBody2D" groups=["Persist", "player"]]
 scale = Vector2(7, 7)
 motion_mode = 1
@@ -637,17 +637,8 @@ max_health = 30
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.8, 0.8)
-limit_left = -160
-limit_top = -160
-limit_right = 640
-limit_bottom = 450
+position_smoothing_enabled = true
 script = ExtResource("7_xu6re")
-
-[node name="HitFlash" type="AnimationPlayer" parent="."]
-root_node = NodePath("../AnimatedSprite2D")
-libraries = {
-"": SubResource("AnimationLibrary_d4ejh")
-}
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_53fnh")
@@ -655,18 +646,25 @@ scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_s8h5j")
 animation = &"attack-front-rika"
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("actor")]
-offset_left = 36.4286
-offset_top = -23.0
-offset_right = 100.429
-offset_bottom = 17.0
-scale = Vector2(0.182857, 0.182857)
+[node name="HitFlash" type="AnimationPlayer" parent="."]
+root_node = NodePath("../AnimatedSprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_d4ejh")
+}
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("actor", "health_component")]
+offset_left = 10.8571
+offset_top = -22.5714
+offset_right = 74.8571
+offset_bottom = 17.4286
+scale = Vector2(0.302857, 0.302857)
 value = 100.0
 texture_under = ExtResource("25_we1ve")
 texture_over = ExtResource("26_ykgfd")
 texture_progress = ExtResource("27_hdjfy")
 script = ExtResource("25_f6g46")
 actor = NodePath("..")
+health_component = NodePath("../HealthComponent")
 
 [connection signal="body_exited" from="Hitbox" to="Hitbox" method="_on_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]

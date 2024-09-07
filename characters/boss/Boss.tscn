@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://cdt4ym5xdvu5j"]
+
+[ext_resource type="Script" path="res://characters/fsm/fsm.gd" id="1_bh7r4"]
+[ext_resource type="PackedScene" uid="uid://j84r6p2vumpq" path="res://components/VelocityComponent.tscn" id="1_bxse8"]
+[ext_resource type="Script" path="res://characters/boss/bossStates/Attack.gd" id="2_1ia7t"]
+[ext_resource type="PackedScene" uid="uid://cawh3p0wqchdo" path="res://components/PathFindComponent.tscn" id="2_37u1y"]
+[ext_resource type="PackedScene" uid="uid://cafhpk3wjdgsm" path="res://components/MovementCircle.tscn" id="3_wmbc5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iiy76"]
+
+[node name="Boss" type="CharacterBody2D"]
+
+[node name="VelocityComponent" parent="." instance=ExtResource("1_bxse8")]
+
+[node name="PathFindComponent" parent="." instance=ExtResource("2_37u1y")]
+
+[node name="MovementCircle" parent="." instance=ExtResource("3_wmbc5")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_iiy76")
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
+script = ExtResource("1_bh7r4")
+state = NodePath("Attack")
+
+[node name="Attack" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("2_1ia7t")

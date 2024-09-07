@@ -22,7 +22,7 @@ func process_physics(delta: float,input: Vector2) -> State_0:
 	return null
 
 func exit() -> void:
-	actor.animator.stop()
+	pass
 
 
 

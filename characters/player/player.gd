@@ -1,30 +1,27 @@
 extends CharacterBody2D
 class_name Player 
-
 #Player Layer is the layer 0.
 
+#Limit velocity for the character 
 var MAX_SPEED : float = 150.0
-var victim
 
-var animator : AnimatedSprite2D
-@onready var animatorGeto = $Geto
-@onready var animatorRika = $Rika
-
+#Child nodes
+@onready var animator = $AnimatedSprite2D
 @onready var attack_timer = $AttackTimer
 @onready var hitbox = $Hitbox
 @onready var state_machine = $StateMachine
 @onready var health_component = $HealthComponent
 
+#For two player moods "geto" and "rika"
 @export var mood : String
 
-
-
+#For player movement and animations 
 var input = Vector2.ZERO
 var prev_input = Vector2.DOWN
 
 
 func _ready() -> void:
-	set_animator(mood)
+	print(get_parent().get_path())
 	state_machine.init(self)
 	
 
@@ -38,22 +35,16 @@ func get_input() -> Vector2:
 	input.x = int(Input.is_action_pressed("Right")) - int(Input.is_action_pressed("Left"))
 	input.y = int(Input.is_action_pressed("Down")) - int(Input.is_action_pressed("Up"))	
 	
-	
 	return input.normalized()
 	
 
-
 func _on_timer_timeout():
+	#attack animation overrides other animations 
 	animator.play(state_machine.current_state.state_name)
 	
 
-
-
-func get_current_state():
-	return state_machine.current_state
-
-
-
+#func get_current_state():
+	#return state_machine.current_state
 
 	
 func save():
@@ -69,10 +60,11 @@ func save():
 	return save_dict
 
 
-
+#some scenes does not contain player camera (level 0)
 func add_player_cam():
 	var player_cam = Camera2D.new()
 	add_child(player_cam)
+	
 
 func handle_animations():
 	# Attack animation takes priority
@@ -81,60 +73,52 @@ func handle_animations():
 			hitbox.rotation = 0
 			hitbox.position = Vector2(2, 0)
 			animator.flip_h = true
-			animator.play("attack-sideview")
+			animator.play("attack-sideview-{mood}".format({"mood": mood}))
 		elif prev_input.x < 0:
 			hitbox.rotation = 0
 			hitbox.position = Vector2(-2, 0)
 			animator.flip_h = false
-			animator.play("attack-sideview")
+			animator.play("attack-sideview-{mood}".format({"mood": mood}))
 		elif prev_input == Vector2.DOWN:
-			animator.play("attack-front")
+			animator.play("attack-front-{mood}".format({"mood": mood}))
 			hitbox.rotation = PI/2
 			hitbox.position = Vector2(0, 2)
 		elif prev_input == Vector2.UP:
-			animator.play("attack-back")
+			animator.play("attack-back-{mood}".format({"mood": mood}))
 			hitbox.rotation = PI/2
 			hitbox.position = Vector2(0, 0)
-		return  # Return early to avoid playing other animations
+		# Return early to avoid playing other animations
+		return  
 
 	# Idle state
 	if input == Vector2.ZERO:
 		if prev_input.x > 0:
 			animator.flip_h = true
-			animator.play("idle-sideview")
+			animator.play("idle-sideview-{mood}".format({"mood": mood}))
 		elif prev_input.x < 0:
 			animator.flip_h = false
-			animator.play("idle-sideview")
+			animator.play("idle-sideview-{mood}".format({"mood": mood}))
 		elif prev_input == Vector2.DOWN:
-			animator.play("idle-front")
+			animator.play("idle-front-{mood}".format({"mood": mood}))
 		elif prev_input == Vector2.UP:
-			animator.play("idle-back")
+			animator.play("idle-back-{mood}".format({"mood": mood}))
 	# Moving state
 	else:
 		if velocity.x > 0:
 			animator.flip_h = true
-			animator.play("move-sideview")
+			animator.play("move-sideview-{mood}".format({"mood": mood}))
 		elif velocity.x < 0:
 			animator.flip_h = false
-			animator.play("move-sideview")
+			animator.play("move-sideview-{mood}".format({"mood": mood}))
 		elif velocity.normalized() == Vector2.UP:
-			animator.play("move-back")
+			animator.play("move-back-{mood}".format({"mood": mood}))
 		elif velocity.normalized() == Vector2.DOWN:
-			animator.play("move-front")
+			animator.play("move-front-{mood}".format({"mood": mood}))
 	
 	# Update prev_input to store the last non-zero input direction
 	if input != Vector2.ZERO:
 		prev_input = input
 
 
-func set_animator(mood):
-	if mood == "Geto":
-		animator = animatorGeto
-		animatorGeto.visible = true
-		animatorRika.visible = false
-	else:
-		animator = animatorRika
-		animatorRika.visible = true
-		animatorGeto.visible = false
 	
 

@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dgd6ejpgt8w77" path="res://assets/angel/melek yana idle-Sheet.png" id="4_smlbp"]
 [ext_resource type="Texture2D" uid="uid://drplrr1hfi1kl" path="res://assets/angel/melekatak-Sheet.png" id="4_y6ori"]
 [ext_resource type="PackedScene" uid="uid://cfpcqylll8gsj" path="res://components/HealthComponent.tscn" id="5_pc103"]
-[ext_resource type="Shader" uid="uid://cel5mpcmb7alc" path="res://characters/angels/Angel.tres" id="6_evbnw"]
+[ext_resource type="Shader" uid="uid://da54u06ubggor" path="res://characters/angels/Angel.tres" id="6_evbnw"]
 [ext_resource type="Texture2D" uid="uid://3qwjuqinht5c" path="res://assets/angel/melek arka yururme-Sheet.png" id="8_et5qd"]
 [ext_resource type="Texture2D" uid="uid://bd0j3wqdhqufp" path="res://assets/angel/melek yana yurume-Sheet.png" id="9_blkix"]
 [ext_resource type="Script" path="res://characters/fsm/fsm.gd" id="12_687sw"]
@@ -24,11 +24,11 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p655m"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1bp4t"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_chuc6"]
 resource_local_to_scene = true
 shader = ExtResource("6_evbnw")
 shader_parameter/enabled = true
-shader_parameter/ColorParameter = Color(1, 1, 0.364706, 0.870588)
+shader_parameter/hitflash = Color(1, 0.945098, 0.294118, 0.709804)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_68yma"]
 atlas = ExtResource("2_jqan8")
@@ -295,8 +295,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_njip8"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_v1vk2"]
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -304,13 +304,13 @@ tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [true, false, true]
 }
 
-[sub_resource type="Animation" id="Animation_qd0ki"]
+[sub_resource type="Animation" id="Animation_ws4t2"]
 resource_name = "hit_flash"
 length = 0.2
 tracks/0/type = "value"
@@ -326,10 +326,10 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ujp5i"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_21tb6"]
 _data = {
-"RESET": SubResource("Animation_njip8"),
-"hit_flash": SubResource("Animation_qd0ki")
+"RESET": SubResource("Animation_v1vk2"),
+"hit_flash": SubResource("Animation_ws4t2")
 }
 
 [node name="Angel" type="CharacterBody2D" groups=["angel", "enemy"]]
@@ -343,8 +343,9 @@ actor = NodePath("..")
 [node name="VelocityComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("4_2eym2")]
 actor = NodePath("..")
 
-[node name="HealthComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("5_pc103")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("actor", "hitflash_animator") instance=ExtResource("5_pc103")]
 actor = NodePath("..")
+hitflash_animator = NodePath("../Hitflash")
 max_health = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -353,7 +354,7 @@ scale = Vector2(1.03132, -1.56435)
 shape = SubResource("CircleShape2D_p655m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_1bp4t")
+material = SubResource("ShaderMaterial_chuc6")
 sprite_frames = SubResource("SpriteFrames_njx5m")
 animation = &"attack-front"
 frame_progress = 0.737713
@@ -362,6 +363,8 @@ frame_progress = 0.737713
 
 [node name="FirePoint" type="Marker2D" parent="."]
 position = Vector2(10, 5)
+
+[node name="BulletContainer" type="Node2D" parent="."]
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
 script = ExtResource("12_687sw")
@@ -403,12 +406,14 @@ script = ExtResource("22_owr5f")
 actor = NodePath("..")
 health_component = NodePath("../HealthComponent")
 
-[node name="HitFlash" type="AnimationPlayer" parent="."]
+[node name="Hitflash" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ujp5i")
+"": SubResource("AnimationLibrary_21tb6")
 }
 
-[node name="BulletContainer" type="Node2D" parent="."]
+[node name="RayCast2D" type="RayCast2D" parent="."]
+rotation = -0.403075
+scale = Vector2(1, 4.08199)
 
 [connection signal="timeout" from="FiniteStateMachine/Wander/WaitingTimer" to="FiniteStateMachine/Wander" method="_on_waiting_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Wander/MovingTimer" to="FiniteStateMachine/Wander" method="_on_moving_timer_timeout"]

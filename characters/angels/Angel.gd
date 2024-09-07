@@ -29,7 +29,6 @@ func _ready():
 	lost_player.connect(fsm.change_state.bind(wander))
 
 
-
 func _physics_process(delta):
 	if victim:
 		vision_cast.target_position = to_local(victim.position)

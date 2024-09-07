@@ -43,7 +43,6 @@ func change_scene(scene_name: String):
 		
 
 func go_to_next_level(next_level_path, connected_door_name):
-	
 	change_scene(next_level_path)
 	spawn_player(connected_door_name);
 
@@ -76,4 +75,5 @@ func spawn_player(door_to_spawn):
 			#you will need to also assert this, ma'am
 			print("Cannot use that door right now")
 	
+
 

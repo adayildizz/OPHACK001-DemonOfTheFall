@@ -26,10 +26,13 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 
 
 func _on_body_entered(body):
+	#if it hit to the player
 	if body.is_in_group("player"):
-		body.health_component.take_damage(damage_rate)
-	else:
-		queue_free()
+		#check player current state
+		if body.attack_timer.is_stopped():
+			body.health_component.take_damage(damage_rate)
+	
+	queue_free()
 
 func set_actor():
 	#We instantiate bitcoinballs within a container.

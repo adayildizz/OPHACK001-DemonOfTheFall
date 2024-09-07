@@ -7,10 +7,6 @@
 [node name="Level0" type="Node2D"]
 script = ExtResource("1_gloow")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_80gq8")
 format = 2
@@ -36,3 +32,10 @@ scale = Vector2(1.4, 1)
 door_name = "level0_door1"
 next_level_path = "res://map/levels/Level1.tscn"
 connected_door_name = "level1_door0"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(10, 7.52)
