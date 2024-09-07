@@ -48,18 +48,18 @@ func choose_random_direction():
 	
 
 #this func is to be able to avoid from a specific direction.
-func compute_avoidance_vector(vector: Vector2, weight : float ):
-	var magnitude = vector.length()
-	var unitvec = vector.normalized()
-	var avoidance_vector = -(unitvec*weight)/magnitude
-	return avoidance_vector
+#func compute_avoidance_vector(vector: Vector2, weight : float ):
+	#var magnitude = vector.length()
+	#var unitvec = vector.normalized()
+	#var avoidance_vector = -(unitvec*weight)/magnitude
+	#return avoidance_vector
+	#
 	
-	
-func avoid_from_obstacles(vector):
+func compute_avoidance_vector():
 	var vectors = self.get_children()
 	var avoid_from = Vector2.ZERO
 	for vec in vectors:
 		if vec.is_colliding():
-			avoid_from -= vec
+			avoid_from -= vec.target_position.normalized()
 	
-	
+	return avoid_from

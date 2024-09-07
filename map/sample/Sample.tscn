@@ -21,7 +21,6 @@ layer_1/tile_data = PackedInt32Array(655359, 786434, 0, 589824, 786434, 0, 65536
 [node name="ExitDoor" parent="Doors" instance=ExtResource("3_484fa")]
 position = Vector2(-44, 0)
 rotation = -1.56998
-scale = Vector2(1, 1)
 door_name = "entry_door"
 
 [node name="Control" type="Control" parent="."]

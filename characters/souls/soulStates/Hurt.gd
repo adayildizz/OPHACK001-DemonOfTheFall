@@ -22,8 +22,11 @@ func _physics_process(delta):
 
 func _enter_state():
 	print("in hurt")
-	set_physics_process(true)
-	hurt()
+	if health_component.should_be_dead():
+		health_component.simply_die()
+	else:
+		set_physics_process(true)
+		hurt()
 	
 	
 func _exit_state():
@@ -41,7 +44,4 @@ func hurt():
 func _on_cool_down_timer_timeout():
 	set_physics_process(true)
 	print("TIMEDOUT")
-	if health_component.should_be_dead():
-		health_component.simply_die()
-	else:
-		state_to_move.emit()
+	state_to_move.emit()

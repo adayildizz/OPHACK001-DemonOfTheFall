@@ -12,6 +12,7 @@ var wander_direction = Vector2(1,0)
 @onready var animator = $AnimatedSprite2D
 @onready var health_component = $HealthComponent
 @onready var velocity_component = $VelocityComponent
+@onready var movement_circle = $MovementCircle
 
 #the fsm states
 @onready var fsm = $FiniteStateMachine
@@ -46,10 +47,11 @@ func seek_and_wander(delta, speed):
 	var target_position =  victim.get_global_position()
 	var seeking_velocity = (target_position - get_global_position()).normalized()*100
 	wander_direction = wander_direction.rotated(randf_range(-PI / 4, PI / 4)).normalized()
-	var final_direction = (seeking_velocity + wander_power*wander_direction).normalized()
+	var randomized_direction = (seeking_velocity + wander_power*wander_direction).normalized()
+	var final_direction = add_avoidance(randomized_direction, 1)
 	var current_direction = velocity.normalized()
 	var smooth_direction = current_direction.slerp(final_direction, 10 * delta)
-
+	
 	# Update velocity and move
 	velocity_component.accelerate_in_direction(smooth_direction, speed, acceleration_coefficient)
 	velocity_component.move(self)
@@ -57,3 +59,12 @@ func seek_and_wander(delta, speed):
 
 func _on_wander_timer_timeout():
 	wander_direction = Vector2(1,0).rotated(randf_range(0,2*PI))
+
+
+
+func add_avoidance(vector, weight):
+	var avoid_from = movement_circle.compute_avoidance_vector()
+	var final_direction = vector + avoid_from*weight
+	return final_direction
+	
+	
