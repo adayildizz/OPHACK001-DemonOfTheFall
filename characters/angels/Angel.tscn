@@ -389,7 +389,7 @@ actor = NodePath("../..")
 wait_time = 3.0
 one_shot = true
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("actor", "health_component")]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("actor")]
 offset_left = -16.0
 offset_top = -29.0
 offset_right = 48.0
@@ -401,7 +401,6 @@ texture_over = ExtResource("19_vkrve")
 texture_progress = ExtResource("20_5tf76")
 script = ExtResource("22_owr5f")
 actor = NodePath("..")
-health_component = NodePath("../HealthComponent")
 
 [node name="HitFlash" type="AnimationPlayer" parent="."]
 libraries = {

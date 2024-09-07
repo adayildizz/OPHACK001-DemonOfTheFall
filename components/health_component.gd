@@ -7,7 +7,8 @@ signal simply_died
 
 @export var actor : CharacterBody2D
 @export var hitflash_animator : AnimationPlayer
-@onready var hurt_time = $Timer
+
+@onready var cool_down_timer = $"../CoolDownTimer"
 
 @export var max_health : int
 
@@ -41,18 +42,9 @@ func simply_die():
 	
 
 func take_damage( damage_rate : float):
-
-	health_remaining -= max_health*damage_rate
-	if hitflash_animator:
-		hitflash_animator.play("hit_flash")
-	hurt_time.start()
-	print(health_remaining)
+	health_remaining -= damage_rate
 	health_changed.emit()
 	
-		
-	
-		
-	 
 	
 func initialize_health():
 	health_remaining = max_health
@@ -63,10 +55,5 @@ func should_be_dead():
 		return true
 	return false
 
-
-func _on_timer_timeout():
-	actor.set_physics_process(true)
-	if should_be_dead():
-		simply_die()
 
 

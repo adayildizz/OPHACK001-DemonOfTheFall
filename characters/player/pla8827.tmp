@@ -35,7 +35,7 @@
 size = Vector2(9, 15)
 
 [sub_resource type="Animation" id="Animation_nk2s1"]
-length = 0.2
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -333,7 +333,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack-back-geto",
-"speed": 15.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -353,7 +353,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack-back-rika",
-"speed": 15.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -373,7 +373,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack-front-geto",
-"speed": 15.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -390,7 +390,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack-front-rika",
-"speed": 12.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -410,7 +410,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack-sideview-geto",
-"speed": 15.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -430,7 +430,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack-sideview-rika",
-"speed": 15.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -596,7 +596,6 @@ animations = [{
 scale = Vector2(7, 7)
 motion_mode = 1
 script = ExtResource("1_t1hgf")
-MAX_SPEED = 200.0
 mood = "geto"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -608,7 +607,7 @@ position = Vector2(0, 2.98023e-08)
 scale = Vector2(0.674286, 1.69143)
 collision_layer = 6
 collision_mask = 6
-damage_rate = 1.0
+damage_rate = 0.1
 opponent = "enemy"
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state", "current_state")]
@@ -627,7 +626,7 @@ idle_state = NodePath("../Idle")
 actor = NodePath("../..")
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 0.3
+wait_time = 0.5
 one_shot = true
 
 [node name="HealthComponent" parent="." node_paths=PackedStringArray("actor", "hitflash_animator") instance=ExtResource("24_ehnu8")]
@@ -653,8 +652,7 @@ libraries = {
 material = SubResource("ShaderMaterial_53fnh")
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_s8h5j")
-animation = &"attack-sideview-rika"
-frame_progress = 0.679812
+animation = &"attack-front-rika"
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("actor", "health_component")]
 offset_left = 36.4286

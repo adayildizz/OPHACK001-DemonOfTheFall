@@ -1,11 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://cel8148hfb5n0"]
+[gd_scene load_steps=19 format=3 uid="uid://cel8148hfb5n0"]
 
 [ext_resource type="Script" path="res://characters/fsm/fsm.gd" id="1_8g0aq"]
 [ext_resource type="Script" path="res://characters/souls/Soul.gd" id="1_fhq4b"]
 [ext_resource type="PackedScene" uid="uid://j84r6p2vumpq" path="res://components/VelocityComponent.tscn" id="2_nhxsu"]
 [ext_resource type="Script" path="res://characters/souls/soulStates/Move.gd" id="3_4cjr7"]
 [ext_resource type="PackedScene" uid="uid://cfpcqylll8gsj" path="res://components/HealthComponent.tscn" id="3_637kw"]
-[ext_resource type="Script" path="res://characters/souls/soulStates/Hurt.gd" id="4_87lv6"]
 [ext_resource type="Shader" uid="uid://bkdtmeq4h4j6g" path="res://characters/souls/Soul.tres" id="7_eu3yo"]
 [ext_resource type="SpriteFrames" uid="uid://bpxjw34lcbumr" path="res://characters/Enemy0/Enemy0.tres" id="7_kq5cg"]
 [ext_resource type="PackedScene" uid="uid://cafhpk3wjdgsm" path="res://components/MovementCircle.tscn" id="8_b5onl"]
@@ -64,14 +63,9 @@ _data = {
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_fhq4b")
-wander_power = 100.0
-acceleration_coefficient = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_omrom")
-
-[node name="WanderTimer" type="Timer" parent="."]
-autostart = true
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
 script = ExtResource("1_8g0aq")
@@ -80,12 +74,12 @@ state = NodePath("SoulMoveState")
 [node name="SoulMoveState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor")]
 script = ExtResource("3_4cjr7")
 actor = NodePath("../..")
-speed = 100.0
+wander_power = 200.0
+speed = 300.0
+acceleration_coefficient = 1.0
 
-[node name="SoulHurtState" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor")]
-script = ExtResource("4_87lv6")
-actor = NodePath("../..")
-speed = 30.0
+[node name="Timer" type="Timer" parent="FiniteStateMachine/SoulMoveState"]
+autostart = true
 
 [node name="VelocityComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("2_nhxsu")]
 actor = NodePath("..")
@@ -95,7 +89,7 @@ max_speed = 30.0
 scale = Vector2(4.56, 4.28)
 actor = NodePath("..")
 hitflash_animator = NodePath("../HitFlash")
-max_health = 2
+max_health = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_kh1y2")
@@ -125,15 +119,12 @@ libraries = {
 "": SubResource("AnimationLibrary_0ijl3")
 }
 
-[node name="CoolDownTimer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
+[node name="HurtTimer" type="Timer" parent="."]
 
 [node name="HitboxComponent" parent="." instance=ExtResource("13_d0d61")]
 scale = Vector2(1.79169, 3.04426)
 damage_rate = 0.5
 opponent = "player"
 
-[connection signal="timeout" from="WanderTimer" to="." method="_on_wander_timer_timeout"]
-[connection signal="timeout" from="CoolDownTimer" to="FiniteStateMachine/SoulHurtState" method="_on_cool_down_timer_timeout"]
+[connection signal="timeout" from="FiniteStateMachine/SoulMoveState/Timer" to="FiniteStateMachine/SoulMoveState" method="_on_timer_timeout"]
 [connection signal="body_entered" from="HitboxComponent" to="." method="_on_hitbox_component_body_entered"]

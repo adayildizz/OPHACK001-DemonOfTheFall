@@ -11,7 +11,7 @@ extends Node2D
 func _ready():
 	#Spawn the player into the scene
 	var player = SceneManager.spawn_player("entry_door")
-	
+	set_player_as_victim(player)
 	
 
 	#enemy.set_inner_map(map)
@@ -21,3 +21,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+
+func set_player_as_victim(victim : CharacterBody2D):
+	for node in get_children():
+		if node.is_in_group("enemy"):
+			node.set_victim(victim)

@@ -1,14 +1,15 @@
 extends TextureProgressBar
 
 @export var actor: CharacterBody2D
-
-
+@export var health_component : HealthComponent
+"actor"
 func _ready():
-	actor.health_component.health_changed.connect(_on_health_changed)
+	
+	health_component.health_changed.connect(_on_health_changed)
 	update()
 
 func update():
-	value = (actor.health_component.health_remaining / actor.health_component.max_health)* 100 
+	value = (health_component.health_remaining / health_component.max_health)* 100 
 	print(value)
 
 

@@ -3,7 +3,10 @@ class_name Player
 #Player Layer is the layer 0.
 
 #Limit velocity for the character 
-var MAX_SPEED : float = 150.0
+@export var MAX_SPEED : float
+
+
+signal attacked
 
 #Child nodes
 @onready var animator = $AnimatedSprite2D
@@ -21,11 +24,15 @@ var prev_input = Vector2.DOWN
 
 
 func _ready() -> void:
-	print(get_parent().get_path())
 	state_machine.init(self)
 	
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("Attack"):
+		attack_timer.start()
+		print("player attacking")
+		attacked.emit()
+		
 	handle_animations()
 	state_machine.process_physics(delta, get_input())
 	move_and_slide()
@@ -120,5 +127,4 @@ func handle_animations():
 		prev_input = input
 
 
-	
 

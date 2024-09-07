@@ -6,7 +6,6 @@ default_value_enabled = true
 
 [sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_7ae46"]
 parameter_name = "BooleanParameter"
-default_value_enabled = true
 
 [sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_7jrk3"]
 default_input_values = [0, 0.0, 1, 1.0, 2, 1e-05, 3, Vector3(0, 0, 0), 4, Vector3(0, 0, 0), 5, Vector3(0, 0, 0)]
@@ -18,7 +17,7 @@ input_name = "color"
 code = "shader_type canvas_item;
 render_mode blend_mix;
 
-uniform bool BooleanParameter = false;
+uniform bool BooleanParameter;
 uniform vec4 ColorParameter : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
 
 

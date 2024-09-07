@@ -1,5 +1,6 @@
 extends Node
 
+#This script is not about scene operations but, it sets the levels as intended for each.
 var current_scene : Node2D
 var player : CharacterBody2D
 
@@ -8,6 +9,7 @@ func _ready():
 	current_scene = get_tree().current_scene
 	print(current_scene)
 	set_player()
+	set_enemies()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,6 +28,7 @@ func set_player():
 			player = child_node
 
 func set_enemies():
-	for child_node in current_scene.get_children():
+	for child_node : Node2D in current_scene.get_children():
 		if child_node.is_in_group("enemy"):
-			child_node.set_victim()
+			print(child_node)
+			child_node.set_victim(player)

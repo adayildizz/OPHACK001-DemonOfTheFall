@@ -1,7 +1,6 @@
 extends Node
 
 var Player = load("res://characters/player/player.tscn")
-
 var exit_door: ExitDoor
 signal level_changed 
 
@@ -12,7 +11,6 @@ func _process(delta):
 
 func start_game():
 	Save.load_game()
-	
 	
 func save_and_quit_game():
 	Save.save_game()
@@ -41,7 +39,6 @@ func change_scene(scene_name: String):
 		current_scene.queue_free()
 		
 		
-
 func go_to_next_level(next_level_path, connected_door_name):
 	change_scene(next_level_path)
 	spawn_player(connected_door_name);

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cmdlowv4sl3xf"]
+[gd_scene load_steps=5 format=3 uid="uid://cmdlowv4sl3xf"]
 
 [ext_resource type="Script" path="res://map/sample/Sample.gd" id="1_k8tb5"]
 [ext_resource type="TileSet" uid="uid://8lwun40m6a0l" path="res://map/tiles/finaltiles.tres" id="2_da5n5"]
 [ext_resource type="PackedScene" uid="uid://c28mg4crlfye2" path="res://map/door/ExitDoor.tscn" id="3_484fa"]
+[ext_resource type="PackedScene" uid="uid://cel8148hfb5n0" path="res://characters/souls/Soul.tscn" id="4_o8hjw"]
 
 [node name="Sample" type="Node2D"]
 script = ExtResource("1_k8tb5")
@@ -22,3 +23,18 @@ position = Vector2(-44, 0)
 rotation = -1.56998
 scale = Vector2(1, 1)
 door_name = "entry_door"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Soul" parent="." instance=ExtResource("4_o8hjw")]
+position = Vector2(153, -94)
+
+[node name="Soul2" parent="." instance=ExtResource("4_o8hjw")]
+position = Vector2(487, 140)
+
+[node name="Soul3" parent="." instance=ExtResource("4_o8hjw")]
+position = Vector2(159, 298)
