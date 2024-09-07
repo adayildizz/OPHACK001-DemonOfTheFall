@@ -11,8 +11,7 @@ extends Node2D
 func _ready():
 	#Spawn the player into the scene
 	var player = SceneManager.spawn_player("entry_door")
-	find_child("Soul").set_victim(player)
-	find_child("Angel").set_victim(player)
+	
 	
 
 	#enemy.set_inner_map(map)
