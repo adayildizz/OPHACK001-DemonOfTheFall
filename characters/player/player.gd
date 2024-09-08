@@ -14,6 +14,7 @@ signal attacked
 @onready var hitbox = $Hitbox
 @onready var state_machine = $StateMachine
 @onready var health_component = $HealthComponent
+@onready var hit_flash = $HitFlash
 
 #For two player moods "geto" and "rika"
 @export var mood : String
@@ -25,6 +26,7 @@ var prev_input = Vector2.DOWN
 
 func _ready() -> void:
 	state_machine.init(self)
+	health_component.health_changed.connect(_on_hurt)
 	
 
 func _physics_process(delta: float) -> void:
@@ -127,4 +129,8 @@ func handle_animations():
 		prev_input = input
 
 
+
+func _on_hurt():
+	hit_flash.play("hit_flash")
+	
 
