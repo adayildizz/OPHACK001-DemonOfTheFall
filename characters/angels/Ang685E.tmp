@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://b6loo6ydr0vml"]
+[gd_scene load_steps=59 format=3 uid="uid://b6loo6ydr0vml"]
 
 [ext_resource type="Script" path="res://characters/angels/Angel.gd" id="1_qholq"]
 [ext_resource type="Texture2D" uid="uid://dgvea66lapo3i" path="res://assets/angel/melek arkaya atak-Sheet.png" id="2_jqan8"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://j84r6p2vumpq" path="res://components/VelocityComponent.tscn" id="4_2eym2"]
 [ext_resource type="Texture2D" uid="uid://dgd6ejpgt8w77" path="res://assets/angel/melek yana idle-Sheet.png" id="4_smlbp"]
 [ext_resource type="Texture2D" uid="uid://drplrr1hfi1kl" path="res://assets/angel/melekatak-Sheet.png" id="4_y6ori"]
-[ext_resource type="PackedScene" uid="uid://cawh3p0wqchdo" path="res://components/PathFindComponent.tscn" id="5_2aqnx"]
 [ext_resource type="PackedScene" uid="uid://cfpcqylll8gsj" path="res://components/HealthComponent.tscn" id="5_pc103"]
 [ext_resource type="Shader" uid="uid://cel5mpcmb7alc" path="res://characters/angels/Angel.tres" id="6_evbnw"]
 [ext_resource type="Texture2D" uid="uid://3qwjuqinht5c" path="res://assets/angel/melek arka yururme-Sheet.png" id="8_et5qd"]
@@ -348,11 +347,6 @@ actor = NodePath("..")
 actor = NodePath("..")
 max_health = 10
 
-[node name="PathFindComponent" parent="." node_paths=PackedStringArray("actor", "velocity_component", "movement_circle") instance=ExtResource("5_2aqnx")]
-actor = NodePath("..")
-velocity_component = NodePath("../VelocityComponent")
-movement_circle = NodePath("../MovementCircle")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 3.14159
 scale = Vector2(1.03132, -1.56435)
@@ -388,7 +382,7 @@ wait_time = 4.0
 one_shot = true
 
 [node name="Attack" parent="FiniteStateMachine" node_paths=PackedStringArray("actor") instance=ExtResource("14_2ar33")]
-chase_speed = 50.0
+runaway_speed = 30.0
 actor = NodePath("../..")
 
 [node name="ShootingTimer" type="Timer" parent="FiniteStateMachine/Attack"]

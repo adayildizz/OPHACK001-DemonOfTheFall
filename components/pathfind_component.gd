@@ -74,19 +74,19 @@ func _on_navigation_agent_2d_target_reached():
 		
 
 
-
-func random_location_from_map():
-	#print("WTF", the_map)
-	if the_map.size() == 0:
-		return Vector2.ZERO
-	var random_index = (randi() % the_map.size())
-	var random_cell = the_map[random_index] 
-
-	return random_cell
-	
-func compute_rand_coords():
-	var rand_cell = random_location_from_map()
-	var rand_coords = Vector2i(rand_cell.x, rand_cell.y) *32
-	target_vector = rand_coords
-	print("New random target vector set: ", target_vector)
-
+#
+#func random_location_from_map():
+	##print("WTF", the_map)
+	#if the_map.size() == 0:
+		#return Vector2.ZERO
+	#var random_index = (randi() % the_map.size())
+	#var random_cell = the_map[random_index] 
+#
+	#return random_cell
+	#
+#func compute_rand_coords():
+	#var rand_cell = random_location_from_map()
+	#var rand_coords = Vector2i(rand_cell.x, rand_cell.y) *32
+	#target_vector = rand_coords
+	#print("New random target vector set: ", target_vector)
+#

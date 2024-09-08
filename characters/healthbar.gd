@@ -2,7 +2,7 @@ extends TextureProgressBar
 
 @export var actor: CharacterBody2D
 @export var health_component : HealthComponent
-"actor"
+
 func _ready():
 	
 	health_component.health_changed.connect(_on_health_changed)

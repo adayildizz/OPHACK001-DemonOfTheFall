@@ -44,7 +44,7 @@ func simply_die():
 func take_damage( damage_rate : float):
 	health_remaining -= damage_rate
 	health_changed.emit()
-	
+	print(actor, "took damage. Remaining: ", health_remaining)
 	
 func initialize_health():
 	health_remaining = max_health
