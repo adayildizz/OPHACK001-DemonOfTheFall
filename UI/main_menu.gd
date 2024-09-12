@@ -2,11 +2,12 @@ class_name MainMenu
 
 extends Control
 
-@onready var start_button = $MarginContainer/HBoxContainer/VBoxContainer/StartButton as Button
-@onready var options_button = $MarginContainer/HBoxContainer/VBoxContainer/OptionsButton as Button
-@onready var exit_button = $MarginContainer/HBoxContainer/VBoxContainer/QuitButton as Button
-@onready var start_level = preload("res://map/levels/Level0.tscn") as PackedScene
-@onready var options = preload("./OptionsUI/Options.tscn") as PackedScene
+@onready var start_button = $StartButton as Button
+@onready var options_button = $OptionsButton as Button
+@onready var exit_button = $QuitButton as Button
+#Since packedscenes did not worked for me, I am adding absolute paths
+@export var gametype_menu : String
+@export var options_menu : String
 
 
 # Called when the node enters the scene tree for the first time.
@@ -23,13 +24,11 @@ func _process(delta):
 
 #for now, starts from the beginning.
 func _on_start_button_pressed():
-	#SceneManager.start_game()
-	get_tree().change_scene_to_packed(start_level)
+	SceneManager.change_scene(gametype_menu)
+	
 
 func _on_options_button_pressed():
-	get_tree().change_scene_to_packed(options)
+	SceneManager.change_scene(options_menu)
 
 func _on_exit_button_pressed():
 	SceneManager.quit_without_saving_game()
-
-

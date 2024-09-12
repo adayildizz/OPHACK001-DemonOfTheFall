@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5a8v8irkrgx7"]
+
+[ext_resource type="Script" path="res://UI/gametype_menu.gd" id="1_15htk"]
+[ext_resource type="Texture2D" uid="uid://3kwvxc5otp8m" path="res://background.jpg" id="2_i7hwq"]
+
+[node name="GameTypeMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_15htk")
+main_menu = "res://UI/MainMenu.tscn"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -5.0
+offset_right = 865.0
+offset_bottom = 430.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.447392, 0.544348)
+texture = ExtResource("2_i7hwq")
+
+[node name="NewGameButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 148.0
+offset_top = 103.0
+offset_right = 248.0
+offset_bottom = 135.0
+text = "NEW GAME
+"
+
+[node name="ContinueButton" type="Button" parent="."]
+layout_mode = 2
+offset_left = 150.0
+offset_top = 142.0
+offset_right = 250.0
+offset_bottom = 174.0
+text = "CONTINUE"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 149.0
+offset_top = 185.0
+offset_right = 249.0
+offset_bottom = 217.0
+text = "BACK
+"
+
+[connection signal="button_down" from="NewGameButton" to="." method="_on_new_game_button_button_down"]
+[connection signal="button_down" from="ContinueButton" to="." method="_on_continue_button_button_down"]
+[connection signal="button_down" from="BackButton" to="." method="_on_back_button_button_down"]
