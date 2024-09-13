@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b5a8v8irkrgx7"]
 
 [ext_resource type="Script" path="res://UI/gametype_menu.gd" id="1_15htk"]
-[ext_resource type="Texture2D" uid="uid://3kwvxc5otp8m" path="res://background.jpg" id="2_i7hwq"]
+[ext_resource type="Theme" uid="uid://7oiqebqmlnf4" path="res://assets/new_theme.tres" id="1_hv07q"]
 
 [node name="GameTypeMenu" type="Control"]
 layout_mode = 3
@@ -10,49 +10,81 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_hv07q")
 script = ExtResource("1_15htk")
 main_menu = "res://UI/MainMenu.tscn"
+start_level = "res://map/sample/samp.tscn"
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -15.0
-offset_top = -5.0
-offset_right = 865.0
-offset_bottom = 430.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.447392, 0.544348)
-texture = ExtResource("2_i7hwq")
+color = Color(0, 0.137255, 0.188235, 1)
 
-[node name="NewGameButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 148.0
-offset_top = 103.0
-offset_right = 248.0
-offset_bottom = 135.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 32
+text = "Demon Of The Fall
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="NewGameButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../BackButton")
+focus_neighbor_bottom = NodePath("../ContinueButton")
+focus_next = NodePath("../ContinueButton")
+focus_previous = NodePath("../BackButton")
 text = "NEW GAME
 "
 
-[node name="ContinueButton" type="Button" parent="."]
+[node name="ContinueButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox"]
 layout_mode = 2
-offset_left = 150.0
-offset_top = 142.0
-offset_right = 250.0
-offset_bottom = 174.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../NewGameButton")
+focus_neighbor_bottom = NodePath("../BackButton")
+focus_next = NodePath("../BackButton")
+focus_previous = NodePath("../NewGameButton")
 text = "CONTINUE"
 
-[node name="BackButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 149.0
-offset_top = 185.0
-offset_right = 249.0
-offset_bottom = 217.0
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_top = NodePath("../ContinueButton")
+focus_neighbor_bottom = NodePath("../NewGameButton")
+focus_next = NodePath("../ContinueButton")
+focus_previous = NodePath("../NewGameButton")
 text = "BACK
 "
 
-[connection signal="button_down" from="NewGameButton" to="." method="_on_new_game_button_button_down"]
-[connection signal="button_down" from="ContinueButton" to="." method="_on_continue_button_button_down"]
-[connection signal="button_down" from="BackButton" to="." method="_on_back_button_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/ButtonsVBox/NewGameButton" to="." method="_on_new_game_button_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/ButtonsVBox/ContinueButton" to="." method="_on_continue_button_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/ButtonsVBox/BackButton" to="." method="_on_back_button_button_down"]

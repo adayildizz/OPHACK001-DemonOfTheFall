@@ -5,10 +5,11 @@ extends Control
 @onready var back_button = $BackButton
 
 @export var main_menu : String
+@export var start_level : String
 
 
 func _on_new_game_button_button_down():
-	pass # Replace with function body.
+	SceneManager.change_scene(start_level)
 
 
 func _on_continue_button_button_down():
@@ -17,3 +18,6 @@ func _on_continue_button_button_down():
 
 func _on_back_button_button_down():
 	SceneManager.change_scene(main_menu)
+
+
+		

@@ -1,44 +1,74 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkj0g70a158es"]
+[gd_scene load_steps=3 format=3 uid="uid://bkj0g70a158es"]
 
+[ext_resource type="Theme" uid="uid://7oiqebqmlnf4" path="res://assets/new_theme.tres" id="1_l7yls"]
 [ext_resource type="Script" path="res://UI/main_menu.gd" id="1_su5j7"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_l7yls")
 script = ExtResource("1_su5j7")
 gametype_menu = "res://UI/GameTypeMenu.tscn"
 options_menu = "res://UI/OptionsUI/Options.tscn"
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.137255, 0.188235, 1)
 
-[node name="StartButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 149.0
-offset_top = 110.0
-offset_right = 249.0
-offset_bottom = 142.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Demon Of The Fall"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "START"
 
-[node name="OptionsButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 149.0
-offset_top = 151.0
-offset_right = 249.0
-offset_bottom = 183.0
+[node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "OPTIONS"
 
-[node name="QuitButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 149.0
-offset_top = 193.0
-offset_right = 249.0
-offset_bottom = 225.0
+[node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "QUIT
 "
 
-[connection signal="button_down" from="StartButton" to="." method="_on_start_button_down"]
-[connection signal="button_down" from="OptionsButton" to="." method="_on_options_button_down"]
-[connection signal="button_down" from="QuitButton" to="." method="_on_quit_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/ButtonsVBox/StartButton" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/ButtonsVBox/OptionsButton" to="." method="_on_options_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/ButtonsVBox/QuitButton" to="." method="_on_quit_button_down"]

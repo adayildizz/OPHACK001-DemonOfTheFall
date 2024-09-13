@@ -2,9 +2,9 @@ class_name MainMenu
 
 extends Control
 
-@onready var start_button = $StartButton as Button
-@onready var options_button = $OptionsButton as Button
-@onready var exit_button = $QuitButton as Button
+@onready var start_button = $MarginContainer/VBoxContainer/ButtonsVBox/StartButton as Button
+@onready var options_button = $MarginContainer/VBoxContainer/ButtonsVBox/OptionsButton as Button
+@onready var exit_button = $MarginContainer/VBoxContainer/ButtonsVBox/QuitButton as Button
 #Since packedscenes did not worked for me, I am adding absolute paths
 @export var gametype_menu : String
 @export var options_menu : String
