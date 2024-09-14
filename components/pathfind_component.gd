@@ -21,7 +21,7 @@ var target_vector = Vector2.ZERO
 
 #for the states : Why not a signal? -> this is being checked in _physics_process of states
 var is_chasing_victim : bool = false
-var is_attacking_victim : bool = false
+
 
 #handling the map
 var current_scene : Node2D
@@ -35,13 +35,9 @@ func _ready():
 # Since the position of the victim must be checked in every frame, rather than signals, 
 #I am using a var. 
 func _physics_process(delta):
-	if is_chasing_victim and actor.victim:
-		target_vector = actor.victim.global_position
-		
+	pass
 		
 func follow_path(speed : float, acceleration_coefficient : float = velocity_component.default_acceleration_coefficient):
-	print("speed: ", speed)
-	print("target: ", target_vector)
 	if target_vector != Vector2.ZERO:
 		nav.target_position = target_vector
 		#print(nav.target_position)
@@ -51,7 +47,6 @@ func follow_path(speed : float, acceleration_coefficient : float = velocity_comp
 		print("finished")
 	#print("AA", nav.target_position)
 	var direction = ((nav.get_next_path_position() - actor.global_position) ).normalized()
-	print("direction: ", nav.get_next_path_position())
 	velocity_component.accelerate_in_direction(direction, speed, acceleration_coefficient)
 	nav.set_velocity(velocity_component.velocity)
 	#print(direction)
@@ -72,21 +67,8 @@ func _on_navigation_agent_2d_target_reached():
 		pass
 		
 		
+func update_target_vector(new_vector : Vector2):
+	target_vector = new_vector
+		
 
-
-#
-#func random_location_from_map():
-	##print("WTF", the_map)
-	#if the_map.size() == 0:
-		#return Vector2.ZERO
-	#var random_index = (randi() % the_map.size())
-	#var random_cell = the_map[random_index] 
-#
-	#return random_cell
-	#
-#func compute_rand_coords():
-	#var rand_cell = random_location_from_map()
-	#var rand_coords = Vector2i(rand_cell.x, rand_cell.y) *32
-	#target_vector = rand_coords
-	#print("New random target vector set: ", target_vector)
 #

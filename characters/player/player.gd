@@ -13,7 +13,7 @@ signal attacked
 @onready var attack_timer = $AttackTimer
 @onready var hitbox = $Hitbox
 @onready var state_machine = $StateMachine
-@onready var health_component = $HealthComponent
+@export var health_component : HealthComponent
 @onready var hit_flash = $HitFlash
 
 #For two player moods "geto" and "rika"
@@ -59,10 +59,10 @@ func _on_timer_timeout():
 func save():
 	var save_dict = {
 		"filename" : get_scene_file_path(),
-		"parent" : get_parent().get_path(),
+		"parent" : get_parent().get_scene_file_path(),
 		"pos_x" : position.x, # Vector2 is not supported by JSON
 		"pos_y" : position.y,
-		#"current_health" : current_health,
+		"current_health" : health_component.health_remaining,
 		#"is_alive" : is_alive,
 		#"last_attack" : last_attack
 	}

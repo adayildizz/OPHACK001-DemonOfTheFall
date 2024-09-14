@@ -13,15 +13,16 @@ config_version=5
 config/name="DemonOfTheFall"
 config/description="A game related blockchain to be deployed to bittboy.
 "
-run/main_scene="res://map/sample/Sample.tscn"
+run/main_scene="res://UI/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
-boot_splash/bg_color=Color(0.827451, 0.12549, 0.27451, 1)
+boot_splash/bg_color=Color(0, 0.0980392, 0.152941, 1)
 
 [autoload]
 
 Save="*res://singletons/save.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 SceneManager="*res://singletons/scene_manager.gd"
+LevelManager="res://singletons/level_manager.gd"
 
 [dialogic]
 
@@ -34,8 +35,8 @@ directories/dtl_directory={
 
 [display]
 
-window/size/viewport_width=400
-window/size/viewport_height=300
+window/size/viewport_width=640
+window/size/viewport_height=480
 window/size/initial_position_type=0
 
 [editor_plugins]
@@ -104,3 +105,4 @@ change_level={
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

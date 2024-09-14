@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://r8oouqaf861y"]
+
+[ext_resource type="Script" path="res://map/worlds/World0.gd" id="1_qqq11"]
+[ext_resource type="TileSet" uid="uid://nn52gnkjyolo" path="res://map/tiles/basetiles.tres" id="2_j8quw"]
+[ext_resource type="PackedScene" uid="uid://bli4q3ahkrhej" path="res://map/walker/Walker0.tscn" id="3_42ba8"]
+[ext_resource type="PackedScene" uid="uid://c28mg4crlfye2" path="res://map/door/ExitDoor.tscn" id="3_48w1p"]
+[ext_resource type="PackedScene" uid="uid://cjaqeadfhlt2x" path="res://UI/inGame/GameUI.tscn" id="5_x8dmc"]
+[ext_resource type="PackedScene" uid="uid://c8ws1ltldnahg" path="res://map/door/transition/Transition.tscn" id="6_4188i"]
+
+[node name="World0" type="Node2D" node_paths=PackedStringArray("entry_door", "exit_door", "walker")]
+script = ExtResource("1_qqq11")
+entry_door = NodePath("Doors/ExitDoor")
+exit_door = NodePath("Doors/ExitDoor2")
+scene_width = 1000
+scene_height = 1000
+walker = NodePath("Walker0")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("2_j8quw")
+format = 2
+
+[node name="Doors" type="Node2D" parent="."]
+
+[node name="ExitDoor" parent="Doors" instance=ExtResource("3_48w1p")]
+position = Vector2(0, -1)
+scale = Vector2(1.01449, 1.04)
+door_name = "Door0"
+
+[node name="ExitDoor2" parent="Doors" instance=ExtResource("3_48w1p")]
+door_name = "Door1"
+next_level_path = "res://map/worlds/World0.tscn"
+connected_door_name = "Door0"
+
+[node name="Walker0" parent="." instance=ExtResource("3_42ba8")]
+size = 50
+min_room_width = 5
+min_room_height = 5
+room_variance = 4
+max_hall_length = 8
+
+[node name="GameUI" parent="." instance=ExtResource("5_x8dmc")]
+
+[node name="Transition" parent="GameUI" instance=ExtResource("6_4188i")]
+root_node = NodePath("../..")

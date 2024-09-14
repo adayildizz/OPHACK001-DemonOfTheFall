@@ -13,7 +13,7 @@ grow_vertical = 2
 theme = ExtResource("1_hv07q")
 script = ExtResource("1_15htk")
 main_menu = "res://UI/MainMenu.tscn"
-start_level = "res://map/sample/samp.tscn"
+start_level = "res://map/worlds/World0.tscn"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -49,6 +49,24 @@ text = "Demon Of The Fall
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SavedGamesContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/SavedGamesContainer"]
+layout_mode = 2
+text = "Continue From...
+"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/SavedGamesContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SavedGames" type="VBoxContainer" parent="MarginContainer/VBoxContainer/SavedGamesContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
 [node name="ButtonsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 10
@@ -80,10 +98,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../ContinueButton")
 focus_neighbor_bottom = NodePath("../NewGameButton")
-focus_next = NodePath("../ContinueButton")
-focus_previous = NodePath("../NewGameButton")
+focus_next = NodePath("../NewGameButton")
+focus_previous = NodePath("../ContinueButton")
 text = "BACK
 "
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="button_down" from="MarginContainer/VBoxContainer/ButtonsVBox/NewGameButton" to="." method="_on_new_game_button_button_down"]
 [connection signal="button_down" from="MarginContainer/VBoxContainer/ButtonsVBox/ContinueButton" to="." method="_on_continue_button_button_down"]

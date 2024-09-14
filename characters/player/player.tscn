@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=3 uid="uid://blyhpi7sw2a1o"]
+[gd_scene load_steps=91 format=3 uid="uid://blyhpi7sw2a1o"]
 
 [ext_resource type="Script" path="res://characters/player/player.gd" id="1_t1hgf"]
 [ext_resource type="Texture2D" uid="uid://c3rovrkjotkcs" path="res://assets/geto/geto attack arka-Sheet.png" id="2_lyadc"]
@@ -12,7 +12,6 @@
 [ext_resource type="Shader" uid="uid://3o65bl7hu7nl" path="res://characters/player/player.tres" id="7_06x6v"]
 [ext_resource type="PackedScene" uid="uid://b47kyc7wyf40e" path="res://components/Hitbox.tscn" id="7_m17w6"]
 [ext_resource type="Texture2D" uid="uid://b2aeorb0j7quj" path="res://assets/geto/geto yan idle-Sheet.png" id="7_uur8g"]
-[ext_resource type="Script" path="res://characters/player/player_cam.gd" id="7_xu6re"]
 [ext_resource type="Texture2D" uid="uid://bi6wylt5kfyqi" path="res://assets/geto/geto arka yurume-Sheet.png" id="8_tspte"]
 [ext_resource type="Texture2D" uid="uid://dwiqpenr3omu2" path="res://assets/geto/geto yurume on-Sheet.png" id="9_5u56w"]
 [ext_resource type="Texture2D" uid="uid://b31ytjgyp5ixp" path="res://assets/geto/geto yan yurume.png" id="10_qlgs0"]
@@ -26,10 +25,6 @@
 [ext_resource type="Texture2D" uid="uid://bquwsu300j08o" path="res://assets/rika/kiz yan yurume-Sheet.png" id="18_yocrb"]
 [ext_resource type="Texture2D" uid="uid://dieii2ttgby1x" path="res://assets/rika/kiz yana atakan-Sheet.png" id="19_w5ec4"]
 [ext_resource type="PackedScene" uid="uid://cfpcqylll8gsj" path="res://components/HealthComponent.tscn" id="24_ehnu8"]
-[ext_resource type="Script" path="res://characters/healthbar.gd" id="25_f6g46"]
-[ext_resource type="Texture2D" uid="uid://62jouqlqvrxe" path="res://assets/healthbars/helth bar arka.png" id="25_we1ve"]
-[ext_resource type="Texture2D" uid="uid://p03dwyb8v28y" path="res://assets/healthbars/helth bar kirmizi cerceve.png" id="26_ykgfd"]
-[ext_resource type="Texture2D" uid="uid://dpyuyq3pfxpen" path="res://assets/healthbars/helth bar kirmizi ic.png" id="27_hdjfy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7fqe8"]
 size = Vector2(9, 15)
@@ -592,11 +587,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" groups=["Persist", "player"]]
-scale = Vector2(7, 7)
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health_component") groups=["Persist", "player"]]
 motion_mode = 1
 script = ExtResource("1_t1hgf")
 MAX_SPEED = 200.0
+health_component = NodePath("HealthComponent")
 mood = "geto"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -635,14 +630,6 @@ actor = NodePath("..")
 hitflash_animator = NodePath("../HitFlash")
 max_health = 30
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.8, 0.8)
-limit_left = -160
-limit_top = -160
-limit_right = 640
-limit_bottom = 450
-script = ExtResource("7_xu6re")
-
 [node name="HitFlash" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimatedSprite2D")
 libraries = {
@@ -651,24 +638,9 @@ libraries = {
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_53fnh")
-scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_s8h5j")
 animation = &"attack-sideview-rika"
 frame_progress = 0.679812
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("actor", "health_component")]
-offset_left = 36.4286
-offset_top = -23.0
-offset_right = 100.429
-offset_bottom = 17.0
-scale = Vector2(0.182857, 0.182857)
-value = 100.0
-texture_under = ExtResource("25_we1ve")
-texture_over = ExtResource("26_ykgfd")
-texture_progress = ExtResource("27_hdjfy")
-script = ExtResource("25_f6g46")
-actor = NodePath("..")
-health_component = NodePath("../HealthComponent")
 
 [connection signal="body_exited" from="Hitbox" to="Hitbox" method="_on_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]

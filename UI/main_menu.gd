@@ -1,6 +1,7 @@
 class_name MainMenu
 
 extends Control
+@onready var buttons_v_box = $MarginContainer/VBoxContainer/ButtonsVBox
 
 @onready var start_button = $MarginContainer/VBoxContainer/ButtonsVBox/StartButton as Button
 @onready var options_button = $MarginContainer/VBoxContainer/ButtonsVBox/OptionsButton as Button
@@ -15,7 +16,7 @@ func _ready():
 	start_button.button_down.connect(_on_start_button_pressed);
 	options_button.button_down.connect(_on_options_button_pressed);
 	exit_button.button_down.connect(_on_exit_button_pressed);
-
+	start_button.grab_focus()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -32,3 +33,7 @@ func _on_options_button_pressed():
 
 func _on_exit_button_pressed():
 	SceneManager.quit_without_saving_game()
+
+
+
+		

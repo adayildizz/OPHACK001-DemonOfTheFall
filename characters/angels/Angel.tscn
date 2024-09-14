@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://b6loo6ydr0vml"]
+[gd_scene load_steps=61 format=3 uid="uid://b6loo6ydr0vml"]
 
 [ext_resource type="Script" path="res://characters/angels/Angel.gd" id="1_qholq"]
 [ext_resource type="Texture2D" uid="uid://dgvea66lapo3i" path="res://assets/angel/melek arkaya atak-Sheet.png" id="2_jqan8"]
@@ -333,6 +333,8 @@ _data = {
 "hit_flash": SubResource("Animation_qd0ki")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_dr4rc"]
+
 [node name="Angel" type="CharacterBody2D" groups=["angel", "enemy"]]
 collision_layer = 4
 collision_mask = 4
@@ -416,6 +418,14 @@ libraries = {
 
 [node name="BulletContainer" type="Node2D" parent="."]
 
+[node name="DistanceCircle" type="Area2D" parent="."]
+scale = Vector2(11.44, 10.44)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DistanceCircle"]
+shape = SubResource("CircleShape2D_dr4rc")
+
 [connection signal="timeout" from="FiniteStateMachine/Wander/WaitingTimer" to="FiniteStateMachine/Wander" method="_on_waiting_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Wander/MovingTimer" to="FiniteStateMachine/Wander" method="_on_moving_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Attack/ShootingTimer" to="FiniteStateMachine/Attack" method="_on_shooting_timer_timeout"]
+[connection signal="body_entered" from="DistanceCircle" to="FiniteStateMachine/Attack" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="DistanceCircle" to="FiniteStateMachine/Attack" method="_on_area_2d_body_exited"]
