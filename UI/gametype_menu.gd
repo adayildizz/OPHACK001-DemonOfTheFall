@@ -20,10 +20,11 @@ func _on_new_game_button_button_down():
 	SceneManager.is_new_game = true
 
 func _on_continue_button_button_down():
+	SceneManager.is_new_game = false
 	SceneManager.start_saved_game(Save.game_number)
 	if not Save.game_number:
 		pass
-	SceneManager.is_new_game = false
+	
 
 func _on_back_button_button_down():
 	SceneManager.change_scene(main_menu)

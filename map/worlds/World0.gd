@@ -29,8 +29,9 @@ func _on_scene_loaded():
 	entry_door.is_enabled = true
 	exit_door.is_enabled = true
 	print("AAAAAAAAAA")
-	SceneManager.spawn_player(entry_door.door_name)
-	
+	if SceneManager.is_new_game:
+		SceneManager.spawn_player(entry_door.door_name)
+		SceneManager.is_new_game = false
 	
 	game_ui.set_actor()
 		
@@ -39,7 +40,7 @@ func _process(delta):
 	
 	var change = Input.is_action_just_pressed("change_level")
 	if change:
-		SceneManager.change_scene("res://map/worlds/World0.tscn")
+		get_tree().reload_current_scene()
 		
 		
 func generate_hills():

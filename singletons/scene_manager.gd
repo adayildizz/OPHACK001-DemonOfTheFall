@@ -2,8 +2,8 @@ extends Node
 
 var is_new_game : bool
 
-var player: Player
-var Player = load("res://characters/player/player.tscn")
+
+var player_scene = preload("res://characters/player/player.tscn")
 var exit_door: ExitDoor
 signal level_changed 
 signal scene_changed
@@ -42,7 +42,6 @@ func change_scene(scene_name: String):
 
 	var current_scene = get_tree().current_scene
 	
-	check_player(current_scene, new_scene)
 	
 	await get_tree().create_timer(0.1).timeout
 	get_tree().get_root().add_child(new_scene)
@@ -57,12 +56,6 @@ func change_scene(scene_name: String):
 		current_scene.queue_free()
 	
 
-func check_player(current_scene, next_scene):
-	if next_scene.is_in_group("level"):
-		player = current_scene.find_child("Player")
-		if !player:
-			player = Player.instantiate()
-		next_scene.add_child(player)
 
 
 
@@ -85,7 +78,9 @@ func spawn_player(door_to_spawn):
 		if exit_door.is_enabled:
 			#Set the spawn point as marker2d of the door.
 			var spawn_point = exit_door.find_child("Marker2D").global_position
-		
+			var player = player_scene.instantiate()
+			
+			get_tree().current_scene.add_child(player)
 			player.position = spawn_point
 				
 			#Disable the door for no further usage

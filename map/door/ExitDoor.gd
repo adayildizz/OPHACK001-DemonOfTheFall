@@ -17,7 +17,7 @@ func _on_body_entered(body):
 		if body.is_in_group("player"):
 			set_deferred("monitoring", false)
 			SceneManager.change_scene(next_level_path)
-			#Save.save_game(Save.game_number)
+			SceneManager.is_new_game = false
 
 
 

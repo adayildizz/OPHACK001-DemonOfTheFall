@@ -8,6 +8,7 @@ class_name Player
 
 signal attacked
 
+
 #Child nodes
 @onready var animator = $AnimatedSprite2D
 @onready var attack_timer = $AttackTimer
@@ -28,7 +29,6 @@ func _ready() -> void:
 	state_machine.init(self)
 	health_component.health_changed.connect(_on_hurt)
 	
-
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Attack"):
 		attack_timer.start()
