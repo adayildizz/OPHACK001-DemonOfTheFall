@@ -45,6 +45,7 @@ func _on_hitbox_component_body_entered(body):
 
 func seek_and_wander(delta, speed):
 	var target_position =  victim.get_global_position()
+	
 	var seeking_velocity = (target_position - get_global_position()).normalized()*100
 	wander_direction = wander_direction.rotated(randf_range(-PI / 4, PI / 4)).normalized()
 	var randomized_direction = (seeking_velocity + wander_power*wander_direction).normalized()
@@ -68,3 +69,15 @@ func add_avoidance(vector, weight):
 	return final_direction
 	
 	
+
+func save():
+	var save_dict = {
+		"filename" : get_scene_file_path(),
+		"parent" : get_parent().get_scene_file_path(),
+		"pos_x" : position.x, # Vector2 is not supported by JSON
+		"pos_y" : position.y,
+		"current_health" : health_component.health_remaining,
+		"victim": victim
+		#"last_attack" : last_attack
+	}
+	return save_dict

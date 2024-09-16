@@ -60,7 +60,7 @@ _data = {
 "hit_flash": SubResource("Animation_fne3o")
 }
 
-[node name="Soul" type="CharacterBody2D" groups=["enemy"]]
+[node name="Soul" type="CharacterBody2D" groups=["Persist", "enemy"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_fhq4b")

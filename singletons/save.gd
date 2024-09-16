@@ -2,8 +2,11 @@ extends Node
 
 var game_count : int = 0
 var game_number : int
-
+signal game_loaded
+var player = Player
+var enemies = []
 const SAVE_PATH : String = "user://GameSaves/"
+
 
 func save_game(game_number : int ):
 	
@@ -48,8 +51,12 @@ func load_game(game_number: int):
 	save_file.close()
 	
 	
+	
 
 func load_nodes_to_scene(save_object):
+	#These nodes are only characters of the game. So feel free to use 
+	#character components as they are shared among all.
+	
 	var scene_path = save_object["scene"]
 	SceneManager.change_scene(scene_path)
 	await get_tree().create_timer(0.2).timeout
@@ -59,14 +66,19 @@ func load_nodes_to_scene(save_object):
 		var new_object = load(node_data["filename"]).instantiate()
 		get_tree().current_scene.add_child(new_object)
 		new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
-
-	# Now we set the remaining variables.
+	
 		for i in node_data.keys():
 			if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
 				continue
-			new_object.set(i, node_data[i])
-
-
+			if i == "current_health":
+				new_object.health_component.health_remaining = node_data[i]
+			
+		if node_data["filename"] == "res://characters/player/player.tscn":
+			print("PLAYER INSTANTIATED IN LOAD")
+			player = new_object
+		if node_data["filename"] == "res://characters/souls/Soul.tscn":
+			enemies.append(new_object)
+	game_loaded.emit()
 
 func get_games():
 	DirAccess.make_dir_recursive_absolute(SAVE_PATH)

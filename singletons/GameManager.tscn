@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddqgysldhckuc"]
+
+[ext_resource type="PackedScene" uid="uid://b5a8v8irkrgx7" path="res://UI/GameTypeMenu.tscn" id="2_i5jkp"]
+[ext_resource type="PackedScene" uid="uid://bkj0g70a158es" path="res://UI/MainMenu.tscn" id="3_3vqa0"]
+[ext_resource type="PackedScene" uid="uid://r8oouqaf861y" path="res://map/worlds/World0.tscn" id="4_v37cq"]
+
+[sub_resource type="GDScript" id="GDScript_33rxn"]
+script/source = "extends Node2D
+
+@onready var game_type_menu = $GameTypeMenu
+@onready var main_menu = $MainMenu
+@onready var world_0 = $World0
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	get_tree().current_scene = game_type_menu
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[node name="GameManager" type="Node2D"]
+script = SubResource("GDScript_33rxn")
+
+[node name="GameTypeMenu" parent="." instance=ExtResource("2_i5jkp")]
+
+[node name="MainMenu" parent="." instance=ExtResource("3_3vqa0")]
+
+[node name="World0" parent="." node_paths=PackedStringArray("game_ui", "entry_door", "exit_door", "tile_map", "grass_walker", "hills_walker") instance=ExtResource("4_v37cq")]
+visible = false
+scene_width = 30
+scene_height = 22
+game_ui = NodePath("")
+entry_door = NodePath("")
+exit_door = NodePath("")
+tile_map = NodePath("")
+grass_walker = NodePath("")
+hills_walker = NodePath("")
+theme = 0

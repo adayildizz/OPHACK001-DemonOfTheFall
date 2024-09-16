@@ -9,17 +9,25 @@ time = 3
 
 [node name="North" type="RayCast2D" parent="."]
 target_position = Vector2(0, -37)
+collision_mask = 3
 
 [node name="NorthEast" type="RayCast2D" parent="."]
+collision_mask = 3
 
 [node name="East" type="RayCast2D" parent="."]
+collision_mask = 3
 
 [node name="SouthEast" type="RayCast2D" parent="."]
+collision_mask = 3
 
 [node name="South" type="RayCast2D" parent="."]
+collision_mask = 3
 
 [node name="SouthWest" type="RayCast2D" parent="."]
+collision_mask = 3
 
 [node name="West" type="RayCast2D" parent="."]
+collision_mask = 3
 
 [node name="NorthWest" type="RayCast2D" parent="."]
+collision_mask = 3

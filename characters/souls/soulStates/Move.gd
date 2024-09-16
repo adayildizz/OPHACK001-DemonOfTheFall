@@ -24,6 +24,7 @@ func _ready():
 func _physics_process(delta):
 	
 	if actor.victim:
+		
 		actor.seek_and_wander(delta, speed)
 
 

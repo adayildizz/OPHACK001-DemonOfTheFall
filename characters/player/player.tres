@@ -8,7 +8,6 @@ default_value_enabled = true
 parameter_name = "BooleanParameter"
 
 [sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_7jrk3"]
-default_input_values = [0, 0.0, 1, 1.0, 2, 1e-05, 3, Vector3(0, 0, 0), 4, Vector3(0, 0, 0), 5, Vector3(0, 0, 0)]
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_ss3xv"]
 input_name = "color"
@@ -37,7 +36,7 @@ void fragment() {
 
 	vec3 n_out4p0;
 // If:4
-	float n_in4p1 = 1.00000;
+	float n_in4p1 = 0.00000;
 	float n_in4p2 = 0.00001;
 	if(abs((n_out3p0 ? 1.0 : 0.0) - n_in4p1) < n_in4p2)
 	{

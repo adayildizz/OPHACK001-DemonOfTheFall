@@ -30,7 +30,7 @@
 size = Vector2(9, 15)
 
 [sub_resource type="Animation" id="Animation_nk2s1"]
-length = 0.2
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -38,10 +38,10 @@ tracks/0/path = NodePath(".:material:shader_parameter/BooleanParameter")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [true, false, false]
 }
 
 [sub_resource type="Animation" id="Animation_7slww"]
@@ -587,20 +587,21 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("health_component") groups=["Persist", "player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "health_component") groups=["Persist", "player"]]
 motion_mode = 1
 script = ExtResource("1_t1hgf")
 MAX_SPEED = 200.0
+state_machine = NodePath("StateMachine")
 health_component = NodePath("HealthComponent")
 mood = "geto"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(0.25, 0.42)
+scale = Vector2(1.49, 2.1)
 shape = SubResource("RectangleShape2D_7fqe8")
 
 [node name="Hitbox" parent="." groups=["hitbox"] instance=ExtResource("7_m17w6")]
 position = Vector2(0, 2.98023e-08)
-scale = Vector2(0.674286, 1.69143)
+scale = Vector2(5.01903, 7.29143)
 collision_layer = 6
 collision_mask = 6
 damage_rate = 1.0
@@ -639,8 +640,16 @@ libraries = {
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_53fnh")
 sprite_frames = SubResource("SpriteFrames_s8h5j")
-animation = &"attack-sideview-rika"
-frame_progress = 0.679812
+animation = &"attack-front-rika"
+frame_progress = 0.181004
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+limit_left = -24
+limit_top = -24
+limit_right = 1016
+limit_bottom = 768
 
 [connection signal="body_exited" from="Hitbox" to="Hitbox" method="_on_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]
+[connection signal="animation_finished" from="HitFlash" to="." method="_on_hit_flash_animation_finished"]

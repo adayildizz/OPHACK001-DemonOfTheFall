@@ -1,5 +1,7 @@
 extends State
+class_name BossAttack
 
+signal back_to_chase
 
 func _ready():
 	pass # Replace with function body.

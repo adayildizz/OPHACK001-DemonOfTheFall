@@ -13,7 +13,7 @@ signal attacked
 @onready var animator = $AnimatedSprite2D
 @onready var attack_timer = $AttackTimer
 @onready var hitbox = $Hitbox
-@onready var state_machine = $StateMachine
+@export var state_machine : FSM_0
 @export var health_component : HealthComponent
 @onready var hit_flash = $HitFlash
 
@@ -28,7 +28,7 @@ var prev_input = Vector2.DOWN
 func _ready() -> void:
 	state_machine.init(self)
 	health_component.health_changed.connect(_on_hurt)
-	
+
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Attack"):
 		attack_timer.start()
@@ -134,3 +134,7 @@ func _on_hurt():
 	hit_flash.play("hit_flash")
 	
 
+
+
+func _on_hit_flash_animation_finished(anim_name):
+	hit_flash.stop()

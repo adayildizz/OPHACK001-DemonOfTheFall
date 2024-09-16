@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3wg272fdalyc"]
+
+[ext_resource type="Script" path="res://map/walker/Walker1.gd" id="1_dkcw8"]
+
+[node name="Walker1" type="Node"]
+script = ExtResource("1_dkcw8")

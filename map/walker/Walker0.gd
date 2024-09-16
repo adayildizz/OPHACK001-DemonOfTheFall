@@ -27,6 +27,7 @@ func initialize(starting_position: Vector2, new_borders: Rect2):
 
 
 func walk():
+	step_history = []
 	var steps = size*40
 	create_room(position)
 	for step in steps:

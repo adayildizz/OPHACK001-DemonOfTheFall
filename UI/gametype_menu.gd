@@ -1,7 +1,5 @@
 extends Control
 
-
-
 @onready var new_game_button = $MarginContainer/VBoxContainer/ButtonsVBox/NewGameButton
 @onready var continue_button = $MarginContainer/VBoxContainer/ButtonsVBox/ContinueButton
 @onready var back_button = $MarginContainer/VBoxContainer/ButtonsVBox/BackButton
@@ -16,11 +14,15 @@ func _ready():
 	get_saved_games()
 
 func _on_new_game_button_button_down():
+	#start from the very first level
 	SceneManager.change_scene(start_level)
+	#a new game with new levels
 	SceneManager.is_new_game = true
+	SceneManager.is_new_level = true
 
 func _on_continue_button_button_down():
 	SceneManager.is_new_game = false
+	SceneManager.is_new_level = false
 	SceneManager.start_saved_game(Save.game_number)
 	if not Save.game_number:
 		pass

@@ -1,14 +1,150 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdt4ym5xdvu5j"]
+[gd_scene load_steps=37 format=3 uid="uid://cdt4ym5xdvu5j"]
 
 [ext_resource type="Script" path="res://characters/fsm/fsm.gd" id="1_bh7r4"]
 [ext_resource type="PackedScene" uid="uid://j84r6p2vumpq" path="res://components/VelocityComponent.tscn" id="1_bxse8"]
+[ext_resource type="Script" path="res://characters/boss/Boss.gd" id="1_fgt86"]
 [ext_resource type="Script" path="res://characters/boss/bossStates/Attack.gd" id="2_1ia7t"]
 [ext_resource type="PackedScene" uid="uid://cawh3p0wqchdo" path="res://components/PathFindComponent.tscn" id="2_37u1y"]
 [ext_resource type="PackedScene" uid="uid://cafhpk3wjdgsm" path="res://components/MovementCircle.tscn" id="3_wmbc5"]
+[ext_resource type="Script" path="res://characters/boss/bossStates/Chase.gd" id="7_kf67x"]
+[ext_resource type="Texture2D" uid="uid://b4m6hq67gmqiv" path="res://assets/boss_temp/adventurer-attack1-00.png" id="8_0ny7l"]
+[ext_resource type="Texture2D" uid="uid://cpeg0clug3lj1" path="res://assets/boss_temp/adventurer-attack1-01.png" id="9_daim1"]
+[ext_resource type="Texture2D" uid="uid://djv3ht64bmhjk" path="res://assets/boss_temp/adventurer-attack1-02.png" id="10_njtdq"]
+[ext_resource type="Texture2D" uid="uid://cl6h2in7wjiwn" path="res://assets/boss_temp/adventurer-attack1-03.png" id="11_l0jf5"]
+[ext_resource type="Texture2D" uid="uid://tcfa0jdhpc8n" path="res://assets/boss_temp/adventurer-attack1-04.png" id="12_fbjqb"]
+[ext_resource type="Texture2D" uid="uid://b3d8hubjtr88i" path="res://assets/boss_temp/adventurer-attack2-00.png" id="13_65pi7"]
+[ext_resource type="Texture2D" uid="uid://c4cx82jihhrff" path="res://assets/boss_temp/adventurer-attack2-01.png" id="14_54h5f"]
+[ext_resource type="Texture2D" uid="uid://mc2g2dmdr856" path="res://assets/boss_temp/adventurer-attack2-02.png" id="15_weo67"]
+[ext_resource type="Texture2D" uid="uid://ch5kbbv8j2qse" path="res://assets/boss_temp/adventurer-attack2-03.png" id="16_mrm72"]
+[ext_resource type="Texture2D" uid="uid://b1b4jj4tuabnm" path="res://assets/boss_temp/adventurer-attack2-04.png" id="17_6gj8m"]
+[ext_resource type="Texture2D" uid="uid://cxde5oge156ke" path="res://assets/boss_temp/adventurer-attack2-05.png" id="18_a3adp"]
+[ext_resource type="Texture2D" uid="uid://by3e3tmdhhr6r" path="res://assets/boss_temp/adventurer-attack3-00.png" id="19_vs1fo"]
+[ext_resource type="Texture2D" uid="uid://cs2u2bkrhyxr3" path="res://assets/boss_temp/adventurer-attack3-01.png" id="20_yeynx"]
+[ext_resource type="Texture2D" uid="uid://cirhnc8y808mh" path="res://assets/boss_temp/adventurer-attack3-02.png" id="21_xamq0"]
+[ext_resource type="Texture2D" uid="uid://cj5eugh6nsku0" path="res://assets/boss_temp/adventurer-attack3-03.png" id="22_jayvo"]
+[ext_resource type="Texture2D" uid="uid://dhrqrva2jw0mb" path="res://assets/boss_temp/adventurer-attack3-04.png" id="23_0h7iy"]
+[ext_resource type="Texture2D" uid="uid://2rj6d4bey8ve" path="res://assets/boss_temp/adventurer-attack3-05.png" id="24_a2rge"]
+[ext_resource type="Texture2D" uid="uid://dnbgbf8wc1kig" path="res://assets/boss_temp/adventurer-slide-00.png" id="25_pn2sq"]
+[ext_resource type="Texture2D" uid="uid://bxqtt65yk1w5" path="res://assets/boss_temp/adventurer-slide-01.png" id="26_p14nm"]
+[ext_resource type="Texture2D" uid="uid://yihcfqn5ynff" path="res://assets/boss_temp/adventurer-run-00.png" id="27_jpewc"]
+[ext_resource type="Texture2D" uid="uid://dd6vjvllnm0be" path="res://assets/boss_temp/adventurer-run-01.png" id="28_2qnm2"]
+[ext_resource type="Texture2D" uid="uid://bd3h5dryaknlg" path="res://assets/boss_temp/adventurer-run-02.png" id="29_7tjdy"]
+[ext_resource type="Texture2D" uid="uid://djntodop2u316" path="res://assets/boss_temp/adventurer-run-03.png" id="30_r6n3p"]
+[ext_resource type="Texture2D" uid="uid://bpkjsklm5fyq1" path="res://assets/boss_temp/adventurer-run-04.png" id="31_6eicl"]
+[ext_resource type="Texture2D" uid="uid://8gftjdaw2mof" path="res://assets/boss_temp/adventurer-run-05.png" id="32_0vc48"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iiy76"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_o8wqx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_0ny7l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_daim1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_njtdq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_l0jf5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_fbjqb")
+}],
+"loop": true,
+"name": &"attack1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_65pi7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_54h5f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_weo67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_mrm72")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_6gj8m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_a3adp")
+}],
+"loop": true,
+"name": &"attack2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_vs1fo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_yeynx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_xamq0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_jayvo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_0h7iy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_a2rge")
+}],
+"loop": true,
+"name": &"attak3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("25_pn2sq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_p14nm")
+}],
+"loop": true,
+"name": &"dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("27_jpewc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_2qnm2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_7tjdy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_r6n3p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_6eicl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_0vc48")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_awcnv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uuqfp"]
+radius = 24.0
+
 [node name="Boss" type="CharacterBody2D"]
+script = ExtResource("1_fgt86")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("1_bxse8")]
 
@@ -21,7 +157,30 @@ shape = SubResource("CapsuleShape2D_iiy76")
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
 script = ExtResource("1_bh7r4")
-state = NodePath("Attack")
+state = NodePath("BossChase")
 
-[node name="Attack" type="Node" parent="FiniteStateMachine"]
+[node name="BossAttack" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("2_1ia7t")
+
+[node name="BossChase" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("7_kf67x")
+chase_speed = 50.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.996129, 1.18819)
+sprite_frames = SubResource("SpriteFrames_o8wqx")
+animation = &"attack1"
+frame_progress = 0.502096
+
+[node name="DashCircle" type="Area2D" parent="."]
+scale = Vector2(9.92, 9.24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DashCircle"]
+shape = SubResource("CircleShape2D_awcnv")
+
+[node name="Attack1Circle" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack1Circle"]
+shape = SubResource("CircleShape2D_uuqfp")
+
+[connection signal="body_entered" from="DashCircle" to="FiniteStateMachine/BossChase" method="_on_area_2d_body_entered"]

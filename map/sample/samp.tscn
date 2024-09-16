@@ -1,9 +1,34 @@
-[gd_scene load_steps=3 format=3 uid="uid://brbjq6dmngosc"]
+[gd_scene load_steps=5 format=3 uid="uid://brbjq6dmngosc"]
 
 [ext_resource type="Script" path="res://map/sample/samp.gd" id="1_s7apx"]
-[ext_resource type="PackedScene" uid="uid://cjaqeadfhlt2x" path="res://UI/inGame/GameUI.tscn" id="2_x46ks"]
+[ext_resource type="TileSet" uid="uid://w3m4lrjmacl3" path="res://map/tiles/tiles.tres" id="3_24r6a"]
+[ext_resource type="PackedScene" uid="uid://bli4q3ahkrhej" path="res://map/walker/Walker0.tscn" id="4_n3b8s"]
+[ext_resource type="PackedScene" uid="uid://c3wg272fdalyc" path="res://map/walker/Walker1.tscn" id="4_seai2"]
 
-[node name="Samp" type="Node2D"]
+[node name="Samp" type="Node2D" node_paths=PackedStringArray("hills_walker", "grass_walker")]
 script = ExtResource("1_s7apx")
+hills_walker = NodePath("Walker0")
+grass_walker = NodePath("Walker1")
 
-[node name="GameUI" parent="." instance=ExtResource("2_x46ks")]
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("3_24r6a")
+format = 2
+layer_0/name = "grass"
+layer_1/name = "paths"
+layer_1/tile_data = PackedInt32Array()
+
+[node name="Walker0" parent="." instance=ExtResource("4_n3b8s")]
+size = 20
+min_room_width = 5
+min_room_height = 5
+room_variance = 4
+max_hall_length = 5
+hall_variance = 3
+
+[node name="Walker1" parent="." instance=ExtResource("4_seai2")]
+size = 5
+min_room_width = 5
+min_room_height = 5
+room_variance = 4
+max_hall_length = 8
+hall_variance = 1
