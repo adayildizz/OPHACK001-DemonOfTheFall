@@ -30,7 +30,6 @@ var random_vector = Vector2.ZERO
 @export var actor: CharacterBody2D
 
 func _ready():
-	health_component.health_changed.connect(on_hurt)
 	set_physics_process(false)
 	
 func _enter_state():
@@ -40,11 +39,9 @@ func _exit_state():
 	set_physics_process(false)
 	
 func _physics_process(delta):
-	chase_victim(delta)
+	run_away(delta)
 	handle_animations()
 	attack()
-
-
 	
 func attack():
 	#send things to players position
@@ -58,7 +55,6 @@ func attack():
 		shooting_timer.start()
 	
 		
-
 func handle_animations():
 	if approximate_to_vector(vision_cast.target_position) == 2:
 		animator.play("attack-back")
@@ -86,14 +82,9 @@ func _on_shooting_timer_timeout():
 
 
 
-func get_victims_relative_position_vector():
-	if actor.victim:
-		var direction = (actor.victim.global_position - actor.global_position)
-		return direction
-	return Vector2.ZERO
 
-func chase_victim(delta):
-	chase_vector = -get_victims_relative_position_vector()
+func run_away(delta):
+	chase_vector = -actor.get_victims_relative_position_vector()
 	
 	if !keep_distance:	
 		chase_vector = keep_dist_with_randomness(chase_vector, 100)
@@ -124,11 +115,4 @@ func add_avoidance(vector, weight):
 	var avoid_from = movement_circle.compute_avoidance_vector()
 	var final_direction = (100*vector.normalized() + avoid_from*weight).normalized()
 	return final_direction
-	
-func on_hurt():
-	chase_speed = 10
-	hurt_timer.start()
 
-
-func _on_hurt_timer_timeout():
-	chase_speed = 50

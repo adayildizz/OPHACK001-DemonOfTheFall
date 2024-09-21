@@ -18,6 +18,8 @@ signal lost_player
 @onready var wander = $FiniteStateMachine/Wander
 @onready var attack = $FiniteStateMachine/Attack
 @onready var fsm = $FiniteStateMachine
+@onready var death_effect = $DeathEffect
+@onready var hurt = $FiniteStateMachine/Hurt
 
 
 var victim : Player
@@ -27,6 +29,7 @@ func _ready():
 	vision_cast.collide_with_bodies = true
 	saw_player.connect(fsm.change_state.bind(attack))
 	lost_player.connect(fsm.change_state.bind(wander))
+	health_component.health_changed.connect(fsm.change_state.bind(hurt))
 
 
 
@@ -74,3 +77,9 @@ func _on_hit_flash_animation_finished(anim_name):
 	hit_flash.stop()
 
 	
+
+func get_victims_relative_position_vector():
+	if victim:
+		var direction = (victim.global_position - global_position)
+		return direction
+	return Vector2.ZERO

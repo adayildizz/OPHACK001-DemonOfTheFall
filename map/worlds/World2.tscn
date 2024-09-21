@@ -18,6 +18,7 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 [node name="World2" type="Node2D" node_paths=PackedStringArray("navigation_region", "game_ui", "entry_door", "exit_door", "tile_map", "grass_walker", "hills_walker")]
 script = ExtResource("1_r66oe")
 navigation_region = NodePath("NavigationRegion2D")
+angel_count = 1
 this_world_path = "res://map/worlds/World2.tscn"
 enemy_count = 1
 game_ui = NodePath("GameUI")
@@ -82,3 +83,16 @@ navigation_polygon = SubResource("NavigationPolygon_5b0b3")
 stream = ExtResource("8_4wmd6")
 autoplay = true
 bus = &"Music"
+
+[node name="ArenaFocusEffect" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ArenaFocusEffect"]
+root_node = NodePath("../..")
+
+[node name="ColorRect2" type="ColorRect" parent="ArenaFocusEffect"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="ArenaFocusEffect"]
+offset_right = 40.0
+offset_bottom = 40.0

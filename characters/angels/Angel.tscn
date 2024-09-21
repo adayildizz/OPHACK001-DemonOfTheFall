@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://b6loo6ydr0vml"]
+[gd_scene load_steps=80 format=3 uid="uid://b6loo6ydr0vml"]
 
 [ext_resource type="Script" path="res://characters/angels/Angel.gd" id="1_qholq"]
 [ext_resource type="Texture2D" uid="uid://dgvea66lapo3i" path="res://assets/angel/melek arkaya atak-Sheet.png" id="2_jqan8"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://cafhpk3wjdgsm" path="res://components/MovementCircle.tscn" id="13_gdbj0"]
 [ext_resource type="PackedScene" uid="uid://dadhnm6es6ij" path="res://characters/angels/angelStates/Attack.tscn" id="14_2ar33"]
 [ext_resource type="Texture2D" uid="uid://62jouqlqvrxe" path="res://assets/healthbars/helth bar arka.png" id="18_4r1ek"]
+[ext_resource type="Script" path="res://characters/angels/angelStates/Hurt.gd" id="19_7x7y5"]
 [ext_resource type="Texture2D" uid="uid://cavtlluvbqlm4" path="res://assets/healthbars/helth bar cerceve.png" id="19_vkrve"]
 [ext_resource type="Texture2D" uid="uid://bwjg0eif56irl" path="res://assets/healthbars/helth bar ici.png" id="20_5tf76"]
 [ext_resource type="Script" path="res://characters/healthbar.gd" id="22_owr5f"]
@@ -470,7 +471,7 @@ death_effect = NodePath("../DeathEffect")
 animator = NodePath("../AnimatedSprite2D")
 actor = NodePath("..")
 hitflash_animator = NodePath("../HitFlash")
-max_health = 10
+max_health = 5
 
 [node name="PathFindComponent" parent="." node_paths=PackedStringArray("actor", "velocity_component", "movement_circle") instance=ExtResource("5_2aqnx")]
 actor = NodePath("..")
@@ -514,6 +515,17 @@ actor = NodePath("../..")
 [node name="ShootingTimer" type="Timer" parent="FiniteStateMachine/Attack"]
 wait_time = 3.0
 one_shot = true
+
+[node name="Hurt" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "health_component", "movement_circle", "velocity_component")]
+script = ExtResource("19_7x7y5")
+actor = NodePath("../..")
+health_component = NodePath("../../HealthComponent")
+movement_circle = NodePath("../../MovementCircle")
+velocity_component = NodePath("../../VelocityComponent")
+hurt_speed = 10.0
+
+[node name="HurtTimer" type="Timer" parent="FiniteStateMachine/Hurt"]
+wait_time = 2.0
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("actor", "health_component")]
 offset_left = -16.0
@@ -572,15 +584,12 @@ animation = &"death"
 frame = 6
 frame_progress = 1.0
 
-[node name="HurtTimer" type="Timer" parent="."]
-wait_time = 2.0
-
 [connection signal="animation_finished" from="AnimatedSprite2D" to="DeathEffect" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="FiniteStateMachine/Wander/WaitingTimer" to="FiniteStateMachine/Wander" method="_on_waiting_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Wander/MovingTimer" to="FiniteStateMachine/Wander" method="_on_moving_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Attack/ShootingTimer" to="FiniteStateMachine/Attack" method="_on_shooting_timer_timeout"]
+[connection signal="timeout" from="FiniteStateMachine/Hurt/HurtTimer" to="FiniteStateMachine/Hurt" method="_on_hurt_timer_timeout"]
 [connection signal="animation_finished" from="HitFlash" to="." method="_on_hit_flash_animation_finished"]
 [connection signal="body_entered" from="DistanceCircle" to="FiniteStateMachine/Attack" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="DistanceCircle" to="FiniteStateMachine/Attack" method="_on_area_2d_body_exited"]
 [connection signal="animation_finished" from="DeathEffect/AnimatedSprite2D" to="DeathEffect" method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="timeout" from="HurtTimer" to="FiniteStateMachine/Attack" method="_on_hurt_timer_timeout"]
