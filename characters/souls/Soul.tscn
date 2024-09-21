@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cel8148hfb5n0"]
+[gd_scene load_steps=21 format=3 uid="uid://cel8148hfb5n0"]
 
 [ext_resource type="Script" path="res://characters/fsm/fsm.gd" id="1_8g0aq"]
 [ext_resource type="Script" path="res://characters/souls/Soul.gd" id="1_fhq4b"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bwjg0eif56irl" path="res://assets/healthbars/helth bar ici.png" id="11_07gv5"]
 [ext_resource type="PackedScene" uid="uid://b47kyc7wyf40e" path="res://components/Hitbox.tscn" id="13_d0d61"]
 [ext_resource type="Script" path="res://characters/healthbar.gd" id="13_jbt1e"]
+[ext_resource type="PackedScene" uid="uid://chyv5tbp4w5mo" path="res://objects/particles/Particles.tscn" id="15_q3x2u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_omrom"]
 
@@ -60,14 +61,16 @@ _data = {
 "hit_flash": SubResource("Animation_fne3o")
 }
 
-[node name="Soul" type="CharacterBody2D" groups=["Persist", "enemy"]]
+[node name="Soul" type="CharacterBody2D" node_paths=PackedStringArray("death_effect") groups=["Persist", "enemy"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_fhq4b")
 wander_power = 100.0
 acceleration_coefficient = 0.5
+death_effect = NodePath("DeathEffect")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.559999, 0.559999)
 shape = SubResource("CircleShape2D_omrom")
 
 [node name="WanderTimer" type="Timer" parent="."]
@@ -91,8 +94,10 @@ speed = 30.0
 actor = NodePath("..")
 max_speed = 30.0
 
-[node name="HealthComponent" parent="." node_paths=PackedStringArray("actor", "hitflash_animator") instance=ExtResource("3_637kw")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("death_effect", "animator", "actor", "hitflash_animator") instance=ExtResource("3_637kw")]
 scale = Vector2(4.56, 4.28)
+death_effect = NodePath("../DeathEffect")
+animator = NodePath("../AnimatedSprite2D")
 actor = NodePath("..")
 hitflash_animator = NodePath("../HitFlash")
 max_health = 2
@@ -100,6 +105,7 @@ max_health = 2
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_kh1y2")
 position = Vector2(0, -2)
+scale = Vector2(0.666181, 0.56)
 sprite_frames = ExtResource("7_kq5cg")
 animation = &"move"
 frame_progress = 0.823247
@@ -130,9 +136,14 @@ wait_time = 2.0
 one_shot = true
 
 [node name="HitboxComponent" parent="." instance=ExtResource("13_d0d61")]
-scale = Vector2(1.79169, 3.04426)
+scale = Vector2(1.11169, 1.76426)
 damage_rate = 0.5
 opponent = "player"
+
+[node name="DeathEffect" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("15_q3x2u")]
+scale = Vector2(0.68, 0.800001)
+animation = "soul_death"
+actor = NodePath("..")
 
 [connection signal="timeout" from="WanderTimer" to="." method="_on_wander_timer_timeout"]
 [connection signal="timeout" from="CoolDownTimer" to="FiniteStateMachine/SoulHurtState" method="_on_cool_down_timer_timeout"]

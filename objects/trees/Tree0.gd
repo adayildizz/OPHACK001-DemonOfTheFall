@@ -20,7 +20,7 @@ func _ready():
 func choose_type(theme):
 	var sprites 
 	if theme == 1:
-		print("what is theme")
+		
 		sprites = green_sprites
 		print(sprites)
 	else:
@@ -28,6 +28,6 @@ func choose_type(theme):
 		
 	var type = sprites[randi() % sprites.size()]
 	for sprite in sprites:
-		print(sprite, "SPRITE")
+		
 		if sprite == type:
 			find_child(sprite).visible = true

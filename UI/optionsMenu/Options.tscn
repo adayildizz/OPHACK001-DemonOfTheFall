@@ -1,0 +1,183 @@
+[gd_scene load_steps=6 format=3 uid="uid://bppnyroa4d4k8"]
+
+[ext_resource type="Theme" uid="uid://7oiqebqmlnf4" path="res://assets/new_theme.tres" id="1_2c3gp"]
+[ext_resource type="Script" path="res://UI/optionsMenu/Options.gd" id="1_kplkp"]
+[ext_resource type="Texture2D" uid="uid://cmiyx3t68drvp" path="res://assets/icons/getoicon.png" id="3_y5w4k"]
+[ext_resource type="AudioStream" uid="uid://ooqwklxe2uws" path="res://assets/audio/music/main_menu.mp3" id="3_yw1em"]
+[ext_resource type="Texture2D" uid="uid://bb5u1no3vyypc" path="res://assets/icons/rikaicon.png" id="4_t170p"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2c3gp")
+script = ExtResource("1_kplkp")
+starting_level_path = "res://map/worlds/World0.tscn"
+main_menu = "res://UI/mainMenu/MainMenu.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.137255, 0.188235, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 68.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.797)
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 3
+text = "OPTIONS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "CHOOSE YOUR DEMON"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GetoButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../RikaButton")
+focus_neighbor_right = NodePath("../RikaButton")
+focus_next = NodePath("../RikaButton")
+focus_previous = NodePath("../RikaButton")
+action_mode = 0
+text = "geto
+"
+icon = ExtResource("3_y5w4k")
+icon_alignment = 1
+vertical_icon_alignment = 2
+expand_icon = true
+
+[node name="RikaButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../GetoButton")
+focus_neighbor_right = NodePath("../GetoButton")
+focus_next = NodePath("../GetoButton")
+focus_previous = NodePath("../GetoButton")
+text = "rika"
+icon = ExtResource("4_t170p")
+icon_alignment = 1
+vertical_icon_alignment = 2
+expand_icon = true
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "audio settiings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_bottom = 0
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/h_separation = 16
+columns = 2
+
+[node name="MusicLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Music
+"
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="SFXLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "SFX
+
+"
+
+[node name="SFXSlider" type="HSlider" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NewGameButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+text = "start new game"
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+text = "back
+"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_yw1em")
+autoplay = true
+
+[connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer/GetoButton" to="." method="_on_geto_button_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/HBoxContainer/RikaButton" to="." method="_on_rika_button_button_down"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/GridContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/MarginContainer/GridContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer2/NewGameButton" to="." method="_on_new_game_button_button_down"]
+[connection signal="button_down" from="MarginContainer/VBoxContainer/MarginContainer2/VBoxContainer2/BackButton" to="." method="_on_back_button_button_down"]

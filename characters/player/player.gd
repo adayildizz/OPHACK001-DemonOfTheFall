@@ -16,6 +16,7 @@ signal attacked
 @export var state_machine : FSM_0
 @export var health_component : HealthComponent
 @onready var hit_flash = $HitFlash
+@onready var player_cam = $Camera2D
 
 #For two player moods "geto" and "rika"
 @export var mood : String
@@ -68,12 +69,6 @@ func save():
 	}
 	return save_dict
 
-
-#some scenes does not contain player camera (level 0)
-func add_player_cam():
-	var player_cam = Camera2D.new()
-	add_child(player_cam)
-	
 
 func handle_animations():
 	# Attack animation takes priority

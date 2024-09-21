@@ -588,6 +588,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "health_component") groups=["Persist", "player"]]
+z_index = 1
 motion_mode = 1
 script = ExtResource("1_t1hgf")
 MAX_SPEED = 200.0
@@ -601,9 +602,9 @@ shape = SubResource("RectangleShape2D_7fqe8")
 
 [node name="Hitbox" parent="." groups=["hitbox"] instance=ExtResource("7_m17w6")]
 position = Vector2(0, 2.98023e-08)
-scale = Vector2(5.01903, 7.29143)
-collision_layer = 6
-collision_mask = 6
+scale = Vector2(5.01903, 11.2914)
+collision_layer = 0
+collision_mask = 14
 damage_rate = 1.0
 opponent = "enemy"
 
@@ -644,7 +645,7 @@ animation = &"attack-front-rika"
 frame_progress = 0.181004
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+zoom = Vector2(0.75, 0.75)
 limit_left = -24
 limit_top = -24
 limit_right = 1016

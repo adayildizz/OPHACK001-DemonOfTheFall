@@ -9,8 +9,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nosnc"]
 
 [node name="Tree0" type="StaticBody2D"]
-light_mask = 8
-visibility_layer = 8
+z_index = 2
 script = ExtResource("1_35yf0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -4,6 +4,7 @@ class_name Angel
 @onready var velocity_component = $VelocityComponent
 @onready var path_find_component = $PathFindComponent
 @onready var health_component = $HealthComponent
+@onready var hit_flash = $HitFlash
 
 @onready var animator = $AnimatedSprite2D
 @onready var vision_cast = $VisionCast
@@ -19,7 +20,6 @@ signal lost_player
 @onready var fsm = $FiniteStateMachine
 
 
-
 var victim : Player
 var last_vision : bool
 
@@ -27,6 +27,7 @@ func _ready():
 	vision_cast.collide_with_bodies = true
 	saw_player.connect(fsm.change_state.bind(attack))
 	lost_player.connect(fsm.change_state.bind(wander))
+
 
 
 func _physics_process(delta):
@@ -57,17 +58,19 @@ func is_seeing_player():
 		
 	
 func check_visioncast():
+
 	if (last_vision == false) and is_seeing_player():
 		saw_player.emit()
-		print("saw player")
+		
 	
 	if (last_vision == true) and !is_seeing_player():
-		print("lost player")
+		
 		lost_player.emit()
 	
 	last_vision = is_seeing_player()
 	
-
-
 	
+func _on_hit_flash_animation_finished(anim_name):
+	hit_flash.stop()
+
 	

@@ -21,12 +21,13 @@ var wander_direction = Vector2(1,0)
 
 
 @export var victim : CharacterBody2D
+@export var death_effect : Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	health_component.health_changed.connect(fsm.change_state.bind(soul_hurt_state))
 	soul_hurt_state.state_to_move.connect(fsm.change_state.bind(soul_move_state))
-
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

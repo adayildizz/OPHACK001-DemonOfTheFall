@@ -61,5 +61,4 @@ func compute_avoidance_vector():
 	for vec in vectors:
 		if vec.is_colliding():
 			avoid_from -= vec.target_position.normalized()
-	
 	return avoid_from

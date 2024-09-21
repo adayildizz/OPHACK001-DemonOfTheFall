@@ -2,7 +2,7 @@ extends Node2D
 class_name PathFindComponent
 
 @export var the_map : Array
-
+var is_enabled : bool = true
 ## The Actor is the enemy scene itself
 @export var actor : CharacterBody2D
 
@@ -38,19 +38,25 @@ func _physics_process(delta):
 	pass
 		
 func follow_path(speed : float, acceleration_coefficient : float = velocity_component.default_acceleration_coefficient):
-	if target_vector != Vector2.ZERO:
-		nav.target_position = target_vector
-		#print(nav.target_position)
-	if nav.is_navigation_finished():
-		velocity_component.decelarate()
+	if is_enabled:
+		if target_vector != Vector2.ZERO:
+			nav.target_position = target_vector
+			print("Target position: ",nav.target_position)
+		if nav.is_navigation_finished():
+			velocity_component.decelarate()
+			
+			print("finished")
+		#print("AA", nav.target_position)
+		var direction = ((nav.get_next_path_position() - actor.global_position) ).normalized()
 		
-		print("finished")
-	#print("AA", nav.target_position)
-	var direction = ((nav.get_next_path_position() - actor.global_position) ).normalized()
-	velocity_component.accelerate_in_direction(direction, speed, acceleration_coefficient)
-	nav.set_velocity(velocity_component.velocity)
-	#print(direction)
-	velocity_component.move(actor)
+		print("Path ", nav.get_current_navigation_path())
+		print("next path",nav.get_next_path_position())
+		print("actors position: ", actor.global_position)
+		#print("following direction: ", direction)
+		velocity_component.accelerate_in_direction(direction, speed, acceleration_coefficient)
+		nav.set_velocity(velocity_component.velocity)
+		
+		velocity_component.move(actor)
 	
 
 

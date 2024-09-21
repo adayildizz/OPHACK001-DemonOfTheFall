@@ -2,7 +2,7 @@ extends Area2D
 
 @export var speed : float
 var direction : Vector2
-var SampleScene = preload("res://map/sample/Sample.tscn")
+
 var actor: CharacterBody2D
 @onready var animator = $AnimatedSprite2D
 

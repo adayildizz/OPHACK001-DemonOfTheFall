@@ -37,24 +37,25 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_0jynw")
 }],
-"loop": true,
-"name": &"default",
+"loop": false,
+"name": &"soul_death",
 "speed": 16.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_sgolr"]
 colors = PackedColorArray(0, 0.560784, 0.909804, 1, 0.12549, 0.839216, 0.780392, 1)
 
-[node name="DeathEffect" type="Node2D"]
+[node name="Particles" type="Node2D"]
 script = ExtResource("1_6ghag")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -21)
+position = Vector2(0, 5.96046e-08)
 scale = Vector2(1.56, 1.44)
 sprite_frames = SubResource("SpriteFrames_ms1bf")
-frame_progress = 0.626173
+animation = &"soul_death"
 
 [node name="GPUParticles2D" type="CPUParticles2D" parent="."]
+scale = Vector2(0.8, 0.8)
 amount = 100
 explosiveness = 0.5
 fixed_fps = 30
@@ -67,11 +68,7 @@ gravity = Vector2(0, 0)
 initial_velocity_min = 50.0
 initial_velocity_max = 50.0
 scale_amount_min = 0.1
-scale_amount_max = 0.5
+scale_amount_max = 0.3
 color_ramp = SubResource("Gradient_sgolr")
 
-[node name="Timer" type="Timer" parent="."]
-one_shot = true
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

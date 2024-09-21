@@ -2,8 +2,10 @@ extends Node2D
 class_name HealthComponent
 
 signal health_changed
-signal simply_died
+signal body_died
 
+@export var death_effect : Node2D
+@export var animator : AnimatedSprite2D
 
 @export var actor : CharacterBody2D
 @export var hitflash_animator : AnimationPlayer
@@ -35,15 +37,18 @@ func isHealing():
 func simply_die():
 	if hitflash_animator:
 		hitflash_animator.stop()
-	simply_died.emit()
-	actor.set_physics_process(false)
-	actor.hide()
-	actor.call_deferred("free")
+	animator.stop()
+	death_effect.create_death_effect()
+	body_died.emit()
+	
 	
 
 func take_damage( damage_rate : float):
 	health_remaining -= damage_rate
 	health_changed.emit()
+	if hitflash_animator:
+		hitflash_animator.play("hit_flash")
+		
 	print(actor, "took damage. Remaining: ", health_remaining)
 	
 func initialize_health():

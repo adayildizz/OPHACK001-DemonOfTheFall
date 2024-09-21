@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://b6loo6ydr0vml"]
+[gd_scene load_steps=79 format=3 uid="uid://b6loo6ydr0vml"]
 
 [ext_resource type="Script" path="res://characters/angels/Angel.gd" id="1_qholq"]
 [ext_resource type="Texture2D" uid="uid://dgvea66lapo3i" path="res://assets/angel/melek arkaya atak-Sheet.png" id="2_jqan8"]
@@ -13,15 +13,17 @@
 [ext_resource type="Shader" uid="uid://cel5mpcmb7alc" path="res://characters/angels/Angel.tres" id="6_evbnw"]
 [ext_resource type="Texture2D" uid="uid://3qwjuqinht5c" path="res://assets/angel/melek arka yururme-Sheet.png" id="8_et5qd"]
 [ext_resource type="Texture2D" uid="uid://bd0j3wqdhqufp" path="res://assets/angel/melek yana yurume-Sheet.png" id="9_blkix"]
+[ext_resource type="Texture2D" uid="uid://5pqc5k034gdy" path="res://assets/spark/yellowspark.png" id="10_qngqh"]
 [ext_resource type="Script" path="res://characters/fsm/fsm.gd" id="12_687sw"]
 [ext_resource type="PackedScene" uid="uid://ckca0vjabnmpp" path="res://characters/angels/angelStates/Wander.tscn" id="12_enfb1"]
 [ext_resource type="PackedScene" uid="uid://cafhpk3wjdgsm" path="res://components/MovementCircle.tscn" id="13_gdbj0"]
-[ext_resource type="Script" path="res://characters/angels/Temp.gd" id="13_lnc72"]
 [ext_resource type="PackedScene" uid="uid://dadhnm6es6ij" path="res://characters/angels/angelStates/Attack.tscn" id="14_2ar33"]
 [ext_resource type="Texture2D" uid="uid://62jouqlqvrxe" path="res://assets/healthbars/helth bar arka.png" id="18_4r1ek"]
 [ext_resource type="Texture2D" uid="uid://cavtlluvbqlm4" path="res://assets/healthbars/helth bar cerceve.png" id="19_vkrve"]
 [ext_resource type="Texture2D" uid="uid://bwjg0eif56irl" path="res://assets/healthbars/helth bar ici.png" id="20_5tf76"]
 [ext_resource type="Script" path="res://characters/healthbar.gd" id="22_owr5f"]
+[ext_resource type="Texture2D" uid="uid://csgwxldxn2eu2" path="res://assets/spark/spark1.png" id="23_kqsxb"]
+[ext_resource type="Script" path="res://characters/angels/DeathEffect.gd" id="24_tlreb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p655m"]
 
@@ -90,6 +92,34 @@ region = Rect2(96, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_nm835"]
 atlas = ExtResource("4_y6ori")
 region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wqel"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4m5t"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv42a"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjt34"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sqyf"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6dkp7"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abh6f"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bmk1g"]
 atlas = ExtResource("2_udg5d")
@@ -219,6 +249,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_0wqel")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4m5t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lv42a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pjt34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4sqyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6dkp7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abh6f")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_bmk1g")
 }, {
 "duration": 1.0,
@@ -297,7 +353,8 @@ animations = [{
 }]
 
 [sub_resource type="Animation" id="Animation_njip8"]
-length = 0.001
+length = 0.3
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -305,10 +362,10 @@ tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [true]
+"values": [true, false, false]
 }
 
 [sub_resource type="Animation" id="Animation_qd0ki"]
@@ -335,9 +392,71 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dr4rc"]
 
+[sub_resource type="Gradient" id="Gradient_ssf7k"]
+offsets = PackedFloat32Array(0, 0.356589, 0.635659, 1)
+colors = PackedColorArray(1, 0.745098, 0.301961, 0.466667, 0.960784, 0.909804, 0.0470588, 0.862745, 0.976471, 0.921569, 0.2, 1, 1, 1, 0.788235, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pspc0"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_liakn"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdlgc"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kylo"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8kpvf"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7o3w"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83jhq"]
+atlas = ExtResource("10_qngqh")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ji3q8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pspc0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_liakn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdlgc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kylo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8kpvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7o3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_83jhq")
+}],
+"loop": false,
+"name": &"death",
+"speed": 10.0
+}]
+
 [node name="Angel" type="CharacterBody2D" groups=["angel", "enemy"]]
 collision_layer = 4
 collision_mask = 4
+motion_mode = 1
 script = ExtResource("1_qholq")
 
 [node name="MovementCircle" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("13_gdbj0")]
@@ -346,8 +465,11 @@ actor = NodePath("..")
 [node name="VelocityComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("4_2eym2")]
 actor = NodePath("..")
 
-[node name="HealthComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("5_pc103")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("death_effect", "animator", "actor", "hitflash_animator") instance=ExtResource("5_pc103")]
+death_effect = NodePath("../DeathEffect")
+animator = NodePath("../AnimatedSprite2D")
 actor = NodePath("..")
+hitflash_animator = NodePath("../HitFlash")
 max_health = 10
 
 [node name="PathFindComponent" parent="." node_paths=PackedStringArray("actor", "velocity_component", "movement_circle") instance=ExtResource("5_2aqnx")]
@@ -363,8 +485,7 @@ shape = SubResource("CircleShape2D_p655m")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_1bp4t")
 sprite_frames = SubResource("SpriteFrames_njx5m")
-animation = &"attack-front"
-frame_progress = 0.737713
+animation = &"death"
 
 [node name="VisionCast" type="RayCast2D" parent="."]
 
@@ -374,9 +495,6 @@ position = Vector2(10, 5)
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
 script = ExtResource("12_687sw")
 state = NodePath("Wander")
-
-[node name="Temp" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("13_lnc72")
 
 [node name="Wander" parent="FiniteStateMachine" instance=ExtResource("12_enfb1")]
 wander_speed = 30.0
@@ -424,8 +542,45 @@ scale = Vector2(11.44, 10.44)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DistanceCircle"]
 shape = SubResource("CircleShape2D_dr4rc")
 
+[node name="DeathEffect" type="Node2D" parent="." node_paths=PackedStringArray("actor")]
+script = ExtResource("24_tlreb")
+animation = "death"
+actor = NodePath("..")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="DeathEffect"]
+position = Vector2(0, 14)
+amount = 150
+randomness = 0.51
+lifetime_randomness = 0.26
+fixed_fps = 60
+draw_order = 1
+texture = ExtResource("23_kqsxb")
+emission_shape = 3
+emission_rect_extents = Vector2(10, 1)
+direction = Vector2(0, 1)
+spread = 134.12
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+scale_amount_min = 0.05
+scale_amount_max = 0.2
+color_ramp = SubResource("Gradient_ssf7k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="DeathEffect"]
+sprite_frames = SubResource("SpriteFrames_ji3q8")
+animation = &"death"
+frame = 6
+frame_progress = 1.0
+
+[node name="HurtTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="DeathEffect" method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="FiniteStateMachine/Wander/WaitingTimer" to="FiniteStateMachine/Wander" method="_on_waiting_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Wander/MovingTimer" to="FiniteStateMachine/Wander" method="_on_moving_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Attack/ShootingTimer" to="FiniteStateMachine/Attack" method="_on_shooting_timer_timeout"]
+[connection signal="animation_finished" from="HitFlash" to="." method="_on_hit_flash_animation_finished"]
 [connection signal="body_entered" from="DistanceCircle" to="FiniteStateMachine/Attack" method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="DistanceCircle" to="FiniteStateMachine/Attack" method="_on_area_2d_body_exited"]
+[connection signal="animation_finished" from="DeathEffect/AnimatedSprite2D" to="DeathEffect" method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="HurtTimer" to="FiniteStateMachine/Attack" method="_on_hurt_timer_timeout"]

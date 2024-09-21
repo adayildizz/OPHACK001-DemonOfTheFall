@@ -4,7 +4,8 @@ var is_new_level : bool
 var is_new_game : bool
 
 var player_scene = preload("res://characters/player/player.tscn")
-var enemy_scene = preload("res://characters/souls/Soul.tscn")
+var player_mood : String 
+var player_health : int
 var exit_door: ExitDoor
 
 signal scene_changed
@@ -28,11 +29,16 @@ func start_saved_game(game_number : int):
 	Save.load_game(game_number)
 	
 func save_and_quit_game(game_number : int):
+	print(game_number)
 	Save.save_game(game_number)
 	get_tree().quit()
 	
 func quit_without_saving_game():
 	get_tree().quit()
+	
+	
+#func change_world(scene_name : String):
+	#change_scene()
 	
 func change_scene(scene_name: String):
 	print("Scene is changing... New scene: ", scene_name)
@@ -103,18 +109,35 @@ func change_scene(scene_name: String):
 func set_player():
 	print("in set ")
 	if is_new_game:
-		player = player_scene.instantiate()	
-		player.health_component.initialize_health()
+		if level_count == 0:
+			print("new game new level")
+			player = player_scene.instantiate()	
+			player.health_component.initialize_health()
+			if player_mood:
+				player.mood = player_mood
+			else:
+				player.mood = "geto"
+				player_mood = "geto"
+		else:
+			player.health_component.health_remaining = player_health
+			player.mood = player_mood
+		
 	else:
-		await Save.game_loaded
-		player = Save.player
+		if is_new_level:
+			print("old game new level")
+			player = player_scene.instantiate()	
+			player.health_component.health_remaining = player_health
+			player.mood = player_mood
+		else:
+			await Save.game_loaded
+			player = Save.player
 	player_set.emit()
 	
 	return player
 	
-func set_enemies(enemy_count):
+func set_enemies(enemy_count, enemy_scene):
 	var enemies = []
-	if SceneManager.is_new_game:
+	if SceneManager.is_new_level:
 		print("new enemies is being sett.")
 		var i = 0
 		while i < enemy_count:
@@ -131,9 +154,7 @@ func set_enemies(enemy_count):
 		for enemy in enemies:
 			if player:
 				enemy.set_victim(player)
+				
 		print(enemies)
 	return enemies
 
-
-
-	
