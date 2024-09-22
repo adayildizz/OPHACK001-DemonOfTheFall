@@ -59,8 +59,7 @@ func _ready():
 	
 	
 func _physics_process(delta):
-	if is_all_enemies_dead():
-		exit_door.area.set_deferred("monitoring", true)
+	pass
 		
 		
 

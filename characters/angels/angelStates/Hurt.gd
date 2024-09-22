@@ -38,6 +38,7 @@ func _physics_process(delta):
 func _on_hurt_timer_timeout():
 	print("out hurt")
 	hit_flash.stop()
+	health_component.can_take_damage = true
 	back_to_wander.emit()
 	
 	

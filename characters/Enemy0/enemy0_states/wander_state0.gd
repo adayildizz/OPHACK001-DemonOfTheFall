@@ -32,8 +32,7 @@ func _enter_state():
 	print("in wander")
 	set_physics_process(true)
 	animator.play("idle")
-	pathfind.is_chasing_victim = false
-	pathfind.is_attacking_victim = false
+	
 	stop_timer.start()
 	
 	

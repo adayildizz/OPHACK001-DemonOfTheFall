@@ -35,7 +35,7 @@ func chase():
 	print("CHAAAASSSEEE")
 	if actor.victim:
 		print("where is victim")
-		var final_vector = add_avoidance(actor.victim.position, 100)
+		var final_vector = add_avoidance(actor.victim.global_position, 50)
 		path_find_component.update_target_vector(final_vector)
 		path_find_component.follow_path(chase_speed)
 	else:

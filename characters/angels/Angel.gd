@@ -35,7 +35,7 @@ func _ready():
 
 func _physics_process(delta):
 	if victim:
-		vision_cast.target_position = to_local(victim.position)
+		vision_cast.target_position = to_local(await victim.position)
 		check_visioncast()
 	fsm.state._physics_process(delta)
 		

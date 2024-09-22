@@ -10,13 +10,11 @@ signal body_died
 @export var actor : CharacterBody2D
 @export var hitflash_animator : AnimationPlayer
 
-@onready var cool_down_timer = $"../CoolDownTimer"
-
 @export var max_health : int
 
 var health_remaining : float 
 
-
+var can_take_damage : bool = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	initialize_health()
@@ -44,12 +42,13 @@ func simply_die():
 	
 
 func take_damage( damage_rate : float):
-	health_remaining -= damage_rate
-	health_changed.emit()
-	if hitflash_animator:
-		hitflash_animator.play("hit_flash")
-		
-	print(actor, "took damage. Remaining: ", health_remaining)
+	if can_take_damage:
+		health_remaining -= damage_rate
+		health_changed.emit()
+		if hitflash_animator:
+			hitflash_animator.play("hit_flash")
+		can_take_damage = false	
+		print(actor, "took damage. Remaining: ", health_remaining)
 	
 func initialize_health():
 	health_remaining = max_health

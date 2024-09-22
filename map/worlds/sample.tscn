@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjnggl6rd5ij"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_5ve0k"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(2, 66, 572, 65, 571, 443, 3, 443)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="TileSet" id="TileSet_m37xd"]
+
+[node name="Sample" type="Node2D"]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_5ve0k")
+navigation_layers = 15
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_m37xd")
+format = 2

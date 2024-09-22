@@ -1,7 +1,7 @@
 extends StaticBody2D
 class_name ExitDoor
 
-signal change_level_request()
+signal change_level_request
 
 @export var door_name :String
 @export var next_level_path: String
@@ -19,6 +19,7 @@ func _on_area_2d_body_entered(body):
 	print("body detected")
 	#if is_enabled:
 	if body.is_in_group("player"):
+		print("body is player")
 		set_deferred("monitoring", false)
 		SceneManager.player_health = body.health_component.health_remaining
 		SceneManager.is_new_level = true

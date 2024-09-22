@@ -1,7 +1,6 @@
 extends World
 class_name World2
 
-@export var navigation_region : NavigationRegion2D
 var soul_scene = preload("res://characters/souls/Soul.tscn")
 var angel_scene = preload("res://characters/angels/Angel.tscn")
 var boss_scene = preload("res://characters/boss/Boss.tscn")
@@ -17,8 +16,8 @@ func _ready():
 	enemy_count = angel_count + soul_count 
 	default_path_map = tile_map.get_used_cells(0)
 	default_hills_map = tile_map.get_used_cells(2)
-	generate_grass(2)
 	generate_hills(0)
+	generate_grass(2)
 	set_doors()
 	player = await SceneManager.set_player()
 	add_child(player)
@@ -37,32 +36,32 @@ func _ready():
 	#for en in enemies:
 		#print("VICTIM ", en.victim )
 	game_ui.set_actor(player)
-	navigation_region.bake_navigation_polygon()
+	
 
 
 func _physics_process(delta):
-	is_small_enemies_dead()
 	if is_all_enemies_dead():
 		exit_door.area.set_deferred("monitoring", true)
-
-
 
 
 func is_small_enemies_dead():
 	print("Dead count:", dead_body_count)
 	if dead_body_count >= (soul_count + angel_count):
-		player.player_cam.enabled = false
-
-
-func prepare_boss():
-	#change camera zoom 
-	
-	#spawn boss 
-	spawn_boss()
-
+		return true
+	return false
 
 
 func spawn_boss():
-	var players_loc = player.get_global_position
+	var boss = enemies[0]
+	var spawn_point = Vector2(15,11)
+	boss.position = spawn_point*TILE_SIZE
+	add_child(boss)
+	boss.set_victim(player)
+	boss.health_component.body_died.connect(on_enemy_dies)
 	
-	
+
+func on_enemy_dies():
+	dead_body_count += 1
+	if is_small_enemies_dead():
+		player.player_cam.zoom = Vector2(0.75, 0.75)
+		spawn_boss()

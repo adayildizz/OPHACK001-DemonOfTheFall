@@ -6,7 +6,7 @@ signal state_to_move
 
 @export var actor: CharacterBody2D
 @onready var health_component = $"../../HealthComponent"
-@onready var cool_down_timer = $"../../CoolDownTimer"
+@onready var hurt_timer = $"../../HurtTimer"
 @onready var hit_flash = $"../../HitFlash"
 
 @export var speed: float
@@ -34,14 +34,15 @@ func _exit_state():
 	
 
 func hurt():
-	cool_down_timer.start()
+	hurt_timer.start()
 	hit_flash.play("hit_flash")
 	actor.velocity = Vector2.ZERO
 		
 
 
 
-func _on_cool_down_timer_timeout():
+func _on_hurt_timer_timeout():
 	set_physics_process(true)
 	print("TIMEDOUT")
+	health_component.can_take_damage = true
 	state_to_move.emit()

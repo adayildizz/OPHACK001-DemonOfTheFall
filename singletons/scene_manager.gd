@@ -72,40 +72,6 @@ func change_scene(scene_name: String):
 		current_scene.queue_free()
 	
 
-#func spawn_player(door_to_spawn):
-	#var doors = get_tree().current_scene.find_child("Doors")
-	#print("Spawning player into current scene: ",get_tree().current_scene)
-	#for door in doors.get_children():
-		#if door.door_name == door_to_spawn:
-			#exit_door = door
-	#
-	#if !exit_door:
-		#print("Error: Cannot find the door of current level.")
-		#return
-	##elif exit_door.connected_door_name == "none":
-		##return
-	#else:
-		#print("Door to spawn found: ", exit_door.door_name)
-		##Check if the door must working or not
-		#
-		#if exit_door.is_enabled:
-			##Set the spawn point as marker2d of the door.
-			#var spawn_point = exit_door.find_child("Marker2D").global_position
-			##var player = player_scene.instantiate()
-			#
-			#get_tree().current_scene.add_child(player)
-			#player.position = spawn_point
-				#
-			##Disable the door for no further usage
-			#exit_door.is_enabled = false
-			#return player
-		#else:
-			##you will need to also assert this, ma'am
-			#print("Cannot use that door right now")
-	#
-#
-
-
 func set_player():
 	print("in set ")
 	if is_new_game:

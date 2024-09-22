@@ -5,6 +5,7 @@ var enemy_scene = preload("res://characters/angels/Angel.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	game_ui.create_new_environment.connect(create_new_environment)
 	default_path_map = tile_map.get_used_cells(0)
 	default_hills_map = tile_map.get_used_cells(2)
 	generate_grass(2)
@@ -26,6 +27,5 @@ func _ready():
 
 
 func _physics_process(delta):
-	if is_all_enemies_dead():
-		exit_door.area.set_deferred("monitoring", true)
+	pass
 		

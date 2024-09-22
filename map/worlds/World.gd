@@ -49,6 +49,7 @@ func create_new_environment():
 	
 	
 func check_level_count():
+	print("checking level count:", SceneManager.level_count)
 	SceneManager.level_count += 1
 	if SceneManager.level_count > 0:
 		SceneManager.change_scene(next_world_path)
@@ -60,6 +61,7 @@ func check_level_count():
 
 
 func set_doors():
+	entry_door.area.set_deferred("monitoring", false)
 	exit_door.area.set_deferred("monitoring", false)
 	
 
@@ -83,6 +85,7 @@ func generate_hills(hills_layer: int):
 	tile_map.set_cells_terrain_connect(hills_layer,hills_map, 0, -1) 
 	
 	
+	
 func is_all_enemies_dead():
 
 	if dead_body_count >= enemy_count:
@@ -95,13 +98,15 @@ func spawn_enemies(enemies):
 	print("in spawn enemies")
 	for enemy in enemies:
 		enemy.position = hills_map[randi() % hills_map.size()]*TILE_SIZE
-		enemy.set_victim(player)
 		add_child(enemy)
+		enemy.set_victim(player)
 		enemy.health_component.body_died.connect(on_enemy_dies)
 		
 
 func on_enemy_dies():
 	dead_body_count += 1
+	if is_all_enemies_dead():
+		exit_door.area.set_deferred("monitoring", true)
 
 func set_trees():
 	var available_tiles = grass_map.duplicate()
