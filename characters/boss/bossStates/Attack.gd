@@ -7,6 +7,9 @@ signal back_to_chase
 @onready var animator = $"../../AnimatedSprite2D"
 @onready var path_find_component = $"../../PathFindComponent"
 @onready var dash_timer = $DashTimer
+@onready var no_dash_timer = $NoDashTimer
+@onready var dash_cast = $"../../DashCast"
+@onready var velocity_component = $"../../VelocityComponent"
 
 var can_dash : bool = true
 
@@ -31,31 +34,38 @@ func _exit_state():
 	set_physics_process(false)
 	
 	
-func get_victims_relative_position():
-	return actor.to_local(actor.victim.position - actor.position)
+
 
 func dash(delta):
 	if can_dash:
-		print("can dash now")
-		var point = actor.victim.position - actor.position
-		print("dash position: ", point)
-		actor.position = lerp(actor.position, point, delta*4.0)
-		can_dash = false
-		dash_timer.start()
+		print("can dash")
+		
+		# Calculate the direction to the target
+		var direction = (actor.victim.position - actor.position).normalized()
+		print(direction, "GGGGGGGG")
+		# Set the velocity based on the direction and attack speed
+		actor.velocity = direction * attack_speed
+		
+		# Move the actor
+		actor.move_and_slide()
+		
+		# Restart the dash timer if it's stopped
+		if dash_timer.is_stopped():
+			dash_timer.start()
 	
 
 func handle_animations():
-	if approximate_to_vector(get_victims_relative_position()) == 2:
+	if approximate_to_vector(actor.get_victims_relative_position()) == 2:
 		animator.play("attack-back")
 		return
-	elif approximate_to_vector(get_victims_relative_position()) == 6:
+	elif approximate_to_vector(actor.get_victims_relative_position()) == 6:
 		animator.play("attack-front")
 		return
 
-	if get_victims_relative_position().x > 0:
+	if actor.get_victims_relative_position().x > 0:
 		animator.flip_h = false
 		animator.play("attack-sideview")
-	elif get_victims_relative_position().x < 0:
+	elif actor.get_victims_relative_position().x < 0:
 		animator.flip_h = true
 		animator.play("attack-sideview")
 	
@@ -73,6 +83,12 @@ func _on_area_2d_body_exited(body):
 
 
 func _on_dash_timer_timeout():
+	can_dash = false
+	no_dash_timer.start()
+	set_physics_process(false)
+	
+
+
+func _on_no_dash_timer_timeout():
 	can_dash = true
-	
-	
+

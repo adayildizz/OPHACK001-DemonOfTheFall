@@ -36,7 +36,7 @@ func _exit_state():
 func hurt():
 	hurt_timer.start()
 	hit_flash.play("hit_flash")
-	actor.velocity = Vector2.ZERO
+	
 		
 
 

@@ -646,10 +646,10 @@ frame_progress = 0.181004
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.75, 0.75)
-limit_left = -24
-limit_top = -24
-limit_right = 1016
-limit_bottom = 768
+limit_left = 0
+limit_top = 0
+limit_right = 960
+limit_bottom = 640
 
 [connection signal="body_exited" from="Hitbox" to="Hitbox" method="_on_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]

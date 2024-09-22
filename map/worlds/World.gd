@@ -14,8 +14,8 @@ var enemies : Array
 @export var next_world_path : String
 @export var enemy_count : int 
 @export var tree_count : int
-@export var scene_width : int = 30
-@export var scene_height : int = 22
+var scene_width : int = 28
+var scene_height : int = 18
 
 @export var game_ui : GameUI
 @export var entry_door : ExitDoor
@@ -36,8 +36,6 @@ var starting_point : Vector2 = Vector2(10, 5)
 var trees_scene = preload("res://objects/trees/Tree0.tscn")
 
 var dead_body_count = 0
-
-var door_locations : Array
 
 func choose_random(array):
 	return array[randi() % array.size()]
@@ -109,22 +107,42 @@ func on_enemy_dies():
 		exit_door.area.set_deferred("monitoring", true)
 
 func set_trees():
+	var corridor = get_corridor_tiles()
 	var available_tiles = grass_map.duplicate()
-	for tile in door_locations:
-		available_tiles.erase(tile)
-		
-	available_tiles.append_array(tile_map.get_used_cells(2))
+	
+	for tile in available_tiles:
+		if corridor.has(tile):
+			available_tiles.erase(tile)
+
 	var i = 0
-	while i < tree_count:
+	while i < tree_count and available_tiles.size() > 0:
 		var loc = choose_random(available_tiles)
+		
+		# Create and position the tree
 		var tree = trees_scene.instantiate()
 		add_child(tree)
 		tree.choose_type(theme)
-		tree.position = loc*TILE_SIZE	
-		var surroundings = tile_map.get_surrounding_cells(loc)
-		for tile in surroundings:
+		tree.position = loc * TILE_SIZE
+		
+		# Collect neighbors to erase
+		var tiles_to_erase = []
+		for k in range(loc.x - 2, loc.x + 3):
+			for j in range(loc.y - 3, loc.y + 4):
+				var neighbor = Vector2(k, j)
+				if available_tiles.has(neighbor):
+					tiles_to_erase.append(neighbor)
+		
+		# Erase neighbors from available tiles
+		for tile in tiles_to_erase:
 			available_tiles.erase(tile)
-		available_tiles.erase(loc)
-			
+			print("ERASED: ", tile)
+		
 		i += 1
 		
+
+func get_corridor_tiles():
+	var corridor_tiles = []
+	for i in range(14,18):
+		for j in range(0, 21):
+			corridor_tiles.append(Vector2(i,j))
+	return corridor_tiles

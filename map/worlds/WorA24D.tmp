@@ -53,6 +53,7 @@ max_hall_length = 8
 hall_variance = 3
 
 [node name="GameUI" parent="." node_paths=PackedStringArray("exit_door") instance=ExtResource("5_x8dmc")]
+visible = false
 exit_door = NodePath("../ExitDoor2")
 next_level_path = "res://map/worlds/World0.tscn"
 

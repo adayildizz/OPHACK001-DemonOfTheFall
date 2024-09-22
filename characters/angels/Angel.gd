@@ -75,6 +75,7 @@ func check_visioncast():
 	
 func _on_hit_flash_animation_finished(anim_name):
 	hit_flash.stop()
+	
 
 	
 

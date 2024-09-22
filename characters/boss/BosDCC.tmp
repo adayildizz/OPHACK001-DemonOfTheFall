@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://cdt4ym5xdvu5j"]
+[gd_scene load_steps=54 format=3 uid="uid://cdt4ym5xdvu5j"]
 
 [ext_resource type="Script" path="res://characters/fsm/fsm.gd" id="1_bh7r4"]
 [ext_resource type="PackedScene" uid="uid://j84r6p2vumpq" path="res://components/VelocityComponent.tscn" id="1_bxse8"]
@@ -10,24 +10,12 @@
 [ext_resource type="Script" path="res://characters/boss/bossStates/Chase.gd" id="7_kf67x"]
 [ext_resource type="Texture2D" uid="uid://22vxna40vkm5" path="res://assets/boss/bos atak arka-Sheet.png" id="8_l4riy"]
 [ext_resource type="Texture2D" uid="uid://b5b4get1w236g" path="res://assets/boss/bos one atakan.png" id="9_enquc"]
-[ext_resource type="Script" path="res://characters/boss/bossStates/Hurt.gd" id="9_ffd1p"]
 [ext_resource type="Texture2D" uid="uid://c2psk4v5wbf21" path="res://assets/boss/boss yana atakan.png" id="10_6uvvr"]
-[ext_resource type="Shader" uid="uid://dc78tc8pv70f3" path="res://characters/boss/Boss.tres" id="10_hc3g5"]
 [ext_resource type="Texture2D" uid="uid://dlmbgbswrd5al" path="res://assets/boss/boss idle ve one surunme-Sheet.png" id="11_22h4l"]
 [ext_resource type="Texture2D" uid="uid://csgwxldxn2eu2" path="res://assets/spark/spark1.png" id="12_g0wl3"]
 [ext_resource type="Texture2D" uid="uid://b056mot0ubdwr" path="res://assets/boss/bos arka yurume-Sheet.png" id="13_iu5ly"]
 [ext_resource type="Texture2D" uid="uid://bodhbf4qo33m" path="res://assets/boss/bos yan yurume-Sheet.png" id="14_0u3vu"]
 [ext_resource type="Texture2D" uid="uid://77e5rtndxq5v" path="res://assets/spark/kirmizi spark.png" id="14_86qta"]
-[ext_resource type="Texture2D" uid="uid://62jouqlqvrxe" path="res://assets/healthbars/helth bar arka.png" id="17_a32tk"]
-[ext_resource type="Script" path="res://characters/boss/DeathEffect.gd" id="17_njr17"]
-[ext_resource type="Texture2D" uid="uid://p03dwyb8v28y" path="res://assets/healthbars/helth bar kirmizi cerceve.png" id="18_lx8y2"]
-[ext_resource type="Texture2D" uid="uid://dpyuyq3pfxpen" path="res://assets/healthbars/helth bar kirmizi ic.png" id="19_f5rc0"]
-[ext_resource type="Script" path="res://characters/healthbar.gd" id="20_8g44b"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vmn3x"]
-shader = ExtResource("10_hc3g5")
-shader_parameter/BooleanParameter = false
-shader_parameter/ColorParameter = Color(0.921569, 0, 0.0431373, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hbss3"]
 atlas = ExtResource("8_l4riy")
@@ -243,7 +231,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iiy76"]
-radius = 11.82
+radius = 15.0
 
 [sub_resource type="Gradient" id="Gradient_lqr1n"]
 colors = PackedColorArray(0, 0, 0, 1, 0.933333, 0, 0, 1)
@@ -307,56 +295,7 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8rmfp"]
 
-[sub_resource type="Animation" id="Animation_fx7h2"]
-resource_name = "hit_flash"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"update": 1,
-"values": []
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/BooleanParameter")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_cspwd"]
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/BooleanParameter")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_bgxmc"]
-_data = {
-"RESET": SubResource("Animation_cspwd"),
-"hit_flash": SubResource("Animation_fx7h2")
-}
-
-[node name="Boss" type="CharacterBody2D" groups=["enemy"]]
+[node name="Boss" type="CharacterBody2D"]
 collision_layer = 8
 collision_mask = 8
 script = ExtResource("1_fgt86")
@@ -376,7 +315,7 @@ actor = NodePath("..")
 death_effect = NodePath("../DeathEffect")
 animator = NodePath("../AnimatedSprite2D")
 actor = NodePath("..")
-max_health = 3
+max_health = 25
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("state")]
 script = ExtResource("1_bh7r4")
@@ -385,7 +324,6 @@ state = NodePath("BossChase")
 [node name="BossAttack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor")]
 script = ExtResource("2_1ia7t")
 actor = NodePath("../..")
-attack_speed = 500.0
 
 [node name="DashTimer" type="Timer" parent="FiniteStateMachine/BossAttack"]
 one_shot = true
@@ -399,29 +337,17 @@ script = ExtResource("7_kf67x")
 actor = NodePath("../..")
 chase_speed = 80.0
 
-[node name="BossHurt" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "health_component", "movement_circle", "velocity_component")]
-script = ExtResource("9_ffd1p")
-actor = NodePath("../..")
-health_component = NodePath("../../HealthComponent")
-movement_circle = NodePath("../../MovementCircle")
-velocity_component = NodePath("../../VelocityComponent")
-
-[node name="HurtTimer" type="Timer" parent="FiniteStateMachine/BossHurt"]
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_vmn3x")
 sprite_frames = SubResource("SpriteFrames_prilo")
 animation = &"move-back"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 2)
-scale = Vector2(1, 1.12)
+visible = false
+position = Vector2(0, 8)
+scale = Vector2(1, 2.16)
 shape = SubResource("CapsuleShape2D_iiy76")
 
-[node name="DeathEffect" type="Node2D" parent="." node_paths=PackedStringArray("actor")]
-script = ExtResource("17_njr17")
-animation = "death"
-actor = NodePath("..")
+[node name="DeathEffect" type="Node2D" parent="."]
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="DeathEffect"]
 amount = 30
@@ -452,23 +378,6 @@ shape = SubResource("CircleShape2D_8rmfp")
 
 [node name="DashCast" type="RayCast2D" parent="."]
 scale = Vector2(1, 3.2)
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="." node_paths=PackedStringArray("actor", "health_component")]
-offset_left = -31.0
-offset_top = -56.0
-offset_right = 33.0
-offset_bottom = -16.0
-texture_under = ExtResource("17_a32tk")
-texture_over = ExtResource("18_lx8y2")
-texture_progress = ExtResource("19_f5rc0")
-script = ExtResource("20_8g44b")
-actor = NodePath("..")
-health_component = NodePath("../HealthComponent")
-
-[node name="HitFlash" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_bgxmc")
-}
 
 [connection signal="timeout" from="FiniteStateMachine/BossAttack/DashTimer" to="FiniteStateMachine/BossAttack" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/BossAttack/NoDashTimer" to="FiniteStateMachine/BossAttack" method="_on_no_dash_timer_timeout"]

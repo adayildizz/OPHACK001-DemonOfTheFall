@@ -1,5 +1,5 @@
 extends Control
-var main_menu_scene = preload("res://UI/mainMenu/MainMenu.tscn")
+var main_menu_scene = "res://UI/mainMenu/MainMenu.tscn"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

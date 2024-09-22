@@ -7,7 +7,6 @@ default_value = Color(1, 0.886275, 0.317647, 0.705882)
 
 [sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_d1kcn"]
 parameter_name = "enabled"
-default_value_enabled = true
 
 [sub_resource type="VisualShaderNodeIf" id="VisualShaderNodeIf_4g8tc"]
 
@@ -18,7 +17,7 @@ input_name = "color"
 code = "shader_type canvas_item;
 render_mode blend_mix;
 
-uniform bool enabled = false;
+uniform bool enabled;
 uniform vec4 hit : source_color = vec4(1.000000, 0.886275, 0.317647, 0.705882);
 
 
@@ -60,6 +59,7 @@ void fragment() {
 
 }
 "
+graph_offset = Vector2(-25.2342, -61.235)
 mode = 1
 flags/light_only = false
 nodes/fragment/0/position = Vector2(840, 200)

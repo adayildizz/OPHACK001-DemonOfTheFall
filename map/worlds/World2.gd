@@ -4,6 +4,10 @@ class_name World2
 var soul_scene = preload("res://characters/souls/Soul.tscn")
 var angel_scene = preload("res://characters/angels/Angel.tscn")
 var boss_scene = preload("res://characters/boss/Boss.tscn")
+var endofgame_scene = "res://UI/EndOfGame.tscn"
+@onready var navigation_region = $NavigationRegion2D
+@onready var audio_player = $AudioStreamPlayer2D
+@onready var boss_audio_player = $BossAudioPlayer
  
 @export var soul_count : int 
 @export var angel_count : int
@@ -36,7 +40,7 @@ func _ready():
 	#for en in enemies:
 		#print("VICTIM ", en.victim )
 	game_ui.set_actor(player)
-	
+	navigation_region.bake_navigation_polygon()
 
 
 func _physics_process(delta):
@@ -52,16 +56,24 @@ func is_small_enemies_dead():
 
 
 func spawn_boss():
+	
 	var boss = enemies[0]
 	var spawn_point = Vector2(15,11)
 	boss.position = spawn_point*TILE_SIZE
 	add_child(boss)
 	boss.set_victim(player)
-	boss.health_component.body_died.connect(on_enemy_dies)
+	boss.health_component.body_died.connect(on_boss_dies)
 	
 
 func on_enemy_dies():
 	dead_body_count += 1
 	if is_small_enemies_dead():
-		player.player_cam.zoom = Vector2(0.75, 0.75)
+		player.player_cam.zoom = Vector2(1, 1)
+		audio_player.stop()
+		boss_audio_player.play()
 		spawn_boss()
+
+
+func on_boss_dies():
+	SceneManager.change_scene(endofgame_scene)
+

@@ -3,6 +3,7 @@ class_name HealthComponent
 
 signal health_changed
 signal body_died
+@onready var timer = $Timer
 
 @export var death_effect : Node2D
 @export var animator : AnimatedSprite2D
@@ -37,18 +38,21 @@ func simply_die():
 		hitflash_animator.stop()
 	animator.stop()
 	death_effect.create_death_effect()
+	print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
 	body_died.emit()
 	
 	
 
 func take_damage( damage_rate : float):
+	print("In take damage")
 	if can_take_damage:
 		health_remaining -= damage_rate
 		health_changed.emit()
 		if hitflash_animator:
 			hitflash_animator.play("hit_flash")
-		can_take_damage = false	
+		can_take_damage = false
 		print(actor, "took damage. Remaining: ", health_remaining)
+		timer.start()
 	
 func initialize_health():
 	health_remaining = max_health
@@ -61,3 +65,7 @@ func should_be_dead():
 
 
 
+
+
+func _on_timer_timeout():
+	can_take_damage = true

@@ -11,7 +11,7 @@ script = ExtResource("1_evwb5")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 avoidance_enabled = true
-radius = 20.0
+radius = 240.52
 max_speed = 30.0
 debug_enabled = true
 

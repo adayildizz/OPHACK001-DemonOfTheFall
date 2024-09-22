@@ -14,7 +14,7 @@ func _ready():
 	print("World ONE")
 	player = await SceneManager.set_player()
 	add_child(player)
-	player.player_cam.zoom = Vector2(1.5,1.5)
+	player.player_cam.zoom = Vector2(2,2)
 
 	
 	if SceneManager.is_new_level:

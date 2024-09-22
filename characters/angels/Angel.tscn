@@ -486,7 +486,7 @@ shape = SubResource("CircleShape2D_p655m")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_1bp4t")
 sprite_frames = SubResource("SpriteFrames_njx5m")
-animation = &"death"
+animation = &"attack-back"
 
 [node name="VisionCast" type="RayCast2D" parent="."]
 

@@ -16,6 +16,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	chase()
+	add_avoidance(90)
 	handle_animations()
 
 
@@ -35,15 +36,16 @@ func chase():
 	print("CHAAAASSSEEE")
 	if actor.victim:
 		print("where is victim")
-		var final_vector = add_avoidance(actor.victim.global_position, 50)
-		path_find_component.update_target_vector(final_vector)
+		
+		path_find_component.update_target_vector(actor.victim.position)
 		path_find_component.follow_path(chase_speed)
 	else:
 		print("no victim")
 
-func add_avoidance(vector : Vector2, weight):
+func add_avoidance(weight):
 	var avoid_from = movement_circle.compute_avoidance_vector()
-	return vector + weight*avoid_from
+	actor.velocity += avoid_from*weight
+
 
 
 func _on_area_2d_body_entered(body):

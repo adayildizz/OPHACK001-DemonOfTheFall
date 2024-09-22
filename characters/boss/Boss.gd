@@ -6,6 +6,7 @@ class_name Boss
 @onready var boss_chase = $FiniteStateMachine/BossChase
 @onready var health_component = $HealthComponent
 @onready var animator = $AnimatedSprite2D
+@onready var boss_hurt = $FiniteStateMachine/BossHurt
 
 @export var victim : CharacterBody2D
 
@@ -13,7 +14,8 @@ class_name Boss
 func _ready():
 	boss_attack.back_to_chase.connect(fsm.change_state.bind(boss_chase))
 	boss_chase.back_to_attack.connect(fsm.change_state.bind(boss_attack))
-
+	health_component.health_changed.connect(fsm.change_state.bind(boss_hurt))
+	boss_hurt.back_to_attack.connect(fsm.change_state.bind(boss_attack))
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
@@ -23,4 +25,5 @@ func set_victim(new_victim: CharacterBody2D):
 	print("boss set victim: ", new_victim)
 	victim = new_victim
 
-
+func get_victims_relative_position():
+	return to_local(victim.position - position)
