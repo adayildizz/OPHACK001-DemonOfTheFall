@@ -5,7 +5,6 @@ class_name Player
 #Limit velocity for the character 
 @export var MAX_SPEED : float
 
-
 signal attacked
 
 
@@ -17,6 +16,7 @@ signal attacked
 @export var health_component : HealthComponent
 @onready var hit_flash = $HitFlash
 @onready var player_cam = $Camera2D
+@onready var audio = $AudioStreamPlayer2D
 
 #For two player moods "geto" and "rika"
 @export var mood : String
@@ -34,6 +34,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("Attack"):
 		attack_timer.start()
 		print("player attacking")
+		audio.play()
 		attacked.emit()
 		
 	handle_animations()
@@ -64,6 +65,7 @@ func save():
 		"pos_x" : position.x, # Vector2 is not supported by JSON
 		"pos_y" : position.y,
 		"current_health" : health_component.health_remaining,
+		"mood" : mood
 		#"is_alive" : is_alive,
 		#"last_attack" : last_attack
 	}

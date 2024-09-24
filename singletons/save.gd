@@ -20,7 +20,7 @@ func save_game(game_number : int ):
 		print("node data:", node_data)
 		save_nodes_data.append(node_data)
 	
-	var save_object = {"scene": current_scene_path, "save_nodes_data": save_nodes_data, "game_count": game_count}
+	var save_object = {"scene": current_scene_path, "save_nodes_data": save_nodes_data, "game_count": game_count, "coin_count": SceneManager.coin_count}
 	save_file.store_line(JSON.stringify(save_object))
 	print(JSON.stringify(save_object))
 	save_file.close()
@@ -60,7 +60,7 @@ func load_nodes_to_scene(save_object):
 	var scene_path = save_object["scene"]
 	SceneManager.change_scene(scene_path)
 	await get_tree().create_timer(0.2).timeout
-	
+	SceneManager.coin_count = save_object["coin_count"]
 	for node_data in save_object["save_nodes_data"]:
 		print("node data:", node_data)
 		var new_object = load(node_data["filename"]).instantiate()
@@ -76,7 +76,9 @@ func load_nodes_to_scene(save_object):
 		if node_data["filename"] == "res://characters/player/player.tscn":
 			print("PLAYER INSTANTIATED IN LOAD")
 			player = new_object
-		if node_data["filename"] == "res://characters/souls/Soul.tscn":
+			player.mood = node_data["mood"] 
+			print("MOOD", player.mood, new_object["mood"])
+		if node_data["filename"] == "res://characters/souls/Soul.tscn" or  node_data["filename"] == "res://characters/boss/Boss.tscn" or  node_data["filename"] == "res://characters/angels/Angel.tscn" :
 			enemies.append(new_object)
 	game_loaded.emit()
 

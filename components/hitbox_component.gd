@@ -8,6 +8,7 @@ var actor : CharacterBody2D
 
 func _ready():
 	actor = get_parent()
+	
 	actor.attacked.connect(_on_attack)
 	
 

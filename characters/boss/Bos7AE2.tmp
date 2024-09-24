@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://cdt4ym5xdvu5j"]
+[gd_scene load_steps=56 format=3 uid="uid://cdt4ym5xdvu5j"]
 
 [ext_resource type="Script" path="res://characters/fsm/fsm.gd" id="1_bh7r4"]
 [ext_resource type="PackedScene" uid="uid://j84r6p2vumpq" path="res://components/VelocityComponent.tscn" id="1_bxse8"]
@@ -22,7 +22,6 @@
 [ext_resource type="Texture2D" uid="uid://dpyuyq3pfxpen" path="res://assets/healthbars/helth bar kirmizi ic.png" id="19_f5rc0"]
 [ext_resource type="Script" path="res://characters/healthbar.gd" id="20_8g44b"]
 [ext_resource type="PackedScene" uid="uid://dp8ufi8djdmcw" path="res://components/DeathEffect.tscn" id="24_nt6t0"]
-[ext_resource type="AudioStream" uid="uid://dfcqx0tp5au0k" path="res://assets/audio/sfx/swordboss.mp3" id="24_rawie"]
 [ext_resource type="PackedScene" uid="uid://b47kyc7wyf40e" path="res://components/Hitbox.tscn" id="26_7ovs8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vmn3x"]
@@ -337,7 +336,7 @@ script = ExtResource("8_8lwnr")
 actor = NodePath("../..")
 animator = NodePath("../../AnimatedSprite2D")
 pathfind_component = NodePath("../../PathFindComponent")
-chase_speed = 100.0
+chase_speed = 150.0
 
 [node name="Timer" type="Timer" parent="FiniteStateMachine/BossChase"]
 wait_time = 2.0
@@ -349,7 +348,7 @@ actor = NodePath("../..")
 pathfind = NodePath("../../PathFindComponent")
 velocity_component = NodePath("../../VelocityComponent")
 animator = NodePath("../../AnimatedSprite2D")
-attack_speed = 150.0
+attack_speed = 100.0
 attack_acc = 0.5
 
 [node name="BossHurt" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("actor", "health_component", "movement_circle", "velocity_component")]
@@ -358,10 +357,9 @@ actor = NodePath("../..")
 health_component = NodePath("../../HealthComponent")
 movement_circle = NodePath("../../MovementCircle")
 velocity_component = NodePath("../../VelocityComponent")
-hurt_speed = 20.0
 
 [node name="HurtTimer" type="Timer" parent="FiniteStateMachine/BossHurt"]
-wait_time = 2.0
+wait_time = 0.5
 one_shot = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -408,9 +406,6 @@ collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("CircleShape2D_vqutg")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("24_rawie")
 
 [connection signal="timeout" from="FiniteStateMachine/BossIdle/WaitingTimer" to="FiniteStateMachine/BossIdle" method="_on_waiting_timer_timeout"]
 [connection signal="animation_finished" from="HitFlash" to="." method="_on_hit_flash_animation_finished"]

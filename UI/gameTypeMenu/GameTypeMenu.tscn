@@ -14,7 +14,7 @@ grow_vertical = 2
 theme = ExtResource("1_hv07q")
 script = ExtResource("1_15htk")
 main_menu = "res://UI/mainMenu/MainMenu.tscn"
-start_level = "res://map/worlds/World2.tscn"
+start_level = "res://map/worlds/World0.tscn"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -45,7 +45,7 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 32
-text = "Demon Of The Fall
+text = "Demon Quest
 "
 horizontal_alignment = 1
 vertical_alignment = 1

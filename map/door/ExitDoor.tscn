@@ -18,7 +18,7 @@ gradient = SubResource("Gradient_bii3x")
 size = Vector2(20, 25.5926)
 
 [node name="ExitDoor" type="StaticBody2D" node_paths=PackedStringArray("area")]
-z_index = 2
+z_index = 6
 collision_layer = 15
 script = ExtResource("1_ekijs")
 area = NodePath("Area2D")

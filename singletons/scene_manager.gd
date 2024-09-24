@@ -10,9 +10,10 @@ var exit_door: ExitDoor
 
 signal scene_changed
 signal player_set
+signal coin_changed
 
 var player : Player
-
+var coin_count : int 
 var level_count : int = 0
 
 func _ready():
@@ -85,6 +86,7 @@ func set_player():
 				player.mood = "geto"
 				player_mood = "geto"
 		else:
+			player = player_scene.instantiate()	
 			player.health_component.health_remaining = player_health
 			player.mood = player_mood
 		
@@ -97,6 +99,7 @@ func set_player():
 		else:
 			await Save.game_loaded
 			player = Save.player
+	
 	player_set.emit()
 	
 	return player
@@ -124,3 +127,17 @@ func set_enemies(enemy_count, enemy_scene):
 		print(enemies)
 	return enemies
 
+func end_game():
+	change_scene("res://UI/EndOfGame.tscn")
+	
+	
+func set_coins():
+	if is_new_game:
+		coin_count = 0
+	else:
+		coin_count = await coin_count
+	coin_changed.emit()
+		
+func collect_coins(amount : int):
+	coin_count += amount
+	coin_changed.emit()

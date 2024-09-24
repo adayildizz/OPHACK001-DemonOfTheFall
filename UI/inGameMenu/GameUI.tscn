@@ -1,18 +1,196 @@
-[gd_scene load_steps=11 format=3 uid="uid://cjaqeadfhlt2x"]
+[gd_scene load_steps=38 format=3 uid="uid://cjaqeadfhlt2x"]
 
 [ext_resource type="Script" path="res://UI/inGameMenu/GameUI.gd" id="1_qh643"]
 [ext_resource type="Texture2D" uid="uid://62jouqlqvrxe" path="res://assets/healthbars/helth bar arka.png" id="2_l3dl5"]
+[ext_resource type="Texture2D" uid="uid://djd0wq4p8ykpe" path="res://assets/GoldCoinSpinning.png" id="3_8etc4"]
 [ext_resource type="Texture2D" uid="uid://p03dwyb8v28y" path="res://assets/healthbars/helth bar kirmizi cerceve.png" id="3_sytfu"]
 [ext_resource type="Texture2D" uid="uid://dpyuyq3pfxpen" path="res://assets/healthbars/helth bar kirmizi ic.png" id="4_b4y5x"]
 [ext_resource type="Theme" uid="uid://7oiqebqmlnf4" path="res://assets/new_theme.tres" id="5_elssh"]
 [ext_resource type="AudioStream" uid="uid://ooqwklxe2uws" path="res://assets/audio/music/main_menu.mp3" id="6_ng860"]
+[ext_resource type="AudioStream" uid="uid://cf082i6jd6xt6" path="res://assets/audio/sfx/retro-coin.mp3" id="8_t0ks5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57kat"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx7ub"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f38xl"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kc8w7"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0535"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wtgr"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o22c1"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(48, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osgxb"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(56, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il04p"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(64, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3jf1c"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(72, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_482lv"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(80, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22n23"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(88, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d15x4"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(96, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfme0"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(104, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fe4bp"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(112, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ler2o"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(120, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xghby"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(128, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1m8eu"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(136, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27fj4"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(144, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4uagw"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(152, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pfxir"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(160, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fwd6"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(168, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1ct7"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(176, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxu3i"]
+atlas = ExtResource("3_8etc4")
+region = Rect2(184, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qchqo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57kat")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx7ub")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f38xl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kc8w7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l0535")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wtgr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o22c1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osgxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_il04p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3jf1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_482lv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22n23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d15x4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfme0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fe4bp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ler2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xghby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1m8eu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27fj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4uagw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pfxir")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6fwd6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1ct7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxu3i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="Animation" id="Animation_aqqsu"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("InGameMenu/ColorRect:color")
+tracks/0/path = NodePath("ColorRect:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -27,7 +205,7 @@ resource_name = "fade_in"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("InGameMenu/ColorRect:color")
+tracks/0/path = NodePath("ColorRect:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -42,7 +220,7 @@ resource_name = "fade_out"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("InGameMenu/ColorRect:color")
+tracks/0/path = NodePath("ColorRect:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -72,16 +250,9 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("5_elssh")
 
-[node name="ColorRect" type="ColorRect" parent="InGameMenu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = ExtResource("5_elssh")
-color = Color(0, 0.137255, 0.188235, 1)
+[node name="ColorRect2" type="ColorRect" parent="InGameMenu"]
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="InGameContainer" type="MarginContainer" parent="InGameMenu"]
 layout_mode = 1
@@ -95,28 +266,28 @@ grow_vertical = 2
 size_flags_vertical = 0
 theme = ExtResource("5_elssh")
 theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 32
 
-[node name="HBoxContainer" type="HBoxContainer" parent="InGameMenu/InGameContainer"]
+[node name="QuitButton" type="Button" parent="InGameMenu/InGameContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 0
 size_flags_vertical = 0
-theme = ExtResource("5_elssh")
-
-[node name="QuitButton" type="Button" parent="InGameMenu/InGameContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 text = "quit"
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="InGameMenu/InGameContainer/HBoxContainer"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="InGameMenu/InGameContainer"]
+position = Vector2(582, 61)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_qchqo")
+autoplay = "default"
+
+[node name="Label" type="Label" parent="InGameMenu/InGameContainer"]
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
-size_flags_horizontal = 10
-texture_under = ExtResource("2_l3dl5")
-texture_over = ExtResource("3_sytfu")
-texture_progress = ExtResource("4_b4y5x")
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "0"
 
 [node name="SettingsContainer" type="MarginContainer" parent="InGameMenu"]
 layout_mode = 1
@@ -140,7 +311,6 @@ theme_override_constants/margin_top = 32
 theme_override_constants/margin_bottom = 32
 
 [node name="Label" type="Label" parent="InGameMenu/SettingsContainer/VBoxContainer/MarginContainer2"]
-custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 0
 text = "audio settings"
@@ -207,10 +377,34 @@ libraries = {
 "": SubResource("AnimationLibrary_xixtq")
 }
 
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = 379.0
+offset_top = 12.0
+offset_right = 443.0
+offset_bottom = 428.0
+scale = Vector2(3, 3)
+size_flags_horizontal = 10
+texture_under = ExtResource("2_l3dl5")
+texture_over = ExtResource("3_sytfu")
+texture_progress = ExtResource("4_b4y5x")
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_ng860")
 
-[connection signal="button_down" from="InGameMenu/InGameContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_button_down"]
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("5_elssh")
+color = Color(0, 0.137255, 0.188235, 1)
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_t0ks5")
+
+[connection signal="button_down" from="InGameMenu/InGameContainer/QuitButton" to="." method="_on_quit_button_button_down"]
 [connection signal="value_changed" from="InGameMenu/SettingsContainer/VBoxContainer/MarginContainer2/GridContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="InGameMenu/SettingsContainer/VBoxContainer/MarginContainer2/GridContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
 [connection signal="button_down" from="InGameMenu/SettingsContainer/VBoxContainer/MarginContainer/VBoxContainer/ReturnButton" to="." method="_on_return_button_button_down"]

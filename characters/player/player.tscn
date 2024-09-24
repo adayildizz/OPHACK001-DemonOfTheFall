@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://blyhpi7sw2a1o"]
+[gd_scene load_steps=93 format=3 uid="uid://blyhpi7sw2a1o"]
 
 [ext_resource type="Script" path="res://characters/player/player.gd" id="1_t1hgf"]
 [ext_resource type="Texture2D" uid="uid://c3rovrkjotkcs" path="res://assets/geto/geto attack arka-Sheet.png" id="2_lyadc"]
@@ -25,6 +25,8 @@
 [ext_resource type="Texture2D" uid="uid://bquwsu300j08o" path="res://assets/rika/kiz yan yurume-Sheet.png" id="18_yocrb"]
 [ext_resource type="Texture2D" uid="uid://dieii2ttgby1x" path="res://assets/rika/kiz yana atakan-Sheet.png" id="19_w5ec4"]
 [ext_resource type="PackedScene" uid="uid://cfpcqylll8gsj" path="res://components/HealthComponent.tscn" id="24_ehnu8"]
+[ext_resource type="PackedScene" uid="uid://dp8ufi8djdmcw" path="res://components/DeathEffect.tscn" id="26_baqmt"]
+[ext_resource type="AudioStream" uid="uid://jxs06n7kbkmn" path="res://assets/audio/sfx/sword-slash.mp3" id="27_6e74i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7fqe8"]
 size = Vector2(9, 15)
@@ -588,13 +590,13 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("state_machine", "health_component") groups=["Persist", "player"]]
-z_index = 1
+z_index = 3
 motion_mode = 1
 script = ExtResource("1_t1hgf")
 MAX_SPEED = 200.0
 state_machine = NodePath("StateMachine")
 health_component = NodePath("HealthComponent")
-mood = "geto"
+mood = "rika"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(1.49, 2.1)
@@ -627,7 +629,9 @@ actor = NodePath("../..")
 wait_time = 0.3
 one_shot = true
 
-[node name="HealthComponent" parent="." node_paths=PackedStringArray("actor", "hitflash_animator") instance=ExtResource("24_ehnu8")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("death_effect", "animator", "actor", "hitflash_animator") instance=ExtResource("24_ehnu8")]
+death_effect = NodePath("../DeathEffect")
+animator = NodePath("../AnimatedSprite2D")
 actor = NodePath("..")
 hitflash_animator = NodePath("../HitFlash")
 max_health = 30
@@ -650,6 +654,13 @@ limit_left = 0
 limit_top = 0
 limit_right = 960
 limit_bottom = 640
+
+[node name="DeathEffect" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("26_baqmt")]
+animation = "death"
+actor = NodePath("..")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("27_6e74i")
 
 [connection signal="body_exited" from="Hitbox" to="Hitbox" method="_on_body_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_timer_timeout"]

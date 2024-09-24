@@ -1,0 +1,91 @@
+[gd_scene load_steps=13 format=3 uid="uid://dp8ufi8djdmcw"]
+
+[ext_resource type="Script" path="res://components/DeathEffect.gd" id="1_hymen"]
+[ext_resource type="Texture2D" uid="uid://csgwxldxn2eu2" path="res://assets/spark/spark1.png" id="3_u1kb6"]
+[ext_resource type="Texture2D" uid="uid://77e5rtndxq5v" path="res://assets/spark/kirmizi spark.png" id="4_u417u"]
+
+[sub_resource type="Gradient" id="Gradient_o25cd"]
+colors = PackedColorArray(0, 0, 0, 1, 0.933333, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g61d8"]
+atlas = ExtResource("4_u417u")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8w8ac"]
+atlas = ExtResource("4_u417u")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_keevb"]
+atlas = ExtResource("4_u417u")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shrch"]
+atlas = ExtResource("4_u417u")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uw4co"]
+atlas = ExtResource("4_u417u")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cl146"]
+atlas = ExtResource("4_u417u")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ucd8"]
+atlas = ExtResource("4_u417u")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jfrq0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g61d8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8w8ac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_keevb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shrch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uw4co")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cl146")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ucd8")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}]
+
+[node name="DeathEffect" type="Node2D"]
+script = ExtResource("1_hymen")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 30
+lifetime = 2.0
+explosiveness = 0.52
+draw_order = 1
+texture = ExtResource("3_u1kb6")
+emission_shape = 2
+emission_sphere_radius = 82.14
+direction = Vector2(0, -1)
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+scale_amount_min = 0.1
+scale_amount_max = 0.2
+color_ramp = SubResource("Gradient_o25cd")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.56, 1.76)
+sprite_frames = SubResource("SpriteFrames_jfrq0")
+animation = &"death"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

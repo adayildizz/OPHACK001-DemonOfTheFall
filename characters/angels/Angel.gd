@@ -5,6 +5,7 @@ class_name Angel
 @onready var path_find_component = $PathFindComponent
 @onready var health_component = $HealthComponent
 @onready var hit_flash = $HitFlash
+@onready var timer = $Timer
 
 @onready var animator = $AnimatedSprite2D
 @onready var vision_cast = $VisionCast
@@ -34,7 +35,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	if victim:
+	if victim and timer.is_stopped():
 		vision_cast.target_position = to_local(await victim.position)
 		check_visioncast()
 	fsm.state._physics_process(delta)
@@ -84,3 +85,15 @@ func get_victims_relative_position_vector():
 		var direction = (victim.global_position - global_position)
 		return direction
 	return Vector2.ZERO
+
+func save():
+	var save_dict = {
+		"filename" : get_scene_file_path(),
+		"parent" : get_parent().get_scene_file_path(),
+		"pos_x" : position.x, # Vector2 is not supported by JSON
+		"pos_y" : position.y,
+		"current_health" : health_component.health_remaining,
+		"victim": victim
+		#"last_attack" : last_attack
+	}
+	return save_dict

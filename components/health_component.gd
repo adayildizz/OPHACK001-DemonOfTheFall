@@ -38,7 +38,6 @@ func simply_die():
 		hitflash_animator.stop()
 	animator.stop()
 	death_effect.create_death_effect()
-	print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
 	body_died.emit()
 	
 	
@@ -53,6 +52,11 @@ func take_damage( damage_rate : float):
 		can_take_damage = false
 		print(actor, "took damage. Remaining: ", health_remaining)
 		timer.start()
+		if actor.is_in_group("enemy"):
+			SceneManager.collect_coins(3)
+		if should_be_dead():
+			simply_die()
+			
 	
 func initialize_health():
 	health_remaining = max_health

@@ -41,7 +41,7 @@ func follow_path(speed : float, acceleration_coefficient : float = velocity_comp
 	if is_enabled:
 		if target_vector != Vector2.ZERO:
 			nav.target_position = target_vector
-			print("Target position: ",nav.target_position)
+			
 		if nav.is_navigation_finished():
 			velocity_component.decelarate()
 			
@@ -49,9 +49,6 @@ func follow_path(speed : float, acceleration_coefficient : float = velocity_comp
 		#print("AA", nav.target_position)
 		var direction = ((nav.get_next_path_position() - actor.global_position) ).normalized()
 		
-		print("Path ", nav.get_current_navigation_path())
-		print("next path",nav.get_next_path_position())
-		print("actors position: ", actor.global_position)
 		#print("following direction: ", direction)
 		velocity_component.accelerate_in_direction(direction, speed, acceleration_coefficient)
 		nav.set_velocity(velocity_component.velocity)

@@ -28,14 +28,13 @@ func _ready():
 	player.player_cam.zoom = Vector2(2,2)
 	if SceneManager.is_new_level:
 		print("it is a new level")
-		spawn_player()
-		
-	set_trees()
+	spawn_player()
+	
 	souls_array = await SceneManager.set_enemies(soul_count, soul_scene)
 	angels_array = await SceneManager.set_enemies(angel_count, angel_scene)
 	enemies = await SceneManager.set_enemies(1, boss_scene)
-	spawn_enemies(souls_array)
-	spawn_enemies(angels_array)
+	spawn_small_enemies(souls_array)
+	spawn_small_enemies(angels_array)
 	print("SOULS: ", souls_array)
 	#for en in enemies:
 		#print("VICTIM ", en.victim )
@@ -62,18 +61,23 @@ func spawn_boss():
 	boss.position = spawn_point*TILE_SIZE
 	add_child(boss)
 	boss.set_victim(player)
-	boss.health_component.body_died.connect(on_boss_dies)
 	
 
-func on_enemy_dies():
+func on_enemy_dies_here():
 	dead_body_count += 1
 	if is_small_enemies_dead():
-		player.player_cam.zoom = Vector2(1, 1)
+		#player.player_cam.zoom = Vector2(2, 2)
 		audio_player.stop()
 		boss_audio_player.play()
 		spawn_boss()
 
 
-func on_boss_dies():
-	SceneManager.change_scene(endofgame_scene)
+func spawn_small_enemies(enemies):
+	print("in spawn enemies")
+	for enemy in enemies:
+		add_child(enemy)
+		enemy.set_victim(player)
+		enemy.health_component.body_died.connect(on_enemy_dies_here)
+		if SceneManager.is_new_game:
+			enemy.position = hills_map[randi() % hills_map.size()]*TILE_SIZE
 

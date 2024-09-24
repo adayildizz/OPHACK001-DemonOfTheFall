@@ -11,7 +11,7 @@ class_name BossHurt
 @export var hurt_speed : float
 var vector : Vector2
 #actually, it does not matter where to turn. we will be checking vision cast in every frame again.
-signal back_to_attack
+signal back_to_chase
 
 func _ready():
 	set_physics_process(false)
@@ -39,7 +39,7 @@ func _on_hurt_timer_timeout():
 	print("out hurt")
 	hit_flash.stop()
 	health_component.can_take_damage = true
-	back_to_attack.emit()
+	back_to_chase.emit()
 	
 	
 func hurt():

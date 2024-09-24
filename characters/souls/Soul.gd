@@ -45,8 +45,11 @@ func _on_hitbox_component_body_entered(body):
 
 
 func seek_and_wander(delta, speed):
-	var target_position =  await victim.get_global_position()
-	
+	var target_position
+	if victim:
+		target_position =  await victim.position
+	else:
+		target_position=Vector2.ZERO
 	var seeking_velocity = (target_position - get_global_position()).normalized()*100
 	wander_direction = wander_direction.rotated(randf_range(-PI / 4, PI / 4)).normalized()
 	var randomized_direction = (seeking_velocity + wander_power*wander_direction).normalized()

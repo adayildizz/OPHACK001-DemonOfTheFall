@@ -5,12 +5,14 @@ var direction : Vector2
 
 var actor: CharacterBody2D
 @onready var animator = $AnimatedSprite2D
+@onready var audio = $AudioStreamPlayer2D
 
 @export var damage_rate : float
 
 func _ready():
 	set_actor()
 	direction = (actor.vision_cast.target_position - position).normalized()
+	audio.play()
 	
 func _process(delta):
 	position += direction * speed * delta

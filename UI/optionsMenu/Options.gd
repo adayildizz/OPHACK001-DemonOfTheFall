@@ -17,6 +17,7 @@ func _on_rika_button_button_down():
 
 
 func _on_new_game_button_button_down():
+	set_game_number()
 	#start from the very first level
 	SceneManager.change_scene(starting_level_path)
 	#a new game with new levels
@@ -37,3 +38,13 @@ func _on_music_slider_value_changed(value):
 func _on_sfx_slider_value_changed(value):
 	AudioServer.set_bus_volume_db(SFX_BUS_ID, linear_to_db(value))
 	AudioServer.set_bus_mute(SFX_BUS_ID, value < .05)
+
+
+
+func set_game_number():
+	var file_list = Save.get_games()
+	var counter = 0
+	for file in file_list:
+		counter += 1
+	Save.game_number = counter
+		

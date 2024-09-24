@@ -87,7 +87,7 @@ func generate_hills(hills_layer: int):
 func is_all_enemies_dead():
 
 	if dead_body_count >= enemy_count:
-		print("ALL DEAD")
+		
 		return true
 	return false
 
@@ -95,10 +95,11 @@ func is_all_enemies_dead():
 func spawn_enemies(enemies):
 	print("in spawn enemies")
 	for enemy in enemies:
-		enemy.position = hills_map[randi() % hills_map.size()]*TILE_SIZE
 		add_child(enemy)
 		enemy.set_victim(player)
 		enemy.health_component.body_died.connect(on_enemy_dies)
+		if SceneManager.is_new_game:
+			enemy.position = hills_map[randi() % hills_map.size()]*TILE_SIZE
 		
 
 func on_enemy_dies():
@@ -146,3 +147,5 @@ func get_corridor_tiles():
 		for j in range(0, 21):
 			corridor_tiles.append(Vector2(i,j))
 	return corridor_tiles
+
+

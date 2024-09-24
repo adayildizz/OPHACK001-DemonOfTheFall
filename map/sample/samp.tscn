@@ -5,10 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://bli4q3ahkrhej" path="res://map/walker/Walker0.tscn" id="4_n3b8s"]
 [ext_resource type="PackedScene" uid="uid://c3wg272fdalyc" path="res://map/walker/Walker1.tscn" id="4_seai2"]
 
-[node name="Samp" type="Node2D" node_paths=PackedStringArray("hills_walker", "grass_walker")]
+[node name="Samp" type="Node2D"]
 script = ExtResource("1_s7apx")
-hills_walker = NodePath("Walker0")
-grass_walker = NodePath("Walker1")
+hills_walker = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","script":Resource("res://map/walker/Walker0.gd"),"size":20,"min_room_width":5,"min_room_height":5,"room_variance":4,"max_hall_length":5,"hall_variance":3)
+
+grass_walker = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","script":Resource("res://map/walker/Walker1.gd"),"size":5,"min_room_width":5,"min_room_height":5,"room_variance":4,"max_hall_length":8,"hall_variance":1)
+
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("3_24r6a")

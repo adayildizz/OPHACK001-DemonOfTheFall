@@ -43,7 +43,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Demon Of The Fall"
+text = "Demon Quest"
 horizontal_alignment = 1
 vertical_alignment = 1
 

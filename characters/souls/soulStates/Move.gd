@@ -11,6 +11,7 @@ signal state_to_hurt
 @onready var wander_ray = $"../../WanderRay"
 @onready var timer = $Timer
 
+@onready var timer2 = $"../../Timer"
 
 @export var speed: float
 
@@ -23,7 +24,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	
-	if actor.victim:
+	if actor.victim and timer2.is_stopped():
 		
 		actor.seek_and_wander(delta, speed)
 

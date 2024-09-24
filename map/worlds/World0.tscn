@@ -69,7 +69,7 @@ texture = ExtResource("7_l1hx4")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 modulate = Color(1, 1, 1, 0.596078)
 self_modulate = Color(1, 1, 1, 0.498039)
-color = Color(0.784314, 0.929412, 0.996078, 1)
+color = Color(0.705882, 0.905882, 0.996078, 1)
 
 [node name="ExitDoor" parent="." instance=ExtResource("3_48w1p")]
 position = Vector2(480, 26)
